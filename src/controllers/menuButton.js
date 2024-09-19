@@ -3643,11 +3643,11 @@ const menuButton = {
 
                     let $t = $(this),
                         itemvalue = $t.attr("itemvalue");
-
+                    console.log(Store.luckysheetPrint);
                     if (itemvalue == "print") {
                         //Print config
                         if (Store.luckysheetPrint) {
-                            luckysheetPrint = Store.luckysheetPrint;
+                            var luckysheetPrint = Store.luckysheetPrint;
                             const plugin = Store.plugins.find((item) => item.name === "print");
                             if (plugin && plugin.config) {
                                 luckysheetPrint.createDialog();
