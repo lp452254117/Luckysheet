@@ -52,6 +52,7 @@ import { openProtectionModal, checkProtectionFormatCells, checkProtectionNotEnab
 import Store from "../store";
 import locale from "../locale/locale";
 import { checkTheStatusOfTheSelectedCells, frozenFirstRow, frozenFirstColumn } from "../global/api";
+import { luckysheetPrint } from "../expendPlugins/print/print?v=1";
 
 const menuButton = {
     menu:
@@ -93,6 +94,7 @@ const menuButton = {
                 .html('<i class="fa fa-check luckysheet-mousedown-cancel"></i>');
         }
     },
+    // 创建下拉菜单
     createButtonMenu: function(itemdata) {
         let itemset = "";
         let _this = this;
@@ -126,6 +128,7 @@ const menuButton = {
 
         return itemset;
     },
+    // 取消点击时间
     cancelPaintModel: function() {
         let _this = this;
 
@@ -3601,74 +3604,80 @@ const menuButton = {
 
         //print
         $("#luckysheet-icon-print").click(function() {
-            let menuButtonId = $(this).attr("id") + "-menuButton";
-            let $menuButton = $("#" + menuButtonId);
-            const _locale = locale();
-            const locale_print = _locale.print;
-            if ($menuButton.length == 0) {
-                let itemdata = [
-                    {
-                        text: locale_print.menuItemPrint,
-                        value: "print",
-                        example: '<i class="iconfont-luckysheet luckysheet-iconfont-dayin" aria-hidden="true"></i>',
-                    },
-                    { text: "", value: "split", example: "" },
-                    {
-                        text: locale_print.menuItemAreas,
-                        value: "areas",
-                        example: '<i class="iconfont-luckysheet luckysheet-iconfont-tihuan" aria-hidden="true"></i>',
-                    },
-                    {
-                        text: locale_print.menuItemRows,
-                        value: "rows",
-                        example: '<i class="iconfont-luckysheet luckysheet-iconfont-zhuandao1" aria-hidden="true"></i>',
-                    },
-                    {
-                        text: locale_print.menuItemColumns,
-                        value: "columns",
-                        example: '<i class="iconfont-luckysheet luckysheet-iconfont-dingwei" aria-hidden="true"></i>',
-                    },
-                ];
-
-                let itemset = _this.createButtonMenu(itemdata);
-
-                let menu = replaceHtml(_this.menu, { id: "print", item: itemset, subclass: "", sub: "" });
-
-                $("body").append(menu);
-                $menuButton = $("#" + menuButtonId).width(180);
-
-                $menuButton.find(".luckysheet-cols-menuitem").click(function() {
-                    $menuButton.hide();
-                    luckysheetContainerFocus();
-
-                    let $t = $(this),
-                        itemvalue = $t.attr("itemvalue");
-                    console.log(Store.luckysheetPrint);
-                    if (itemvalue == "print") {
-                        //Print config
-                        if (Store.luckysheetPrint) {
-                            var luckysheetPrint = Store.luckysheetPrint;
-                            const plugin = Store.plugins.find((item) => item.name === "print");
-                            if (plugin && plugin.config) {
-                                luckysheetPrint.createDialog();
-                                luckysheetPrint.init(plugin.config.license);
-                            }
-                        }
-                    } else if (itemvalue == "areas" || itemvalue == "rows" || itemvalue == "columns") {
-                        //range
-                        alert("areas");
-                    }
-                });
+            if (Store.luckysheetPrint) {
+                var luckysheetPrint = Store.luckysheetPrint;
+                const plugin = Store.plugins.find((item) => item.name === "print");
+                console.log(plugin);
+                if (plugin && plugin.config) {
+                    luckysheetPrint.createDialog();
+                    luckysheetPrint.init(plugin.config.license);
+                }
+            } else {
+                tooltip.notify("缺少打印插件")
             }
+            // let menuButtonId = $(this).attr("id") + "-menuButton";
+            // let $menuButton = $("#" + menuButtonId);
+            // const _locale = locale();
+            // const locale_print = _locale.print;
+            // if ($menuButton.length == 0) {
+                // let itemdata = [
+                    // {
+                    //     text: locale_print.menuItemSheet,
+                    //     value: "sheet",
+                    //     example: '<i class="iconfont-luckysheet luckysheet-iconfont-dayin" aria-hidden="true"></i>',
+                    // },
+                    // // { text: "", value: "split", example: "" },
+                    // {
+                    //     text: locale_print.menuItemAreas,
+                    //     value: "areas",
+                    //     example: '<i class="iconfont-luckysheet luckysheet-iconfont-dayin" aria-hidden="true"></i>',
+                    // },
+                    // {
+                    //     text: locale_print.menuItemRows,
+                    //     value: "rows",
+                    //     example: '<i class="iconfont-luckysheet luckysheet-iconfont-zhuandao1" aria-hidden="true"></i>',
+                    // },
+                    // {
+                    //     text: locale_print.menuItemColumns,
+                    //     value: "columns",
+                    //     example: '<i class="iconfont-luckysheet luckysheet-iconfont-dingwei" aria-hidden="true"></i>',
+                    // },
+                // ];
 
-            let userlen = $(this).outerWidth();
-            let tlen = $menuButton.outerWidth();
+                // let itemset = _this.createButtonMenu(itemdata);
+                //
+                // let menu = replaceHtml(_this.menu, { id: "print", item: itemset, subclass: "", sub: "" });
+                //
+                // $("body").append(menu);
+                // $menuButton = $("#" + menuButtonId).width(180);
+                //
+                // $menuButton.find(".luckysheet-cols-menuitem").click(function() {
+                //     $menuButton.hide();
+                //     luckysheetContainerFocus();
+                //
+                //     let $t = $(this), itemvalue = $t.attr("itemvalue");
+                //     switch (itemvalue) {
+                //         case "sheet":
+                //             // 打印当前工作簿
+                //             luckysheetPrint.directPrint('sheet');
+                //             break;
+                //         case "areas":
+                //             // 打印所选区域
+                //             luckysheetPrint.directPrint('areas');
+                //             break;
+                //     }
+                //
+                // });
+            // }
 
-            let menuleft = $(this).offset().left;
-            if (tlen > userlen && tlen + menuleft > $("#" + Store.container).width()) {
-                menuleft = menuleft - tlen + userlen;
-            }
-            mouseclickposition($menuButton, menuleft, $(this).offset().top + 25, "lefttop");
+            // let userlen = $(this).outerWidth();
+            // let tlen = $menuButton.outerWidth();
+            //
+            // let menuleft = $(this).offset().left;
+            // if (tlen > userlen && tlen + menuleft > $("#" + Store.container).width()) {
+            //     menuleft = menuleft - tlen + userlen;
+            // }
+            // mouseclickposition($menuButton, menuleft, $(this).offset().top + 25, "lefttop");
         });
 
         $("body")

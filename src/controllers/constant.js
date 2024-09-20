@@ -3,11 +3,14 @@ import Store from "../store";
 import luckysheetConfigsetting from "./luckysheetConfigsetting";
 import { getObjType } from "../utils/util";
 import { createToolbarHtml } from "./toolbar";
-//dom variable
+/**
+ * 界面TOP、Menu/右键、Menu、以及整个表格的Dom结构
+ * @returns {string}
+ */
 const gridHTML = function() {
     const _locale = locale();
     const locale_info = _locale.info;
-    const locale_print = _locale.print;
+    // const locale_print = _locale.print;
     const userInfo =
         luckysheetConfigsetting.userInfo === true
             ? '<i style="font-size:16px;color:#ff6a00;" class="fa fa-taxi" aria-hidden="true"></i> Lucky'
@@ -22,7 +25,7 @@ const gridHTML = function() {
                             }" id="luckysheet_info_detail_title" class="luckysheet_info_detail_back"> 
                                 <i style="color:#444D5A;" class="fa fa-angle-left fa-2x" aria-hidden="true"></i> 
                             </div> 
-                            <div class="luckysheet-share-logo" title="\${logotitle}"></div>
+                            <!--<div class="luckysheet-share-logo" title="\${logotitle}"></div>-->
                             <div class="sheet-name"> 
                                 <input data-tips="${
                                     locale_info.tips

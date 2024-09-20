@@ -57,7 +57,9 @@ export const defaultToolbar = [
     'findAndReplace',
     'protection',
     'print',
-    'exportXlsx',
+    // 'exportXlsx',
+    'upload',
+    'download'
 ];
 
 // 工具栏按钮 id 关系
@@ -99,7 +101,9 @@ export const toolbarIdMap = {
     findAndReplace: '#luckysheet-icon-seachmore', //'Find and Replace'
     protection: '#luckysheet-icon-protection', // 'Worksheet protection'
     print: '#luckysheet-icon-print', // 'print'
-    exportXlsx: '#luckysheet-exportXlsx-btn-title' // 'export xlsx'
+    // exportXlsx: '#luckysheet-exportXlsx-btn-title' // 'export xlsx'
+    upload: '#luckysheet-icon-upload', // 'upload'
+    download: '#luckysheet-icon-download' // 'upload'
 };
 
 // 创建工具栏按钮的html
@@ -826,9 +830,9 @@ export function createToolbarHtml() {
                         style="user-select: none;">
                         </div>
                     </div>
-                    <div class="luckysheet-toolbar-menu-button-dropdown luckysheet-inline-block iconfont-luckysheet luckysheet-iconfont-xiayige"
-                    style="user-select: none;margin-left: 0px;margin-right: 4px;">
-                    </div>
+                    <!--<div class="luckysheet-toolbar-menu-button-dropdown luckysheet-inline-block iconfont-luckysheet luckysheet-iconfont-xiayige"-->
+                    <!--style="user-select: none;margin-left: 0px;margin-right: 4px;">-->
+                    <!--</div>-->
                 </div>
             </div>
         </div>`, // 'print'
@@ -850,6 +854,36 @@ export function createToolbarHtml() {
                 </div>
             </div>
         </div>`, // 'Insert picture'
+        upload: `<div class="luckysheet-toolbar-select luckysheet-toolbar-menu-button luckysheet-inline-block" data-tips="${toolbar.upload}"
+        id="luckysheet-icon-upload" role="button" style="user-select: none;">
+            <div class="luckysheet-toolbar-menu-button-outer-box luckysheet-inline-block"
+            style="user-select: none;">
+                <div class="luckysheet-toolbar-button-inner-box luckysheet-inline-block"
+                style="user-select: none;">
+                    <div class="luckysheet-icon luckysheet-inline-block " style="user-select: none;">
+                        <div aria-hidden="true" class="luckysheet-icon-img-container luckysheet-icon-img luckysheet-icon-autofilter fa fa-upload"
+                        style="user-select: none;">
+                            <input id="luckysheet-excelUpload" type="file" accept=".xls, .xlsx, .xlsm" style="display:none;"></input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`, // 'upload'
+        download: `<div class="luckysheet-toolbar-select luckysheet-toolbar-menu-button luckysheet-inline-block" data-tips="${toolbar.download}"
+        id="luckysheet-icon-download" role="button" style="user-select: none;">
+            <div class="luckysheet-toolbar-menu-button-outer-box luckysheet-inline-block"
+            style="user-select: none;">
+                <div class="luckysheet-toolbar-button-inner-box luckysheet-inline-block"
+                style="user-select: none;">
+
+                    <div class="luckysheet-icon luckysheet-inline-block " style="user-select: none;">
+                        <div aria-hidden="true" class="luckysheet-icon-img-container luckysheet-icon-img luckysheet-icon-autofilter fa fa-download"
+                        style="user-select: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>` // 'download'
     };
 
     const showtoolbar = luckysheetConfigsetting.showtoolbar;

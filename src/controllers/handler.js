@@ -37,6 +37,9 @@ import {
     checkProtectionAuthorityNormal,
 } from "./protection";
 import { openCellFormatModel } from "./cellFormat";
+import LuckyExcel from 'luckyexcel';
+import {getWorkbookName} from '../global/api';
+import exportExcel from '../utils/excelExport';
 
 import {
     replaceHtml,
@@ -47,6 +50,8 @@ import {
     luckysheetactiveCell,
     luckysheetContainerFocus,
     $$,
+    common_extend,
+    downloadFileByBlob
 } from "../utils/util";
 import { getSheetIndex, getRangetxt } from "../methods/get";
 import { rowLocation, colLocation, mouseposition } from "../global/location";
@@ -5510,7 +5515,78 @@ export default function luckysheetHandler() {
         let file = e.currentTarget.files[0];
         imageCtrl.insertImg(file);
     });
+    //菜单栏 导入Excel文件
+    $("#luckysheet-icon-upload").click(function () {
+        // *如果禁止前台编辑，则中止下一步操作
+        if (!checkIsAllowEdit()) {
+            tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+            return
+        }
+        if(!checkProtectionAuthorityNormal(Store.currentSheetIndex, "editObjects")){
+            return;
+        }
 
+        $("#luckysheet-excelUpload").click();
+    });
+
+    $("#luckysheet-excelUpload").click(function (e) {
+        e.stopPropagation();
+    });
+
+    // 上传Excel文件
+    $("#luckysheet-excelUpload").on("change", function(e) {
+        if(!checkProtectionAuthorityNormal(Store.currentSheetIndex, "editObjects",false)){
+            return;
+        }
+        // let file = e.currentTarget.files[0];
+        const files = e.target.files;
+        if (files == null || files.length == 0) {
+            alert("No files wait for import");
+            return;
+        }
+
+        let name = files[0].name;
+        // let suffixArr = name.split("."), suffix = suffixArr[suffixArr.length - 1];
+        // if (suffix != "xlsx") {
+        //     alert("Currently only supports the import of xlsx files");
+        //     return;
+        // }
+        LuckyExcel.transformExcelToLucky(files[0], function (exportJson) {
+            if (exportJson.sheets == null || exportJson.sheets.length == 0) {
+                alert("Failed to read the content of the excel file, currently does not support xls files!");
+                return;
+            }
+
+            // 释放luckysheet实例
+            luckysheet.destroy();
+
+            // 要继承之前的初始化信息
+            luckysheet.create(common_extend(Store.init_setting, {
+                data: exportJson.sheets,
+                title: exportJson.info.name,
+                userInfo: exportJson.info.name.creator
+            }));
+
+        });
+    });
+
+    //菜单栏 导出Excel文件
+    $("#luckysheet-icon-download").click(function () {
+        // *如果禁止前台编辑，则中止下一步操作
+        if (!checkIsAllowEdit()) {
+            tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+            return
+        }
+        if(!checkProtectionAuthorityNormal(Store.currentSheetIndex, "editObjects")){
+            return;
+        }
+        let name = getWorkbookName();
+        name = name.replaceAll('.xlsx', '').replaceAll('.xls', '')
+        // exportExcel(this.sheet.getluckysheetfile(), name, 'office', function (blob, name) {
+        exportExcel(luckysheet.getluckysheetfile(), name, 'office', (blob, name) => {
+            downloadFileByBlob(blob, name || 'file');
+        })
+    });
     //菜单栏 插入链接按钮
     $("#luckysheet-insertLink-btn-title").click(function() {
         // *如果禁止前台编辑，则中止下一步操作

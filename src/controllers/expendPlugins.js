@@ -11,8 +11,8 @@ const pluginsObj = {
 const isDemo = true
 
 /**
- * Register plugins
- * 
+ * 插件注册
+ *
  * plugins:[
  * {name:'chart'},
  * {name:'print'},

@@ -887,6 +887,37 @@ function camel2split(camel) {
     });
 }
 
+// blob转文件并下载
+function downloadFileByBlob(blob, fileName = "file") {
+    let blobUrl = window.URL.createObjectURL(blob)
+    let link = document.createElement('a')
+    link.download = fileName || 'defaultName'
+    link.style.display = 'none'
+    link.href = blobUrl
+    // 触发点击
+    document.body.appendChild(link)
+    link.click()
+    // 移除
+    document.body.removeChild(link)
+}
+
+// 深度克隆
+function deepClone(obj, hash = new WeakMap()) {
+    if (typeof obj !== 'object' || obj === null) return obj;
+    if (hash.has(obj)) return hash.get(obj);
+
+    let cloneObj = Array.isArray(obj) ? [] : {};
+    hash.set(obj, cloneObj);
+
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            cloneObj[key] = deepClone(obj[key], hash);
+        }
+    }
+
+    return cloneObj;
+}
+
 export {
     isJsonString,
     common_extend,
@@ -917,4 +948,6 @@ export {
     createProxy,
     arrayRemoveItem,
     camel2split,
+    downloadFileByBlob,
+    deepClone
 };

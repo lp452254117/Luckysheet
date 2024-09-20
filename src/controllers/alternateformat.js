@@ -12,7 +12,7 @@ import { selectHightlightShow } from './select';
 import Store from '../store';
 import locale from '../locale/locale';
 
-//交替颜色
+// 单元格的颜色控制器
 const alternateformat = {
     rangefocus: false,
     modelfocusIndex: null,
@@ -160,7 +160,7 @@ const alternateformat = {
             "one":  { "fc": "#000", "bc": "#ffffff" },
             "two":  { "fc": "#000", "bc": "#f6ede5" },
             "foot": { "fc": "#000", "bc": "#d3a47c" }
-        }            
+        }
     ],
     getModelBox: function(hasRowHeader, hasRowFooter){
         let _this = this;
@@ -323,7 +323,7 @@ const alternateformat = {
                 hasRowHeader = true;
             }
             else{
-                hasRowHeader = false;   
+                hasRowHeader = false;
             }
 
             let hasRowFooter;
@@ -331,7 +331,7 @@ const alternateformat = {
                 hasRowFooter = true;
             }
             else{
-                hasRowFooter = false;   
+                hasRowFooter = false;
             }
 
             _this.checkboxChange(hasRowHeader, hasRowFooter);
@@ -344,7 +344,7 @@ const alternateformat = {
                 hasRowHeader = true;
             }
             else{
-                hasRowHeader = false;   
+                hasRowHeader = false;
             }
 
             let hasRowFooter;
@@ -352,7 +352,7 @@ const alternateformat = {
                 hasRowFooter = true;
             }
             else{
-                hasRowFooter = false;   
+                hasRowFooter = false;
             }
 
             _this.checkboxChange(hasRowHeader, hasRowFooter);
@@ -429,7 +429,7 @@ const alternateformat = {
             }
 
             let source = $parent.find(".currenColor").attr("data-source");
-            
+
             //赋给颜色
             if(source == "0"){
                 if(colorType == "fc"){
@@ -479,14 +479,14 @@ const alternateformat = {
                     $("#luckysheet-alternateformat-modelToning .footer .luckysheet-icon-cell-color").parents(".luckysheet-color-menu-button-indicator").css("border-bottom-color", currenColor);
                 }
             }
-            
+
             //若模板聚焦在固有模板，则新加模板；若模板聚焦在自定义模板，则修改该模板
             let hasRowHeader;
             if($("#luckysheet-alternateformat-rowHeader").is(":checked")){
                 hasRowHeader = true;
             }
             else{
-                hasRowHeader = false;   
+                hasRowHeader = false;
             }
 
             let hasRowFooter;
@@ -494,7 +494,7 @@ const alternateformat = {
                 hasRowFooter = true;
             }
             else{
-                hasRowFooter = false;   
+                hasRowFooter = false;
             }
 
             let index = _this.modelfocusIndex;
@@ -560,7 +560,7 @@ const alternateformat = {
             _this.modelboxOn();
             _this.update();
         });
-        
+
         //点击 移除交替颜色 按钮
         $(document).off("click.AFremove").on("click.AFremove", "#luckysheet-alternateformat-remove", function(){
             let dataIndex = $(this).data("index");
@@ -581,7 +581,7 @@ const alternateformat = {
             }
 
             let currentRules = $.extend(true, [], ruleArr);
-            
+
             //刷新一次表格
             _this.ref(historyRules, currentRules);
 
@@ -601,20 +601,20 @@ const alternateformat = {
 
         let range = $.extend(true, {}, Store.luckysheet_select_save[0]);
         let existsIndex = _this.rangeIsExists(range)[1];
-        
+
         let obj = $.extend(true, {}, Store.luckysheetfile[getSheetIndex(Store.currentSheetIndex)]["luckysheet_alternateformat_save"][existsIndex]);
-        
+
         //应用范围
         let cellrange = obj["cellrange"];
         $("#luckysheet-alternateformat-range input").val(getRangetxt(Store.currentSheetIndex, { "row": cellrange["row"], "column": cellrange["column"] }, Store.currentSheetIndex));
-        
+
         Store.luckysheet_select_save = [{ "row": cellrange["row"], "column": cellrange["column"] }];
         selectHightlightShow();
 
         //页眉、页脚
         let hasRowHeader = obj["hasRowHeader"];
         let hasRowFooter = obj["hasRowFooter"];
-        
+
         //模板聚焦
         let format = obj["format"];
         _this.modelfocusIndex = _this.getIndexByFormat(format);
@@ -636,8 +636,8 @@ const alternateformat = {
             $("#luckysheet-alternateformat-modelToning .header").show();
         }
         else{
-            $("#luckysheet-alternateformat-rowHeader").removeAttr("checked");  
-            $("#luckysheet-alternateformat-modelToning .header").hide(); 
+            $("#luckysheet-alternateformat-rowHeader").removeAttr("checked");
+            $("#luckysheet-alternateformat-modelToning .header").hide();
         }
 
         if(hasRowFooter){
@@ -645,8 +645,8 @@ const alternateformat = {
             $("#luckysheet-alternateformat-modelToning .footer").show();
         }
         else{
-            $("#luckysheet-alternateformat-rowFooter").removeAttr("checked"); 
-            $("#luckysheet-alternateformat-modelToning .footer").hide();  
+            $("#luckysheet-alternateformat-rowFooter").removeAttr("checked");
+            $("#luckysheet-alternateformat-modelToning .footer").hide();
         }
 
         this.getModelBox(hasRowHeader, hasRowFooter);
@@ -659,7 +659,7 @@ const alternateformat = {
 
         let index = _this.modelfocusIndex;
         let len = _this.FixedModelColor.length;
-        
+
         if(index < len){
             $("#luckysheet-alternateformat-modelList .modelbox").eq(index).addClass("on");
         }
@@ -727,27 +727,27 @@ const alternateformat = {
             title = alternatingColors.selectionCellColor;
         }
 
-        $("body").append(replaceHtml(modelHTML, { 
-            "id": "luckysheet-alternateformat-colorSelect-dialog", 
-            "addclass": "luckysheet-alternateformat-colorSelect-dialog", 
-            "title": title, 
-            "content": "<div class='currenColor' data-source='"+ source +"'>"+ alternatingColors.currentColor +"：<span title='"+ currenColor +"' style='background-color:"+ currenColor +"'></span></div><div class='colorshowbox'></div>", 
-            "botton": '<button id="luckysheet-alternateformat-colorSelect-dialog-confirm" class="btn btn-primary">'+locale_button.confirm+'</button><button class="btn btn-default luckysheet-model-close-btn">'+locale_button.cancel+'</button>', 
-            "style": "z-index:100003" 
+        $("body").append(replaceHtml(modelHTML, {
+            "id": "luckysheet-alternateformat-colorSelect-dialog",
+            "addclass": "luckysheet-alternateformat-colorSelect-dialog",
+            "title": title,
+            "content": "<div class='currenColor' data-source='"+ source +"'>"+ alternatingColors.currentColor +"：<span title='"+ currenColor +"' style='background-color:"+ currenColor +"'></span></div><div class='colorshowbox'></div>",
+            "botton": '<button id="luckysheet-alternateformat-colorSelect-dialog-confirm" class="btn btn-primary">'+locale_button.confirm+'</button><button class="btn btn-default luckysheet-model-close-btn">'+locale_button.cancel+'</button>',
+            "style": "z-index:100003"
         }));
         let $t = $("#luckysheet-alternateformat-colorSelect-dialog")
                 .find(".luckysheet-modal-dialog-content")
                 .css("min-width", 300)
-                .end(), 
-            myh = $t.outerHeight(), 
+                .end(),
+            myh = $t.outerHeight(),
             myw = $t.outerWidth();
         let winw = $(window).width(), winh = $(window).height();
         let scrollLeft = $(document).scrollLeft(), scrollTop = $(document).scrollTop();
-        $("#luckysheet-alternateformat-colorSelect-dialog").css({ 
-            "left": (winw + scrollLeft - myw) / 2, 
-            "top": (winh + scrollTop - myh) / 3 
+        $("#luckysheet-alternateformat-colorSelect-dialog").css({
+            "left": (winw + scrollLeft - myw) / 2,
+            "top": (winh + scrollTop - myh) / 3
         }).show();
-        
+
         //初始化选择颜色插件
         $("#luckysheet-alternateformat-colorSelect-dialog").find(".colorshowbox").spectrum({
             showPalette: true,
@@ -801,25 +801,25 @@ const alternateformat = {
         const alternatingColors =_locale.alternatingColors;
         const locale_button = _locale.button;
 
-        $("body").append(replaceHtml(modelHTML, { 
-            "id": "luckysheet-alternateformat-rangeDialog", 
-            "addclass": "luckysheet-alternateformat-rangeDialog", 
-            "title": alternatingColors.selectRange, 
-            "content": '<input readonly="readonly" placeholder="'+alternatingColors.tipSelectRange+'" value="'+value+'"/>', 
-            "botton": '<button id="luckysheet-alternateformat-rangeDialog-confirm" class="btn btn-primary">'+locale_button.confirm+'</button><button id="luckysheet-alternateformat-rangeDialog-close" class="btn btn-default">'+locale_button.cancel+'</button>', 
-            "style": "z-index:100003" 
+        $("body").append(replaceHtml(modelHTML, {
+            "id": "luckysheet-alternateformat-rangeDialog",
+            "addclass": "luckysheet-alternateformat-rangeDialog",
+            "title": alternatingColors.selectRange,
+            "content": '<input readonly="readonly" placeholder="'+alternatingColors.tipSelectRange+'" value="'+value+'"/>',
+            "botton": '<button id="luckysheet-alternateformat-rangeDialog-confirm" class="btn btn-primary">'+locale_button.confirm+'</button><button id="luckysheet-alternateformat-rangeDialog-close" class="btn btn-default">'+locale_button.cancel+'</button>',
+            "style": "z-index:100003"
         }));
         let $t = $("#luckysheet-alternateformat-rangeDialog")
                 .find(".luckysheet-modal-dialog-content")
                 .css("min-width", 300)
-                .end(), 
-            myh = $t.outerHeight(), 
+                .end(),
+            myh = $t.outerHeight(),
             myw = $t.outerWidth();
         let winw = $(window).width(), winh = $(window).height();
         let scrollLeft = $(document).scrollLeft(), scrollTop = $(document).scrollTop();
-        $("#luckysheet-alternateformat-rangeDialog").css({ 
-            "left": (winw + scrollLeft - myw) / 2, 
-            "top": (winh + scrollTop - myh) / 3 
+        $("#luckysheet-alternateformat-rangeDialog").css({
+            "left": (winw + scrollLeft - myw) / 2,
+            "top": (winh + scrollTop - myh) / 3
         }).show();
     },
     rangeIsExists: function(range, index){
@@ -850,15 +850,15 @@ const alternateformat = {
 
                 arr.push(obj);
             }
-            
+
             //获取当前选区
             let rangeMap = _this.getRangeMap(range["row"], range["column"]);
-            
+
             //遍历
             for(let x in rangeMap){
                 if(isExists){
                     break;
-                } 
+                }
 
                 for(let j = 0; j < arr.length; j++){
                     if(x in arr[j]["map"]){
@@ -875,13 +875,13 @@ const alternateformat = {
     getRangeMap: function(row, column){
         let map = {};
         let st_r = row[0], ed_r = row[1], st_c = column[0], ed_c = column[1];
-        
+
         for(let r = st_r; r <= ed_r; r++){
             for(let c = st_c; c <= ed_c; c++){
                 map[r + "_" + c] = 0;
             }
         }
-        
+
         return map;
     },
     getIndexByFormat: function(format){
@@ -904,7 +904,7 @@ const alternateformat = {
                 }
             }
         }
-        
+
         //自定义 模板
         let modelCustom = Store.luckysheetfile[getSheetIndex(Store.currentSheetIndex)]["luckysheet_alternateformat_save_modelCustom"];
         if(modelCustom != null && modelCustom.length > 0){
@@ -923,7 +923,7 @@ const alternateformat = {
                 }
             }
         }
-       
+
         return index;
     },
     getFormatByIndex: function(){
@@ -950,14 +950,14 @@ const alternateformat = {
 
         let file = Store.luckysheetfile[getSheetIndex(Store.currentSheetIndex)];
         let ruleArr = file["luckysheet_alternateformat_save"];
-        
+
         if(ruleArr == null){
             ruleArr = [];
         }
 
         //保存之前的规则
         let historyRules = $.extend(true, [], ruleArr);
-        
+
         //保存当前的规则
         let obj = {
             "cellrange": {
@@ -972,7 +972,7 @@ const alternateformat = {
         ruleArr.push(obj);
 
         let currentRules = $.extend(true, [], ruleArr);
-        
+
         //刷新一次表格
         _this.ref(historyRules, currentRules);
 
@@ -986,10 +986,10 @@ const alternateformat = {
         const alternatingColors =_locale.alternatingColors;
         //获取标识
         let dataIndex = $("#luckysheet-alternateformat-remove").data("index");
-        
+
         //应用范围
         let rangeValue = $("#luckysheet-modal-dialog-slider-alternateformat #luckysheet-alternateformat-range input").val().trim();
-        
+
         if(!formula.iscelldata(rangeValue)){
             if(isEditMode()){
                 alert(alternatingColors.errorNoRange);
@@ -1000,7 +1000,7 @@ const alternateformat = {
 
             return;
         }
-        
+
         let cellrange = formula.getcellrange(rangeValue);
         let isExists = _this.rangeIsExists(cellrange, dataIndex)[0];
 
@@ -1009,7 +1009,7 @@ const alternateformat = {
                 alert(alternatingColors.errorExistColors);
             }
             else{
-                tooltip.info(alternatingColors.errorExistColors, ""); 
+                tooltip.info(alternatingColors.errorExistColors, "");
             }
 
             return;
@@ -1021,7 +1021,7 @@ const alternateformat = {
             hasRowHeader = true;
         }
         else{
-            hasRowHeader = false;    
+            hasRowHeader = false;
         }
 
         let hasRowFooter;
@@ -1029,21 +1029,21 @@ const alternateformat = {
             hasRowFooter = true;
         }
         else{
-            hasRowFooter = false;    
+            hasRowFooter = false;
         }
 
         //获取选中样式模板的颜色
         let format = _this.getFormatByIndex();
         let file = Store.luckysheetfile[getSheetIndex(Store.currentSheetIndex)];
-        
+
         let ruleArr = file["luckysheet_alternateformat_save"];
         if(ruleArr == null){
             ruleArr = [];
         }
-        
+
         //保存之前的规则
         let historyRules = $.extend(true, [], ruleArr);
-        
+
         //保存当前的规则
         let obj = {
             "cellrange": {
@@ -1054,11 +1054,11 @@ const alternateformat = {
             "hasRowHeader": hasRowHeader,
             "hasRowFooter": hasRowFooter
         }
-        
+
         ruleArr[dataIndex] = obj;
 
         let currentRules = $.extend(true, [], ruleArr);
-        
+
         //刷新一次表格
         _this.ref(historyRules, currentRules);
 
@@ -1093,11 +1093,11 @@ const alternateformat = {
                 let format = obj[i]["format"];
                 let hasRowHeader = obj[i]["hasRowHeader"];
                 let hasRowFooter = obj[i]["hasRowFooter"];
-                let st_r = cellrange["row"][0], 
-                    ed_r = cellrange["row"][1], 
-                    st_c = cellrange["column"][0], 
+                let st_r = cellrange["row"][0],
+                    ed_r = cellrange["row"][1],
+                    st_c = cellrange["column"][0],
                     ed_c = cellrange["column"][1];
-                
+
                 if(hasRowHeader && hasRowFooter){
                     //页眉所在行
                     for(let c = st_c; c <= ed_c; c++){
@@ -1119,7 +1119,7 @@ const alternateformat = {
 
                             for(let c = st_c; c <= ed_c; c++){
                                 computeMap[r + "_" + c] = [fc, bc];
-                            } 
+                            }
                         }
                     }
 
@@ -1151,7 +1151,7 @@ const alternateformat = {
 
                             for(let c = st_c; c <= ed_c; c++){
                                 computeMap[r + "_" + c] = [fc, bc];
-                            } 
+                            }
                         }
                     }
                 }
@@ -1195,7 +1195,7 @@ const alternateformat = {
 
                         for(let c = st_c; c <= ed_c; c++){
                             computeMap[r + "_" + c] = [fc, bc];
-                        } 
+                        }
                     }
                 }
             }
@@ -1211,7 +1211,7 @@ const alternateformat = {
             redo["type"] = "updateAF";
             redo["sheetIndex"] = Store.currentSheetIndex;
             redo["data"] = {"historyRules": historyRules, "currentRules": currentRules};
-            Store.jfredo.push(redo); 
+            Store.jfredo.push(redo);
         }
 
         let index = getSheetIndex(Store.currentSheetIndex);

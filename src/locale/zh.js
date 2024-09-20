@@ -6098,6 +6098,9 @@ export default {
 
         cellFormat: "设置单元格格式",
         print: "打印",
+
+        upload: "上传",
+        download: "下载"
     },
     alternatingColors: {
         applyRange: "应用范围",
@@ -7283,9 +7286,10 @@ export default {
         pageBtn: "分页预览",
 
         menuItemPrint: "打印(Ctrl+P)",
-        menuItemAreas: "打印区域",
+        menuItemAreas: "打印所选区域",
         menuItemRows: "打印标题行",
         menuItemColumns: "打印标题列",
+        menuItemSheet: "打印当前页",
         suggest: "对打印功能有什么建议？",
         range: "打印范围",
         size: "纸张大小",

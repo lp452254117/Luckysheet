@@ -105,7 +105,8 @@ const paths = {
         'src/plugins/js/lodash.min.js',
         'src/plugins/js/jstat.min.js',
         'src/plugins/js/crypto-api.min.js',
-        'src/plugins/js/jquery.sPage.min.js'
+        'src/plugins/js/jquery.sPage.min.js',
+        'src/plugins/js/toastr.min.js'
     ],
 
     //plugins concat
@@ -217,17 +218,47 @@ async function core_rollup() {
 
 async function core() {
 
+    // 打包浏览器环境包
     await require('esbuild').buildSync({
-        format: 'iife',
-        globalName: 'luckysheet',    
-        entryPoints: ['src/index.js'],
-        bundle: true,
-        minify: production,
-        banner: { js: banner },
-        target: ['es2015'],
-        sourcemap: true,
-        outfile: 'dist/luckysheet.umd.js',
-      })
+        format: 'iife', // iife 是一个函数表达式，定义后立即执行。这种格式通常用于生成一个全局作用域的变量，适合在浏览器环境中使用。如果想要ES Module模式改成"esm"即可
+        globalName: 'luckysheet', // 这使得构建后的代码会在全局作用域中暴露一个名为 luckysheet 的变量
+        entryPoints: ['src/index.js'], // 指定构建的入口文件
+        bundle: true, // 指示 esbuild 将所有依赖项打包成一个单一的文件
+        minify: production, // 指示是否进行代码压缩
+        banner: { js: banner }, // 在输出文件的顶部添加一个注释（或脚本）
+        target: ['es2018'], // 指定输出代码的目标环境
+        sourcemap: !production, // 指示是否生成源码映射文件（source map）
+        outfile: 'dist/luckysheet.umd.js', // 指定输出文件的路径和名称
+    })
+
+    // 打包ES Module
+    // 不能按ES Module模式打包. 原因是作为注入使用的UMD格式JS会判断是esm模式引入的话。它的自执行函数通过require('jquery')最后可能加载成功导致入参不对
+    // await require('esbuild').buildSync({
+    //     format: 'esm', // iife 是一个函数表达式，定义后立即执行。这种格式通常用于生成一个全局作用域的变量，适合在浏览器环境中使用。如果想要ES Module模式改成"esm"即可
+    //     globalName: 'luckysheet', // 这使得构建后的代码会在全局作用域中暴露一个名为 luckysheet 的变量
+    //     entryPoints: ['src/index.js'], // 指定构建的入口文件
+    //     bundle: true, // 指示 esbuild 将所有依赖项打包成一个单一的文件
+    //     // minify: production, // 指示是否进行代码压缩
+    //     minify: false, // 指示是否进行代码压缩
+    //     banner: { js: banner }, // 在输出文件的顶部添加一个注释（或脚本）
+    //     target: ['esnext'], // 确保使用 ESM 语法
+    //     inject: [
+    //         './inject.js',
+    //         "./src/plugins/js/clipboard.min.js",
+    //         "./src/plugins/js/spectrum.min.js",
+    //         "./src/plugins/js/jquery-ui.min.js",
+    //         "./src/plugins/js/jquery.mousewheel.min.js",
+    //         "./src/plugins/js/html2canvas.min.js",
+    //         "./src/plugins/js/localforage.min.js",
+    //         "./src/plugins/js/lodash.min.js",
+    //         "./src/plugins/js/jstat.min.js",
+    //         "./src/plugins/js/crypto-api.min.js",
+    //         "./src/plugins/js/jquery.sPage.min.js",
+    //     ], // 注入多个 UMD 模块
+    //     sourcemap: false, // 指示是否生成源码映射文件（source map）
+    //     // outdir: "dist",
+    //     outfile: 'dist/luckysheet.esm.js', // 指定输出文件的路径和名称
+    // })
 }
 
 // According to the build tag in html, package js and css

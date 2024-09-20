@@ -55,6 +55,9 @@ luckysheet.create = function (setting) {
         }
     }
 
+    // 保存初始化设置
+    Store.init_setting = setting;
+
     let extendsetting = common_extend(defaultSetting, setting);
 
     let loadurl = extendsetting.loadUrl,
@@ -167,19 +170,45 @@ luckysheet.create = function (setting) {
         // luckysheetsizeauto();
         initialWorkBook();
     } else {
-        $.post(loadurl, { gridKey: server.gridKey }, function (d) {
-            let data = new Function("return " + d)();
-            Store.luckysheetfile = data;
+        $.ajax({
+            url: loadurl,
+            type: 'POST',
+            data: {
+                "gridKey": server.gridKey
+            },
+            dataType: 'json', // 或者其他数据类型
+            headers: setting.api_headers || {}, // 支持自定义身份信息
+            success: function(d) {
+                let data = new Function("return " + d)();
+                Store.luckysheetfile = data;
 
-            sheetmanage.initialjfFile(menu, title);
-            // luckysheetsizeauto();
-            initialWorkBook();
+                sheetmanage.initialjfFile(menu, title);
+                initialWorkBook();
 
-            //需要更新数据给后台时，建立WebSocket连接
-            if (server.allowUpdate) {
-                server.openWebSocket();
+                //需要更新数据给后台时，建立WebSocket连接
+                if (server.allowUpdate) {
+                    server.openWebSocket();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // 处理错误情况
+                console.error(textStatus + ": " + errorThrown);
             }
         });
+
+        // $.post(loadurl, {"gridKey" : server.gridKey}, function (d) {
+        //     let data = new Function("return " + d)();
+        //     Store.luckysheetfile = data;
+        //
+        //     sheetmanage.initialjfFile(menu, title);
+        //     // luckysheetsizeauto();
+        //     initialWorkBook();
+        //
+        //     //需要更新数据给后台时，建立WebSocket连接
+        //     if(server.allowUpdate){
+        //         server.openWebSocket();
+        //     }
+        // });
     }
 
     initChat()

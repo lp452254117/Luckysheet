@@ -3,8 +3,16 @@ import browser from './browser';
 import { replaceHtml } from '../utils/util';
 import locale from '../locale/locale';
 import server from '../controllers/server';
-
+/**
+ * 封装的弹窗组件
+ * @type {{confirm: tooltip.confirm, createHoverTip: tooltip.createHoverTip, sheetConfig: tooltip.sheetConfig, hoverTipshowTimeOut: null, chartPointConfig: tooltip.chartPointConfig, popover: tooltip.popover, screenshot: tooltip.screenshot, hoverTipshowState: boolean, info: tooltip.info}}
+ */
 const tooltip = {
+    // 通知消息
+    notify: function(title, content) {
+        toastr.info(content, title);
+    },
+    // 弹窗提示消息
     info: function (title, content) {
         $("#luckysheet-modal-dialog-mask").show();
         $("#luckysheet-info").remove();
@@ -12,28 +20,29 @@ const tooltip = {
         let _locale = locale();
         let locale_button = _locale.button;
 
-        $("body").append(replaceHtml(modelHTML, { 
-            "id": "luckysheet-info", 
-            "addclass": "", 
-            "title": title, 
-            "content": content, 
-            "botton": '<button class="btn btn-default luckysheet-model-close-btn">&nbsp;&nbsp;'+locale_button.close+'&nbsp;&nbsp;</button>', 
-            "style": "z-index:100003" 
+        $("body").append(replaceHtml(modelHTML, {
+            "id": "luckysheet-info",
+            "addclass": "",
+            "title": title,
+            "content": content,
+            "botton": '<button class="btn btn-default luckysheet-model-close-btn">&nbsp;&nbsp;'+locale_button.close+'&nbsp;&nbsp;</button>',
+            "style": "z-index:100003"
         }));
-        let $t = $("#luckysheet-info").find(".luckysheet-modal-dialog-content").css("min-width", 300).end(), 
-            myh = $t.outerHeight(), 
+        let $t = $("#luckysheet-info").find(".luckysheet-modal-dialog-content").css("min-width", 300).end(),
+            myh = $t.outerHeight(),
             myw = $t.outerWidth();
         let winw = $(window).width(), winh = $(window).height();
         let scrollLeft = $(document).scrollLeft(), scrollTop = $(document).scrollTop();
         $("#luckysheet-info").css({ "left": (winw + scrollLeft - myw) / 2, "top": (winh + scrollTop - myh) / 3 }).show();
     },
+    // 确认框
     confirm: function (title, content, func1, func2, name1, name2) {
         $("#luckysheet-modal-dialog-mask").show();
         $("#luckysheet-confirm").remove();
 
         const _locale = locale();
         const locale_button = _locale.button;
-        
+
         if(name1 == null){
             name1 = locale_button.confirm;
         }
@@ -41,16 +50,16 @@ const tooltip = {
             name2 = locale_button.cancel;
         }
 
-        $("body").append(replaceHtml(modelHTML, { 
-            "id": "luckysheet-confirm", 
-            "addclass": "", 
-            "style": "z-index:100003", 
-            "title": title, 
-            "content": content, 
-            "botton": '<button class="btn btn-primary luckysheet-model-conform-btn">&nbsp;&nbsp;'+ name1 +'&nbsp;&nbsp;</button><button class="btn btn-default luckysheet-model-cancel-btn">&nbsp;&nbsp;'+ name2 +'&nbsp;&nbsp;</button>' 
+        $("body").append(replaceHtml(modelHTML, {
+            "id": "luckysheet-confirm",
+            "addclass": "",
+            "style": "z-index:100003",
+            "title": title,
+            "content": content,
+            "botton": '<button class="btn btn-primary luckysheet-model-conform-btn">&nbsp;&nbsp;'+ name1 +'&nbsp;&nbsp;</button><button class="btn btn-default luckysheet-model-cancel-btn">&nbsp;&nbsp;'+ name2 +'&nbsp;&nbsp;</button>'
         }));
-        let $t = $("#luckysheet-confirm").find(".luckysheet-modal-dialog-content").css("min-width", 300).end(), 
-            myh = $t.outerHeight(), 
+        let $t = $("#luckysheet-confirm").find(".luckysheet-modal-dialog-content").css("min-width", 300).end(),
+            myh = $t.outerHeight(),
             myw = $t.outerWidth();
         let winw = $(window).width(), winh = $(window).height();
         let scrollLeft = $(document).scrollLeft(), scrollTop = $(document).scrollTop();
@@ -61,7 +70,7 @@ const tooltip = {
             }
             server.keepHighLightBox();
             $("#luckysheet-confirm").hide();
-            $("#luckysheet-modal-dialog-mask").hide();  
+            $("#luckysheet-modal-dialog-mask").hide();
         });
         $t.find(".luckysheet-model-cancel-btn").click(function () {
             if (typeof func2 == 'function') {
@@ -77,16 +86,16 @@ const tooltip = {
         const locale_screenshot = _locale.screenshot;
         $("#luckysheet-modal-dialog-mask").show();
         $("#luckysheet-confirm").remove();
-        $("body").append(replaceHtml(modelHTML, { 
-            "id": "luckysheet-confirm", 
-            "addclass": "", 
-            "style": "z-index:100003", 
-            "title": title, 
-            "content": content, 
-            "botton": '<a style="text-decoration:none;color:#fff;" class="download btn btn-primary luckysheet-model-conform-btn">&nbsp;&nbsp;'+ locale_screenshot.downLoadBtn +'&nbsp;&nbsp;</a>&nbsp;&nbsp;<button class="btn btn-primary luckysheet-model-copy-btn">&nbsp;&nbsp;'+ locale_screenshot.downLoadCopy +'&nbsp;&nbsp;</button><button class="btn btn-default luckysheet-model-cancel-btn">&nbsp;&nbsp;'+ locale_screenshot.downLoadClose +'&nbsp;&nbsp;</button>' 
+        $("body").append(replaceHtml(modelHTML, {
+            "id": "luckysheet-confirm",
+            "addclass": "",
+            "style": "z-index:100003",
+            "title": title,
+            "content": content,
+            "botton": '<a style="text-decoration:none;color:#fff;" class="download btn btn-primary luckysheet-model-conform-btn">&nbsp;&nbsp;'+ locale_screenshot.downLoadBtn +'&nbsp;&nbsp;</a>&nbsp;&nbsp;<button class="btn btn-primary luckysheet-model-copy-btn">&nbsp;&nbsp;'+ locale_screenshot.downLoadCopy +'&nbsp;&nbsp;</button><button class="btn btn-default luckysheet-model-cancel-btn">&nbsp;&nbsp;'+ locale_screenshot.downLoadClose +'&nbsp;&nbsp;</button>'
         }));
-        let $t = $("#luckysheet-confirm").find(".luckysheet-modal-dialog-content").css("min-width", 300).end(), 
-            myh = $t.outerHeight(), 
+        let $t = $("#luckysheet-confirm").find(".luckysheet-modal-dialog-content").css("min-width", 300).end(),
+            myh = $t.outerHeight(),
             myw = $t.outerWidth();
         let winw = $(window).width(), winh = $(window).height();
         let scrollLeft = $(document).scrollLeft(), scrollTop = $(document).scrollTop();
@@ -107,7 +116,7 @@ const tooltip = {
                             window.frames["IframeReportImg"].document.execCommand("SaveAs");
                         }
                     }
-                }  
+                }
             }
         });
         $t.find(".luckysheet-model-cancel-btn").click(function () {
@@ -123,27 +132,27 @@ const tooltip = {
             }
             else{
                 clipboard.write(dt);
-                alert(locale_screenshot.successTip);  
+                alert(locale_screenshot.successTip);
             }
         });
     },
     chartPointConfig: function (id, savefunc1, closefunc2) {
-        $("body").append(replaceHtml(modelHTML, { 
-            "id": id, 
-            "addclass": "luckysheet-chart-point-config-c", 
-            "title": "数据点批量设置", 
-            "content": luckysheetchartpointconfigHTML, 
-            "botton": '<button class="btn btn-danger luckysheet-model-save-btn">&nbsp;&nbsp;保存设置&nbsp;&nbsp;</button><button class="btn btn-default luckysheet-model-close-btn">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>', 
-            "style": "z-index:100003;height:80%;width:80%;top:10%;left:10%;" 
+        $("body").append(replaceHtml(modelHTML, {
+            "id": id,
+            "addclass": "luckysheet-chart-point-config-c",
+            "title": "数据点批量设置",
+            "content": luckysheetchartpointconfigHTML,
+            "botton": '<button class="btn btn-danger luckysheet-model-save-btn">&nbsp;&nbsp;保存设置&nbsp;&nbsp;</button><button class="btn btn-default luckysheet-model-close-btn">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>',
+            "style": "z-index:100003;height:80%;width:80%;top:10%;left:10%;"
         }));
         $("#luckysheet-modal-dialog-mask").show();
         let winw = $(window).width(), winh = $(window).height();
         $("#" + id).find(".luckysheet-chart-point-config").css("height", winh - 160);
-        $("#" + id).css({ 
-            "height": winh - 90, 
-            "width": winw - 100, 
-            "left": 7, 
-            "top": 14 
+        $("#" + id).css({
+            "height": winh - 90,
+            "width": winw - 100,
+            "left": 7,
+            "top": 14
         }).show().find(".luckysheet-model-save-btn").click(function () {
             if (typeof savefunc1 == 'function') {
                 savefunc1();
@@ -177,10 +186,10 @@ const tooltip = {
 
             clearTimeout(_this.hoverTipshowTimeOut);
             _this.hoverTipshowTimeOut = setTimeout(function(){
-                let $t = $(e.currentTarget), 
-                    toffset = $t.offset(), 
+                let $t = $(e.currentTarget),
+                    toffset = $t.offset(),
                     $toolup = $("#luckysheet-tooltip-up");
-                
+
                 let tips = $t.data("tips");
                 if (tips == null || tips.length == 0) {
                     tips = $t.prev().data("tips");

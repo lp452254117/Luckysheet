@@ -1,3 +1,4 @@
+// 判断设备环境
 const browser = {
     mobilecheck: function() {
         var a = !1;

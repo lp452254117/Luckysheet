@@ -212,7 +212,7 @@
     transition: all 0.2s;
 }
 
-/* 
+/*
 .luckysheet-wa-editor>div.luckysheetfulltoolbar {
     display: inline-block;
     height: 34px;
@@ -3023,7 +3023,7 @@ fieldset[disabled] .btn-danger.focus {
 #luckysheet-sheet-list .luckysheet-cols-menuitem .luckysheet-cols-menuitem-content {
     padding-left: 5px;
 }
-/* 
+/*
 #luckysheet-sheet-list .luckysheet-cols-menuitem .luckysheet-cols-menuitem-content {
     max-width: 420px;
     min-width: 190px;
@@ -3074,11 +3074,11 @@ fieldset[disabled] .btn-danger.focus {
 
 #luckysheet-rich-text-editor {
     -webkit-user-modify: read-write;
-    /*    background-color: rgb(255, 255, 255); 
-    font-size: 13px; 
-    color: rgb(0, 0, 0); 
-    font-weight: 400; 
-    font-family: Arial; 
+    /*    background-color: rgb(255, 255, 255);
+    font-size: 13px;
+    color: rgb(0, 0, 0);
+    font-weight: 400;
+    font-family: Arial;
     font-style: normal;*/
 }
 
@@ -3095,6 +3095,11 @@ fieldset[disabled] .btn-danger.focus {
     border-radius: 2px;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
     color: white;
+    /* 迭代 */
+    border-radius: 2px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    border: none;
 }
 
 .luckysheet-modal-dialog {
@@ -5055,7 +5060,7 @@ fieldset[disabled] .btn-danger.focus {
 
 .luckysheetpopover {
     position: absolute;
-    /*    left: 50%; 
+    /*    left: 50%;
     top:20px; */
     background: rgba(0, 0, 0, 0.65);
     color: #fff;
@@ -7253,4 +7258,17 @@ fieldset[disabled] .btn-danger.focus {
 #luckysheet-icon-redo.disabled {
     cursor: default;
     opacity: 0.4;
+}
+
+/************* 二次迭代样式 *********************/
+.luckysheet-icon-img-container.fa {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.luckysheet-icon-img-container.fa-download {
+    position: relative;
+    top: 1px;
 }
