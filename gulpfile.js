@@ -1,11 +1,11 @@
 const gulp = require('gulp');
 // gulp core function
 const { src, dest, series, parallel, watch } = require('gulp');
-// gulp compress js
+// gulp compress js(移除多余的空格、注释)
 const uglify = require('gulp-uglify');
 // gulp judgment
 const gulpif = require('gulp-if');
-// gulp compress css
+// gulp compress css(移除多余的空格、注释。合并重复的规则)
 const cleanCSS = require('gulp-clean-css');
 // Delete Files
 const del = require('delete');
@@ -31,6 +31,7 @@ const babel = require('@rollup/plugin-babel').default;
 // const gulpBabel = require('gulp-babel');
 // Distinguish development and production environments
 const production = process.env.NODE_ENV === 'production' ? true : false;
+
 
 const pkg = require('./package.json');
 const banner = `/*! @preserve
@@ -225,6 +226,7 @@ async function core() {
         entryPoints: ['src/index.js'], // 指定构建的入口文件
         bundle: true, // 指示 esbuild 将所有依赖项打包成一个单一的文件
         minify: production, // 指示是否进行代码压缩
+        legalComments: 'none', // 不保留注释，去掉所有注释
         banner: { js: banner }, // 在输出文件的顶部添加一个注释（或脚本）
         target: ['es2018'], // 指定输出代码的目标环境
         sourcemap: !production, // 指示是否生成源码映射文件（source map）
@@ -260,6 +262,7 @@ async function core() {
     //     outfile: 'dist/luckysheet.esm.js', // 指定输出文件的路径和名称
     // })
 }
+
 
 // According to the build tag in html, package js and css
 function pluginsCss() {
