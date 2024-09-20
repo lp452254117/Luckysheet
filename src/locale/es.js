@@ -5853,6 +5853,8 @@ export default {
 
         cellFormat:"Configuración formato de celda",
         print:"Imprimir",
+        "upload": "Subir",
+        "download": "Descargar"
     },
     alternatingColors:{
         applyRange: 'Aplicar a rango',
@@ -6967,14 +6969,35 @@ export default {
 
     },
     print:{
-        normalBtn:"Normal",
-        layoutBtn:"Disposición de página",
-        pageBtn:"Previsualización de saltos de página",
-
-        menuItemPrint:"Imprimir (Ctrl+P)",
-        menuItemAreas:"Imprimir áreas",
-        menuItemRows:"Imprimir títulos de filas",
-        menuItemColumns:"Imprimir títulos de columnas",
+        "normalBtn": "Vista Normal",
+        "layoutBtn": "Diseño de Página",
+        "pageBtn": "Vista Previa de Página",
+        "menuItemPrint": "Imprimir (Ctrl+P)",
+        "menuItemAreas": "Imprimir Área Seleccionada",
+        "menuItemRows": "Imprimir Filas de Título",
+        "menuItemColumns": "Imprimir Columnas de Título",
+        "menuItemSheet": "Imprimir Hoja Actual",
+        "suggest": "¿Alguna sugerencia para la función de impresión?",
+        "range": "Rango de Impresión",
+        "size": "Tamaño del Papel",
+        "direction": "Orientación de Impresión",
+        "horizontal": "Horizontal",
+        "vertical": "Vertical",
+        "title": "Configuración de Impresión",
+        "current": "Hoja de Trabajo Actual",
+        "area": "Área Seleccionada",
+        "letter": "Sobre",
+        "paper": "Tabloide",
+        "law": "Legal",
+        "admin": "Ejecutivo",
+        "expire": "Caducado",
+        "remain": "Días Restantes",
+        "error": "Error",
+        "showLine": "Mostrar Cuadrícula",
+        "show": "Mostrar",
+        "hide": "Ocultar",
+        "preview": "Vista Previa",
+        "lack_module": "Falta el Plugin de Impresión"
     },
     edit:{
         typing:"mecanografía",

@@ -3604,17 +3604,15 @@ const menuButton = {
 
         //print
         $("#luckysheet-icon-print").click(function() {
-            if (Store.luckysheetPrint) {
-                var luckysheetPrint = Store.luckysheetPrint;
-                const plugin = Store.plugins.find((item) => item.name === "print");
-                console.log(plugin);
-                if (plugin && plugin.config) {
-                    luckysheetPrint.createDialog();
-                    luckysheetPrint.init(plugin.config.license);
-                }
+
+            const _locale = locale();
+            if (luckysheetPrint) {
+                luckysheetPrint.createDialog();
+                luckysheetPrint.init();
             } else {
-                tooltip.notify("缺少打印插件")
+                tooltip.notify(_locale.print.lack_module)
             }
+
             // let menuButtonId = $(this).attr("id") + "-menuButton";
             // let $menuButton = $("#" + menuButtonId);
             // const _locale = locale();
