@@ -942,6 +942,7 @@ export function createToolbarHtml() {
     if (Object.prototype.toString.call(toolbar_mkk) === '[object Array]' && toolbar_mkk.length > 0) {
         defaultToolbar.unshift('|');
         defaultToolbar.unshift('mkk');
+        config['mkk'] = true;
     }
 
     if (!showtoolbar) {

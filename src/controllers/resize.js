@@ -447,10 +447,10 @@ export function menuToolBarWidth() {
         arr[index] = curr.ele;
 
         if(index !== toobarElements.length - 1){
-            if(curr.ele instanceof Array){
-                toobarWidths.push($(curr.ele[0]).offset().left);
+            if(curr.ele instanceof Array) {
+                toobarWidths.push($(curr.ele[0]).offset()?.left);
             }else{
-                toobarWidths.push($(curr.ele).offset().left);
+                toobarWidths.push($(curr.ele).offset()?.left);
             }
         }else{
             if(curr.ele instanceof Array){
