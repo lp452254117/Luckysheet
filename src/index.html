@@ -270,6 +270,9 @@
 				}]
 			}
 			luckysheet.create(options);
+			window.newLoad = ()=> {
+        luckysheet.create(options);
+      }
 		})
 	</script>
 	<style>

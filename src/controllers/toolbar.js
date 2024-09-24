@@ -939,7 +939,8 @@ export function createToolbarHtml() {
     }, {});
 
     // 判断是否存在自定义工具菜单
-    if (Object.prototype.toString.call(toolbar_mkk) === '[object Array]' && toolbar_mkk.length > 0) {
+    // 修复重新渲染会一直增加MKK菜单
+    if (Object.prototype.toString.call(toolbar_mkk) === '[object Array]' && toolbar_mkk.length > 0 && !defaultToolbar.includes('mkk')) {
         defaultToolbar.unshift('|');
         defaultToolbar.unshift('mkk');
         config['mkk'] = true;
