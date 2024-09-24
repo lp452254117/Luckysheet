@@ -53,6 +53,7 @@ import Store from "../store";
 import locale from "../locale/locale";
 import { checkTheStatusOfTheSelectedCells, frozenFirstRow, frozenFirstColumn } from "../global/api";
 import { luckysheetPrint } from "../expendPlugins/print/print?v=1";
+import { defaultToolbar } from "./toolbar";
 
 const menuButton = {
     menu:
@@ -2781,6 +2782,53 @@ const menuButton = {
                         let range = $.extend(true, [], Store.luckysheet_select_save);
 
                         luckysheetLocationCell.apply(range, "locationStepColumn");
+                    }
+                });
+            }
+
+            let userlen = $(this).outerWidth();
+            let tlen = $menuButton.outerWidth();
+
+            let menuleft = $(this).offset().left;
+            if (tlen > userlen && tlen + menuleft > $("#" + Store.container).width()) {
+                menuleft = menuleft - tlen + userlen;
+            }
+            mouseclickposition($menuButton, menuleft, $(this).offset().top + 25, "lefttop");
+        });
+
+        // MAKUKU 业务菜单
+        $("#luckysheet-icon-makuku").click(function() {
+            let menuButtonId = $(this).attr("id") + "-menuButton";
+            let $menuButton = $("#" + menuButtonId);
+            if ($menuButton.length == 0) {
+                const toolbar_mkk = Store.init_setting.toolbar_mkk;
+                let itemdata = [];
+                // 判断是否存在自定义工具菜单
+                if (Object.prototype.toString.call(toolbar_mkk) === '[object Array]' && toolbar_mkk.length > 0) {
+                    toolbar_mkk.forEach(item => {
+                        itemdata.push({
+                            text: item.title,
+                            value: "",
+                            example: ""
+                        });
+                    });
+                }
+                let itemset = _this.createButtonMenu(itemdata);
+                // 这里的ID 必须要跟触发click的ID一致，否则无法获取到对应的菜单
+                let menu = replaceHtml(_this.menu, { id: "makuku", item: itemset, subclass: "", sub: "" });
+
+                $("body").append(menu);
+                $menuButton = $("#" + menuButtonId).width(180);
+
+                $menuButton.find(".luckysheet-cols-menuitem").click(function() {
+                    $menuButton.hide();
+                    luckysheetContainerFocus();
+                    let $t = $(this), itemname = $t.attr("itemname");
+                    for(let i in toolbar_mkk) {
+                        if (toolbar_mkk[i].title === itemname) {
+                            if(typeof toolbar_mkk[i].func === 'function') toolbar_mkk[i].func();
+                            break;
+                        }
                     }
                 });
             }

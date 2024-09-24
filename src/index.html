@@ -202,6 +202,53 @@
 						},
 
 					},
+          showtoolbarConfig: {
+            textRotateMode: false, // '文本旋转方式'
+            image:false, // '插入图片'
+            link:false, // '插入链接'
+            chart: false, // '图表'（图标隐藏，但是如果配置了chart插件，右击仍然可以新建图表）
+            postil:  false, //'批注'
+            pivotTable: false,  //'数据透视表'
+            function: false, // '公式'
+            frozenMode: false, // '冻结方式'
+            sortAndFilter: false, // '排序和筛选'
+            conditionalFormat: false, // '条件格式'
+            dataVerification: false, // '数据验证'
+            splitColumn: false, // '分列'
+            screenshot: false, // '截图'
+            findAndReplace: false, // '查找替换'
+            protection:false, // '工作表保护'
+            print:false, // '打印',
+            upload: false, // 上传(二次迭代)
+            download: false, // 下载(二次迭代)
+            mkk: true, // 麦酷酷业务菜单(二次迭代)
+          },
+          toolbar_mkk: [
+            {
+              title: '发布',
+              func: () => {
+                console.log('发布')
+              }
+            },
+            {
+              title: '刷新',
+              func: function () {
+                console.log('刷新')
+              }
+            },
+            {
+              title: '测算',
+              func: function () {
+                console.log('测算')
+              }
+            },
+            {
+              title: '保存',
+              func: function () {
+                console.log('保存')
+              }
+            }
+          ],
 					data:
 						[sheetCell, sheetFormula, sheetConditionFormat, sheetSparkline, sheetTable, sheetComment, sheetPivotTableData, sheetPivotTable, sheetChart, sheetPicture, sheetDataVerification]
 				}

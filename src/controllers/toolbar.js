@@ -1,5 +1,6 @@
 import locale from '../locale/locale';
 import luckysheetConfigsetting from './luckysheetConfigsetting';
+import Store from '../Store';
 
 import { getObjType, camel2split } from '../utils/util';
 
@@ -64,6 +65,7 @@ export const defaultToolbar = [
 
 // 工具栏按钮 id 关系
 export const toolbarIdMap = {
+    mkk: '#luckysheet-icon-makuku', // makuku功能区
     undo: '#luckysheet-icon-undo', //Undo redo
     redo: '#luckysheet-icon-redo',
     paintFormat: ['#luckysheet-icon-paintformat'], //Format brush
@@ -112,6 +114,21 @@ export function createToolbarHtml() {
     const fontarray = locale().fontarray;
     const defaultFmtArray = locale().defaultFmt;
     const htmlMap = {
+        mkk: `<div class="luckysheet-toolbar-select luckysheet-toolbar-menu-button luckysheet-inline-block" data-tips="makuku menu"
+        id="luckysheet-icon-makuku" role="button" style="user-select: none;">
+            <div class="luckysheet-toolbar-menu-button-outer-box luckysheet-inline-block"
+            style="user-select: none;">
+                <div class="luckysheet-toolbar-button-inner-box luckysheet-inline-block"
+                style="user-select: none;">
+                    <div class="luckysheet-icon luckysheet-inline-block " style="user-select: none;">
+                      MKK
+                    </div>
+                    <div class="luckysheet-toolbar-menu-button-dropdown luckysheet-inline-block iconfont-luckysheet luckysheet-iconfont-xiayige"
+                    style="user-select: none;margin-left: 0px;margin-right: 4px;">
+                    </div>
+                </div>
+            </div>
+        </div>`, //'Find and Replace'
         undo: `<div class="luckysheet-toolbar-button luckysheet-inline-block disabled" data-tips="${toolbar.undo}"
         id="luckysheet-icon-undo" role="button" style="user-select: none;">
             <div class="luckysheet-toolbar-button-outer-box luckysheet-inline-block"
@@ -888,6 +905,7 @@ export function createToolbarHtml() {
 
     const showtoolbar = luckysheetConfigsetting.showtoolbar;
     const showtoolbarConfig = luckysheetConfigsetting.showtoolbarConfig;
+    const toolbar_mkk = Store.init_setting.toolbar_mkk;
 
     const buttonHTML = ['<div class="luckysheet-toolbar-left-theme"></div>'];
 
@@ -919,6 +937,12 @@ export function createToolbarHtml() {
         }
         return total;
     }, {});
+
+    // 判断是否存在自定义工具菜单
+    if (Object.prototype.toString.call(toolbar_mkk) === '[object Array]' && toolbar_mkk.length > 0) {
+        defaultToolbar.unshift('|');
+        defaultToolbar.unshift('mkk');
+    }
 
     if (!showtoolbar) {
         for (let s in config) {
