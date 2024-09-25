@@ -91,7 +91,9 @@
 					// },
 					forceCalculation: false,
           plugins: [
-            { name: "chart" },
+            { name: "chart",
+              // config: { prefix: "/static/luckysheet" }
+            },
             {
               name: "exportXlsx",
               config: { url: "http://localhost:3002/luckyToXlsx" },
