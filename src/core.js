@@ -176,7 +176,7 @@ luckysheet.create = function (setting) {
             data: {
                 "gridKey": server.gridKey
             },
-            dataType: 'json', // 或者其他数据类型
+            // dataType: 'json', // 或者其他数据类型
             headers: setting.api_headers || {}, // 支持自定义身份信息
             success: function(d) {
                 let data = new Function("return " + d)();

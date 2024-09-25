@@ -3229,30 +3229,45 @@ const menuButton = {
                                 sheetindex.push(file[i].index);
                             }
 
-                            $.post(loadSheetUrl, { gridKey: server.gridKey, index: sheetindex.join(",") }, function(d) {
-                                let dataset = new Function("return " + d)();
+                            $.ajax({
+                                url: loadSheetUrl,
+                                type: 'POST',
+                                data: {
+                                    gridKey: server.gridKey,
+                                    index: sheetindex.join(",")
+                                },
+                                // dataType: 'json', // 或者其他数据类型
+                                headers: Store.init_setting.api_headers || {}, // 支持自定义身份信息
+                                success: function(d) {
+                                    let dataset = new Function("return " + d)();
 
-                                setTimeout(function() {
-                                    Store.loadingObj.close();
-                                }, 500);
+                                    setTimeout(function() {
+                                        Store.loadingObj.close();
+                                    }, 500);
 
-                                for (let item in dataset) {
-                                    if (item == Store.currentSheetIndex) {
-                                        continue;
+                                    for (let item in dataset) {
+                                        if (item == Store.currentSheetIndex) {
+                                            continue;
+                                        }
+
+                                        let otherfile = file[getSheetIndex(item)];
+
+                                        otherfile.celldata = dataset[item.toString()];
+                                        otherfile["data"] = sheetmanage.buildGridData(otherfile);
                                     }
 
-                                    let otherfile = file[getSheetIndex(item)];
+                                    setluckysheetfile(file);
 
-                                    otherfile.celldata = dataset[item.toString()];
-                                    otherfile["data"] = sheetmanage.buildGridData(otherfile);
+                                    conditionformat.fileClone = $.extend(true, [], file);
+                                    conditionformat.administerRuleDialog();
+                                    conditionformat.init();
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    // 处理错误情况
+                                    console.error(textStatus + ": " + errorThrown);
                                 }
-
-                                setluckysheetfile(file);
-
-                                conditionformat.fileClone = $.extend(true, [], file);
-                                conditionformat.administerRuleDialog();
-                                conditionformat.init();
                             });
+
                         } else {
                             conditionformat.fileClone = $.extend(true, [], file);
                             conditionformat.administerRuleDialog();

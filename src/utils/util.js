@@ -608,10 +608,11 @@ function $$(selector, context) {
  * @param {Array|String}  scripts 指定要加载的脚本
  * @param {Object} options 属性设置
  * @param {Function} callback 成功后回调的函数
+ * @param {String}  prefix 拼接前缀地址(根据项目部署的目录不同自定义前缀地址)
  * @return {Array} 所有生成的脚本元素对象数组
  */
 
-function seriesLoadScripts(scripts, options, callback) {
+function seriesLoadScripts(scripts, options, callback, prefix = '') {
     if (typeof scripts !== "object") {
         var scripts = [scripts];
     }
@@ -636,7 +637,7 @@ function seriesLoadScripts(scripts, options, callback) {
             }
         };
         // 同步
-        s[i].setAttribute("src", scripts[i]);
+        s[i].setAttribute("src", prefix + scripts[i]);
 
         // 设置属性
         if (typeof options === "object") {
@@ -716,14 +717,15 @@ function loadLink(url) {
 /**
  * 动态添加一组css
  * @param {String}  url 指定要加载的css地址
+ * @param {String}  prefix 拼接前缀地址(根据项目部署的目录不同自定义前缀地址)
  */
-function loadLinks(urls) {
+function loadLinks(urls, prefix = '') {
     if (typeof urls !== "object") {
         urls = [urls];
     }
     if (urls.length) {
         urls.forEach((url) => {
-            loadLink(url);
+            loadLink(prefix + url);
         });
     }
 }
