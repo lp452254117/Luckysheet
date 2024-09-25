@@ -254,6 +254,39 @@
 					data:
 						[sheetCell, sheetFormula, sheetConditionFormat, sheetSparkline, sheetTable, sheetComment, sheetPivotTableData, sheetPivotTable, sheetChart, sheetPicture, sheetDataVerification]
 				}
+				options = {
+          "container": "luckysheet",
+          "lang": "zh",
+          "allowUpdate": false,
+          // "updateImageUrl": "http://localhost/luckysheet/api/updateImg",
+          // "updateUrl": "ws://localhost/luckysheet/websocket/luckysheet",
+          "gridKey": "2e5c816ba9f347319d116fbb43857a52",
+          "loadUrl": "/microService/mkk-general-server/luckysheet/load",
+          "loadSheetUrl": "/microService/mkk-general-server/luckysheet/loadSheet",
+          "showinfobar": false,
+          "toolbar_mkk": [{
+            "title": "发布"
+          }, {
+            "title": "刷新"
+          }],
+          "plugins": [{
+            "name": "chart",
+            "config": {
+              // "prefix": "/static/luckysheet/"
+            }
+          }],
+          "api_headers": {
+            "token": "Bearer eyJ0eXBlIjoiSnNvbldlYlRva2VuIiwiYWxnIjoiSFMyNTYifQ.eyJwZXJtaXNzaW9ucyI6InRlbmFudFN1cGVyQWRtaW4iLCJuYW1lIjoi6IKW6ZW_5Z2kIiwibW9iaWxlIjoiMTc2MjE3NTY0MzMiLCJ0b2tlblR5cGUiOiJ0b2tlbiIsInVzZXJJZCI6IjQ3MTg1MSIsImVtYWlsIjoiY2hhbmdrdW4ueGlhb0BtYWt1a3UuY29tIiwidXNlclVpZCI6ImMzN2U0YTliY2NiZTU4ZWJkYjE2YzFlYzNlMWE1ZDI2IiwiaWF0IjoxNzI3MjQzMTc3LCJuYmYiOjE3MjcyNDMxNzcsImV4cCI6MTcyNzg0Nzk3N30.V4AOXAG1LDgDnB078dMv8fLmgl_KR_O9akzITNBSyf0",
+            "client": "Basic enYzNXExZHgzeThocGN5ZmJ1ZTN5YWtzOmNnMHllZWl5Zm9vbmNxeHNqdnE5dHA4aHR4YWFvNjht",
+            "tenantId": "3",
+            "tenantCode": "idn",
+            "language": "CN"
+          },
+          "showtoolbarConfig": {
+            "protection": false
+          },
+          "hook": {}
+        };
 			}
 			options.loading = {
 				image: () => {

@@ -138,12 +138,22 @@ const apiProxy = createProxyMiddleware('/luckysheet/', {
     ws: true, // proxy websockets
 });
 
+// proxy middleware
+const apiProxyTest = createProxyMiddleware('/microService/', {
+    target: 'http://124.221.87.162:8090', // set your server address
+    changeOrigin: true, // for vhosted sites
+    ws: true, // proxy websockets
+    pathRewrite: {
+        '^/microService': ''
+    },
+});
+
 // Static server
 function serve(done) {
     browserSync.init({
         server: {
             baseDir: paths.dist,
-            middleware: [apiProxy],//proxy
+            middleware: [apiProxy, apiProxyTest],//proxy
         },
         ghostMode: false, //默认true，滚动和表单在任何设备上输入将被镜像到所有设备里，会影响本地的协同编辑消息，故关闭
     }, done)
