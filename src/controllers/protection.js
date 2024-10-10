@@ -16,7 +16,7 @@ import tooltip from '../global/tooltip';
  */
 
 let isInitialProtection = false, isInitialProtectionAddRang = false, rangeItemListCache=[], isAddRangeItemState=true, updateRangeItemIndex = null, validationAuthority=null, updatingSheetFile=null, firstInputSheetProtectionPassword = true;
-// let sqrefMapCache = {}, inputRangeProtectionPassword = {}, initialRangePasswordHtml=false;
+let inputRangeProtectionPassword = {}, initialRangePasswordHtml=false;
 
 const authorityItemArr = [
     "selectLockedCells",
@@ -920,7 +920,9 @@ export function checkProtectionNotEnable(sheetIndex){
     else{
         ht = local_protection.defaultSheetHintText;
     }
-    tooltip.info("", ht);
+    // tooltip.info("", ht);
+    console.log(123123);
+    tooltip.notify("", ht);
 
     return false;
 }
@@ -1141,7 +1143,8 @@ export function checkProtectionFormatCells(sheetIndex){
     else{
         ht = local_protection.defaultSheetHintText;
     }
-    tooltip.info("", ht);
+    // tooltip.info("", ht);
+    tooltip.notify("", ht);
 
     return false;
 }
@@ -1191,7 +1194,8 @@ export function checkProtectionAuthorityNormal(sheetIndex, type="formatColumns",
         else{
             ht = local_protection.defaultSheetHintText;
         }
-        tooltip.info("", ht);
+        // tooltip.info("", ht);
+        tooltip.notify("", ht);
     }
 
     return false;

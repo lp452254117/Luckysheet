@@ -3149,6 +3149,7 @@ fieldset[disabled] .btn-danger.focus {
     width: 11px;
     color: #d4d4d4;
     outline: 0;
+    box-sizing: content-box;
 }
 
 .luckysheet-modal-dialog-chart {
