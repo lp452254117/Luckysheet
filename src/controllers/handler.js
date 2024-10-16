@@ -5582,7 +5582,7 @@ export default function luckysheetHandler() {
         }
         let name = getWorkbookName();
         name = name.replaceAll('.xlsx', '').replaceAll('.xls', '')
-        tooltip.info("请稍等...正在处理中", "");
+        tooltip.notify("请稍等...正在处理中,稍后会自动下载文件", "");
         exportExcel(luckysheet.getluckysheetfile(), name, 'office', (blob, name) => {
             downloadFileByBlob(blob, name || 'file');
         })

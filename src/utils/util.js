@@ -902,7 +902,7 @@ function downloadFileByBlob(blob, fileName = "file") {
     link.click()
     // 移除
     document.body.removeChild(link)
-    tooltip.info("导出成功", "");
+    // tooltip.notify("导出成功", "");
 }
 
 // 深度克隆
