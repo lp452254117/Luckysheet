@@ -5,8 +5,7 @@ export default function exportExcelFront(luckysheet, name, excelType , fallback)
     const workbook = new ExcelJS.Workbook()
     // 2.创建表格，第二个参数可以配置创建什么样的工作表
     luckysheet.forEach(function (table) {
-        // debugger
-        if (table.data.length === 0) return true
+        if (table?.data?.length === 0) return true
         const worksheet = workbook.addWorksheet(table.name)
         const merge = (table.config && table.config.merge) || {}        //合并单元格
         const borderInfo = (table.config && table.config.borderInfo) || {}      //边框
