@@ -5,6 +5,7 @@ import { hasChinaword, isRealNum } from "../global/validate";
 import Store from "../store";
 import locale from "../locale/locale";
 import numeral from "numeral";
+import tooltip from '../global/tooltip';
 // import method from '../global/method';
 
 /**
@@ -901,6 +902,7 @@ function downloadFileByBlob(blob, fileName = "file") {
     link.click()
     // 移除
     document.body.removeChild(link)
+    tooltip.info("导出成功", "");
 }
 
 // 深度克隆
