@@ -102,7 +102,8 @@ const tooltip = {
         $("#luckysheet-confirm").css({ "left": (winw + scrollLeft - myw) / 2, "top": (winh + scrollTop - myh) / 3 }).show();
         $t.find(".luckysheet-model-conform-btn").click(function () {
             if(browser.isIE() == "1"){
-                alert(locale_screenshot.browserNotTip);
+                // alert(locale_screenshot.browserNotTip);
+                tooltip.notify(locale_screenshot.browserNotTip);
             }
             else{
                 if (!!window.ActiveXObject || "ActiveXObject" in window){
@@ -128,11 +129,13 @@ const tooltip = {
             let dt = new clipboard.DT();
             dt.setData("text/html", "<img src='"+ imgurl +"'>");
             if(browser.isIE() == "1"){
-                alert(locale_screenshot.rightclickTip);
+                // alert(locale_screenshot.rightclickTip);
+                tooltip.notify(locale_screenshot.rightclickTip);
             }
             else{
                 clipboard.write(dt);
-                alert(locale_screenshot.successTip);
+                // alert(locale_screenshot.successTip);
+                tooltip.notify(locale_screenshot.successTip);
             }
         });
     },

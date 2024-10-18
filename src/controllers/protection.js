@@ -209,19 +209,22 @@ export function initialEvent(file){
         hint = $("#protection-allowRangeAdd-hint").val();
 
         if(name.length==0){
-            alert(local_protection.rangeItemErrorTitleNull);
+            // alert(local_protection.rangeItemErrorTitleNull);
+            tooltip.notify(local_protection.rangeItemErrorTitleNull);
             return;
         }
 
         let range = dataVerificationCtrl.getRangeByTxt(rangeText);
 
         if(rangeText.length==0){
-            alert(local_protection.rangeItemErrorRangeNull);
+            // alert(local_protection.rangeItemErrorRangeNull);
+            tooltip.notify(local_protection.rangeItemErrorRangeNull);
             return;
         }
 
         if(range.length==0){
-            alert(local_protection.rangeItemErrorRange);
+            // alert(local_protection.rangeItemErrorRange);
+            tooltip.notify(local_protection.rangeItemErrorRange);
             return;
         }
 
@@ -300,7 +303,8 @@ export function initialEvent(file){
 
 
         if(password==null || password.length==0){
-            alert(local_protection.checkPasswordNullalert);
+            // alert(local_protection.checkPasswordNullalert);
+            tooltip.notify(local_protection.checkPasswordNullalert);
             return;
         }
 
@@ -323,7 +327,8 @@ export function initialEvent(file){
             firstInputSheetProtectionPassword = false;
         }
         else{
-            alert(local_protection.checkPasswordWrongalert);
+            // alert(local_protection.checkPasswordWrongalert);
+            tooltip.notify(local_protection.checkPasswordWrongalert);
         }
 
     });
@@ -864,7 +869,8 @@ function openRangePasswordModal(rangeAut) {
         let password = $input.val();
 
         if(password==null || password.length==0){
-            alert(local_protection.checkPasswordNullalert);
+            // alert(local_protection.checkPasswordNullalert);
+            tooltip.notify(local_protection.checkPasswordNullalert);
             return;
         }
 
@@ -883,10 +889,12 @@ function openRangePasswordModal(rangeAut) {
             inputRangeProtectionPassword[rangeAut.sqref] = 1;
             $rangeV.hide();
             $("#luckysheet-modal-dialog-mask").hide();
-            alert(local_protection.checkPasswordSucceedalert);
+            // alert(local_protection.checkPasswordSucceedalert);
+            tooltip.notify(local_protection.checkPasswordSucceedalert);
         }
         else{
-            alert(local_protection.checkPasswordWrongalert);
+            // alert(local_protection.checkPasswordWrongalert);
+            tooltip.notify(local_protection.checkPasswordWrongalert);
         }
 
     });

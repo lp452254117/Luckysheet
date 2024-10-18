@@ -4444,7 +4444,8 @@ export default function luckysheetHandler() {
             //选区包含部分单元格
             if (hasPartMC(cfg, last["row"][0], last["row"][1], last["column"][0], last["column"][1])) {
                 if (isEditMode()) {
-                    alert(locale_drag.noMerge);
+                    // alert(locale_drag.noMerge);
+                    tooltip.notify(locale_drag.noMerge);
                 } else {
                     tooltip.info('<i class="fa fa-exclamation-triangle"></i>', locale_drag.noMerge);
                 }
@@ -4488,7 +4489,8 @@ export default function luckysheetHandler() {
             //替换的位置包含部分单元格
             if (hasPartMC(cfg, row_s, row_e, col_s, col_e)) {
                 if (isEditMode()) {
-                    alert(locale_drag.noMerge);
+                    // alert(locale_drag.noMerge);
+                    tooltip.notify(locale_drag.noMerge);
                 } else {
                     tooltip.info('<i class="fa fa-exclamation-triangle"></i>', locale_drag.noMerge);
                 }
@@ -4855,7 +4857,8 @@ export default function luckysheetHandler() {
 
                 if (hasMc) {
                     if (isEditMode()) {
-                        alert(locale_drag.noMerge);
+                        // alert(locale_drag.noMerge);
+                        tooltip.notify(locale_drag.noMerge);
                     } else {
                         tooltip.info(locale_drag.noMerge, "");
                     }
@@ -4876,7 +4879,8 @@ export default function luckysheetHandler() {
 
                 if (hasMc) {
                     if (isEditMode()) {
-                        alert(locale_drag.noMerge);
+                        // alert(locale_drag.noMerge);
+                        tooltip.notify(locale_drag.noMerge);
                     } else {
                         tooltip.info(locale_drag.noMerge, "");
                     }
@@ -5145,7 +5149,8 @@ export default function luckysheetHandler() {
 
         if (isNaN(parseInt(value))) {
             if (isEditMode()) {
-                alert(locale_info.tipInputNumber);
+                // alert(locale_info.tipInputNumber);
+                tooltip.notify(locale_info.tipInputNumber);
             } else {
                 tooltip.info("error", locale_info.tipInputNumber);
             }
@@ -5155,7 +5160,8 @@ export default function luckysheetHandler() {
         value = parseInt(value);
         if (value < 1 || value > 100) {
             if (isEditMode()) {
-                alert(locale_info.tipInputNumberLimit);
+                // alert(locale_info.tipInputNumberLimit);
+                tooltip.notify(locale_info.tipInputNumberLimit);
             } else {
                 tooltip.info("error", locale_info.tipInputNumberLimit);
             }
@@ -5193,7 +5199,8 @@ export default function luckysheetHandler() {
 
             if (has_PartMC) {
                 if (isEditMode()) {
-                    alert(locale_drag.noPartMerge);
+                    // alert(locale_drag.noPartMerge);
+                    tooltip.notify(locale_drag.noPartMerge);
                 } else {
                     tooltip.info(locale_drag.noPartMerge, "");
                 }
@@ -5230,7 +5237,8 @@ export default function luckysheetHandler() {
 
             if (hasCF) {
                 if (isEditMode()) {
-                    alert(locale_drag.noMulti);
+                    // alert(locale_drag.noMulti);
+                    tooltip.notify(locale_drag.noMulti);
                 } else {
                     tooltip.info(locale_drag.noMulti, "");
                 }
@@ -5264,7 +5272,8 @@ export default function luckysheetHandler() {
 
             if ((!isSameRow && !isSameCol) || selectIsOverlap()) {
                 if (isEditMode()) {
-                    alert(locale_drag.noMulti);
+                    // alert(locale_drag.noMulti);
+                    tooltip.notify(locale_drag.noMulti);
                 } else {
                     tooltip.info(locale_drag.noMulti, "");
                 }
@@ -5307,7 +5316,8 @@ export default function luckysheetHandler() {
         const locale_screenshot = _locale.screenshot;
         if (Store.luckysheet_select_save.length == 0) {
             if (isEditMode()) {
-                alert(locale_screenshot.screenshotTipNoSelection);
+                // alert(locale_screenshot.screenshotTipNoSelection);
+                tooltip.notify(locale_screenshot.screenshotTipNoSelection);
             } else {
                 tooltip.info(locale_screenshot.screenshotTipTitle, locale_screenshot.screenshotTipNoSelection);
             }
@@ -5316,7 +5326,8 @@ export default function luckysheetHandler() {
 
         if (Store.luckysheet_select_save.length > 1) {
             if (isEditMode()) {
-                alert(locale_screenshot.screenshotTipHasMulti);
+                // alert(locale_screenshot.screenshotTipHasMulti);
+                tooltip.notify(locale_screenshot.screenshotTipHasMulti);
             } else {
                 tooltip.info(locale_screenshot.screenshotTipTitle, locale_screenshot.screenshotTipHasMulti);
             }
@@ -5343,7 +5354,8 @@ export default function luckysheetHandler() {
 
             if (has_PartMC) {
                 if (isEditMode()) {
-                    alert(locale_screenshot.screenshotTipHasMerge);
+                    // alert(locale_screenshot.screenshotTipHasMerge);
+                    tooltip.notify(locale_screenshot.screenshotTipHasMerge);
                 } else {
                     tooltip.info(locale_screenshot.screenshotTipTitle, locale_screenshot.screenshotTipHasMerge);
                 }
@@ -5541,7 +5553,8 @@ export default function luckysheetHandler() {
         // let file = e.currentTarget.files[0];
         const files = e.target.files;
         if (files == null || files.length == 0) {
-            alert("No files wait for import");
+            // alert("No files wait for import");
+            tooltip.notify("No files wait for import");
             return;
         }
 
@@ -5553,7 +5566,8 @@ export default function luckysheetHandler() {
         // }
         LuckyExcel.transformExcelToLucky(files[0], function (exportJson) {
             if (exportJson.sheets == null || exportJson.sheets.length == 0) {
-                alert("Failed to read the content of the excel file, currently does not support xls files!");
+                // alert("Failed to read the content of the excel file, currently does not support xls files!");
+                tooltip.notify("Failed to read the content of the excel file, currently does not support xls files!");
                 return;
             }
 

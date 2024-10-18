@@ -250,6 +250,6 @@
 
 .luckysheet-protection-sheet-validation{
     width: 390px;
-    height: 180px;
+    /*height: 180px;*/
     display: none;
 }

@@ -640,7 +640,8 @@ const selection = {
                 _this.pasteHandler(data);
             } else {
                 if (isEditMode()) {
-                    alert(local_drag.pasteMustKeybordAlert);
+                    // alert(local_drag.pasteMustKeybordAlert);
+                    tooltip.notify(local_drag.pasteMustKeybordAlert);
                 } else {
                     tooltip.info(local_drag.pasteMustKeybordAlertHTMLTitle, local_drag.pasteMustKeybordAlertHTML);
                 }
@@ -661,7 +662,8 @@ const selection = {
 
         if (Store.luckysheet_select_save.length > 1) {
             if (isEditMode()) {
-                alert(locale_paste.errorNotAllowMulti);
+                // alert(locale_paste.errorNotAllowMulti);
+                tooltip.notify(locale_paste.errorNotAllowMulti);
             } else {
                 tooltip.info(
                     `<i class="fa fa-exclamation-triangle"></i>${locale_paste.warning}`,
@@ -700,7 +702,8 @@ const selection = {
 
             if (has_PartMC) {
                 if (isEditMode()) {
-                    alert(locale_paste.errorNotAllowMerged);
+                    // alert(locale_paste.errorNotAllowMerged);
+                    tooltip.notify(locale_paste.errorNotAllowMerged);
                 } else {
                     tooltip.info(
                         `<i class="fa fa-exclamation-triangle"></i>${locale_paste.warning}`,
@@ -846,7 +849,8 @@ const selection = {
 
             if (has_PartMC) {
                 if (isEditMode()) {
-                    alert(locale_paste.errorNotAllowMerged);
+                    // alert(locale_paste.errorNotAllowMerged);
+                    tooltip.notify(locale_paste.errorNotAllowMerged);
                 } else {
                     tooltip.info(
                         `<i class="fa fa-exclamation-triangle"></i>${locale_paste.warning}`,
@@ -964,7 +968,8 @@ const selection = {
 
         if (has_PartMC) {
             if (isEditMode()) {
-                alert(locale_paste.errorNotAllowMerged);
+                // alert(locale_paste.errorNotAllowMerged);
+                tooltip.notify(locale_paste.errorNotAllowMerged);
             } else {
                 tooltip.info(
                     `<i class="fa fa-exclamation-triangle"></i>${locale_paste.warning}`,
@@ -1493,7 +1498,8 @@ const selection = {
 
         if (has_PartMC) {
             if (isEditMode()) {
-                alert(locale_paste.errorNotAllowMerged);
+                // alert(locale_paste.errorNotAllowMerged);
+                tooltip.notify(locale_paste.errorNotAllowMerged);
             } else {
                 tooltip.info(
                     `<i class="fa fa-exclamation-triangle"></i>${locale_paste.warning}`,
@@ -1787,7 +1793,8 @@ const selection = {
 
             if (has_PartMC) {
                 if (isEditMode()) {
-                    alert(locale_paste.errorNotAllowMerged);
+                    // alert(locale_paste.errorNotAllowMerged);
+                    tooltip.notify(locale_paste.errorNotAllowMerged);
                 } else {
                     tooltip.info(
                         `<i class="fa fa-exclamation-triangle"></i>${locale_paste.warning}`,

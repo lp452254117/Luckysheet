@@ -7,6 +7,7 @@ import {checkProtectionNotEnable} from './protection';
 import { jfrefreshgrid } from '../global/refresh';
 import locale from '../locale/locale';
 import { setcellvalue } from '../global/setdata';
+import tooltip from "../global/tooltip";
 
 
 let isInitialCellFormatModel = false;
@@ -18,7 +19,7 @@ function initialCellFormatModelEvent(){
     $("#luckysheet-cellFormat-confirm").click(function(){
         let locked = $("#luckysheet-protection-check-locked").is(':checked');
         let hidden = $("#luckysheet-protection-check-hidden").is(':checked');
-    
+
         locked = locked==true?1:0;
         hidden = hidden==true?1:0;
 
@@ -36,7 +37,8 @@ function initialCellFormatModelEvent(){
                 }
             },
             function(){
-                alert(local_cellFormat.sheetDataIsNullAlert);
+                // alert(local_cellFormat.sheetDataIsNullAlert);
+                tooltip.notify(local_cellFormat.sheetDataIsNullAlert);
             }
         );
 
@@ -51,7 +53,7 @@ function recycleSeletion(cycleFunction, dataIsNullFunction){
     if(Store.luckysheet_select_save != null && Store.luckysheet_select_save.length > 0){
         let sheetFile = sheetmanage.getSheetByIndex(), data=sheetFile.data;
         if(data!=null){
-            
+
             for(let i=0;i<Store.luckysheet_select_save.length;i++){
                 let selection = Store.luckysheet_select_save[i];
                 let row = selection.row, column = selection.column;
@@ -114,10 +116,10 @@ function initialCellFormatModel(){
     const locale_button = _locale.button;
 
     //Password input initial
-    $("body").append(replaceHtml(modelHTML, { 
-        "id": "luckysheet-cellFormat-config", 
-        "addclass": "luckysheet-cellFormat-config", 
-        "title": local_cellFormat.cellFormatTitle, 
+    $("body").append(replaceHtml(modelHTML, {
+        "id": "luckysheet-cellFormat-config",
+        "addclass": "luckysheet-cellFormat-config",
+        "title": local_cellFormat.cellFormatTitle,
         "content": `
             <div class="luckysheet-cellFormat-menu-c">
                 <div class="luckysheet-cellFormat-menu luckysheet-cellFormat-menu-active" id="luckysheet-cellFormat-protection">
@@ -134,10 +136,10 @@ function initialCellFormatModel(){
                     <label for="luckysheet-protection-check-hidden"><input id="luckysheet-protection-check-hidden" name="luckysheet-protection-check-hidden" type="checkbox">${local_cellFormat.hidden}</label><span>全部选中</span>
                 </div>
             </div>
-        `, 
+        `,
         "botton":  `<button id="luckysheet-cellFormat-confirm" class="btn btn-primary">${locale_button.confirm}</button>
-                    <button class="btn btn-default luckysheet-model-close-btn">${locale_button.cancel}</button>`, 
-        "style": "z-index:100003" 
+                    <button class="btn btn-default luckysheet-model-close-btn">${locale_button.cancel}</button>`,
+        "style": "z-index:100003"
     }));
 
     initialCellFormatModelEvent();
@@ -180,7 +182,8 @@ export function openCellFormatModel(){
         );
     }
     else{
-        alert(local_cellFormat.selectionIsNullAlert);
+        // alert(local_cellFormat.selectionIsNullAlert);
+        tooltip.notify(local_cellFormat.selectionIsNullAlert);
         return;
     }
 

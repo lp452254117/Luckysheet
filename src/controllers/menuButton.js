@@ -169,14 +169,16 @@ const menuButton = {
 
             if (Store.luckysheet_select_save == null || Store.luckysheet_select_save.length == 0) {
                 if (isEditMode()) {
-                    alert(locale_paint.tipSelectRange);
+                    // alert(locale_paint.tipSelectRange);
+                    tooltip.notify(locale_paint.tipSelectRange);
                 } else {
                     tooltip.info("", locale_paint.tipSelectRange);
                 }
                 return;
             } else if (Store.luckysheet_select_save.length > 1) {
                 if (isEditMode()) {
-                    alert(locale_paint.tipNotMulti);
+                    // alert(locale_paint.tipNotMulti);
+                    tooltip.notify(locale_paint.tipNotMulti);
                 } else {
                     tooltip.info("", locale_paint.tipNotMulti);
                 }
@@ -267,14 +269,16 @@ const menuButton = {
             let locale_paint = _locale.paint;
             if (Store.luckysheet_select_save == null || Store.luckysheet_select_save.length == 0) {
                 if (isEditMode()) {
-                    alert(locale_paint.tipSelectRange);
+                    // alert(locale_paint.tipSelectRange);
+                    tooltip.notify(locale_paint.tipSelectRange);
                 } else {
                     tooltip.info("", locale_paint.tipSelectRange);
                 }
                 return;
             } else if (Store.luckysheet_select_save.length > 1) {
                 if (isEditMode()) {
-                    alert(locale_paint.tipNotMulti);
+                    // alert(locale_paint.tipNotMulti);
+                    tooltip.notify(locale_paint.tipNotMulti);
                 } else {
                     tooltip.info("", locale_paint.tipNotMulti);
                 }
@@ -812,7 +816,8 @@ const menuButton = {
 
                         if (Store.luckysheet_select_save.length > 1) {
                             if (isEditMode()) {
-                                alert(locale_alternatingColors.errorInfo);
+                                // alert(locale_alternatingColors.errorInfo);
+                                tooltip.notify(locale_alternatingColors.errorInfo);
                             } else {
                                 tooltip.info(locale_alternatingColors.errorInfo, "");
                             }
@@ -969,7 +974,8 @@ const menuButton = {
 
                     if (Store.luckysheet_select_save.length > 1) {
                         if (isEditMode()) {
-                            alert(locale_alternatingColors.errorInfo);
+                            // alert(locale_alternatingColors.errorInfo);
+                            tooltip.notify(locale_alternatingColors.errorInfo);
                         } else {
                             tooltip.info(locale_alternatingColors.errorInfo, "");
                         }
@@ -1682,7 +1688,8 @@ const menuButton = {
 
             if (selectIsOverlap()) {
                 if (isEditMode()) {
-                    alert(locale_merge.overlappingError);
+                    // alert(locale_merge.overlappingError);
+                    tooltip.notify(locale_merge.overlappingError);
                 } else {
                     tooltip.info(locale_merge.overlappingError, "");
                 }
@@ -1707,7 +1714,8 @@ const menuButton = {
 
                 if (has_PartMC) {
                     if (isEditMode()) {
-                        alert(locale_merge.partiallyError);
+                        // alert(locale_merge.partiallyError);
+                        tooltip.notify(locale_merge.partiallyError);
                     } else {
                         tooltip.info(locale_merge.partiallyError, "");
                     }
@@ -1748,7 +1756,8 @@ const menuButton = {
 
                     if (selectIsOverlap()) {
                         if (isEditMode()) {
-                            alert(locale_merge.overlappingError);
+                            // alert(locale_merge.overlappingError);
+                            tooltip.notify(locale_merge.overlappingError);
                         } else {
                             tooltip.info(locale_merge.overlappingError, "");
                         }
@@ -1773,7 +1782,8 @@ const menuButton = {
 
                         if (has_PartMC) {
                             if (isEditMode()) {
-                                alert(locale_merge.partiallyError);
+                                // alert(locale_merge.partiallyError);
+                                tooltip.notify(locale_merge.partiallyError);
                             } else {
                                 tooltip.info(locale_merge.partiallyError, "");
                             }
@@ -2296,7 +2306,8 @@ const menuButton = {
 
                         if (Store.luckysheet_select_save == null || Store.luckysheet_select_save.length == 0) {
                             if (isEditMode()) {
-                                alert(locale_freezen.noSeletionError);
+                                // alert(locale_freezen.noSeletionError);
+                                tooltip.notify(locale_freezen.noSeletionError);
                             } else {
                                 tooltip.info(locale_freezen.noSeletionError, "");
                             }
@@ -2353,7 +2364,8 @@ const menuButton = {
                         //选区列冻结
                         if (Store.luckysheet_select_save == null || Store.luckysheet_select_save.length == 0) {
                             if (isEditMode()) {
-                                alert(locale_freezen.noSeletionError);
+                                // alert(locale_freezen.noSeletionError);
+                                tooltip.notify(locale_freezen.noSeletionError);
                             } else {
                                 tooltip.info(locale_freezen.noSeletionError, "");
                             }
@@ -2410,7 +2422,8 @@ const menuButton = {
                         //选区行列冻结
                         if (Store.luckysheet_select_save == null || Store.luckysheet_select_save.length == 0) {
                             if (isEditMode()) {
-                                alert(locale_freezen.noSeletionError);
+                                // alert(locale_freezen.noSeletionError);
+                                tooltip.notify(locale_freezen.noSeletionError);
                             } else {
                                 tooltip.info(locale_freezen.noSeletionError, "");
                             }
@@ -2754,7 +2767,8 @@ const menuButton = {
                                 Store.luckysheet_select_save[0].row[0] == Store.luckysheet_select_save[0].row[1])
                         ) {
                             if (isEditMode()) {
-                                alert(locale_findAndReplace.lessTwoRowTip);
+                                // alert(locale_findAndReplace.lessTwoRowTip);
+                                tooltip.notify(locale_findAndReplace.lessTwoRowTip);
                             } else {
                                 tooltip.info("", locale_findAndReplace.lessTwoRowTip);
                             }
@@ -2772,7 +2786,8 @@ const menuButton = {
                                 Store.luckysheet_select_save[0].column[0] == Store.luckysheet_select_save[0].column[1])
                         ) {
                             if (isEditMode()) {
-                                alert(locale_findAndReplace.lessTwoColumnTip);
+                                // alert(locale_findAndReplace.lessTwoColumnTip);
+                                tooltip.notify(locale_findAndReplace.lessTwoColumnTip);
                             } else {
                                 tooltip.info("", locale_findAndReplace.lessTwoColumnTip);
                             }
@@ -2894,7 +2909,8 @@ const menuButton = {
                                 ifFormulaGenerator.ifFormulaDialog(fp);
                             } else {
                                 if (isEditMode()) {
-                                    alert(locale_formula.tipNotBelongToIf);
+                                    // alert(locale_formula.tipNotBelongToIf);
+                                    tooltip.notify(locale_formula.tipNotBelongToIf);
                                 } else {
                                     tooltip.info(locale_formula.tipNotBelongToIf, "");
                                 }
@@ -2909,7 +2925,8 @@ const menuButton = {
                         //点击函数查找弹出框
                         if (Store.luckysheet_select_save.length == 0) {
                             if (isEditMode()) {
-                                alert(locale_formula.tipSelectCell);
+                                // alert(locale_formula.tipSelectCell);
+                                tooltip.notify(locale_formula.tipSelectCell);
                             } else {
                                 tooltip.info(locale_formula.tipSelectCell, "");
                             }
@@ -3198,7 +3215,8 @@ const menuButton = {
                     if (itemvalue == "icons") {
                         if (Store.luckysheet_select_save.length == 0) {
                             if (isEditMode()) {
-                                alert(conditionformat_text.pleaseSelectRange);
+                                // alert(conditionformat_text.pleaseSelectRange);
+                                tooltip.notify(conditionformat_text.pleaseSelectRange);
                             } else {
                                 tooltip.info(conditionformat_text.pleaseSelectRange, "");
                             }
@@ -3210,7 +3228,8 @@ const menuButton = {
                     } else if (itemvalue == "newRule") {
                         if (Store.luckysheet_select_save.length == 0) {
                             if (isEditMode()) {
-                                alert(conditionformat_text.pleaseSelectRange);
+                                // alert(conditionformat_text.pleaseSelectRange);
+                                tooltip.notify(conditionformat_text.pleaseSelectRange);
                             } else {
                                 tooltip.info(conditionformat_text.pleaseSelectRange, "");
                             }
@@ -3292,7 +3311,8 @@ const menuButton = {
 
                             if (Store.luckysheet_select_save.length == 0) {
                                 if (isEditMode()) {
-                                    alert(conditionformat_text.pleaseSelectRange);
+                                    // alert(conditionformat_text.pleaseSelectRange);
+                                    tooltip.notify(conditionformat_text.pleaseSelectRange);
                                 } else {
                                     tooltip.info(conditionformat_text.pleaseSelectRange, "");
                                 }
@@ -3415,7 +3435,8 @@ const menuButton = {
 
                             if (Store.luckysheet_select_save.length == 0) {
                                 if (isEditMode()) {
-                                    alert(conditionformat_text.pleaseSelectRange);
+                                    // alert(conditionformat_text.pleaseSelectRange);
+                                    tooltip.notify(conditionformat_text.pleaseSelectRange);
                                 } else {
                                     tooltip.info(conditionformat_text.pleaseSelectRange, "");
                                 }

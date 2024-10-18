@@ -992,7 +992,8 @@ const alternateformat = {
 
         if(!formula.iscelldata(rangeValue)){
             if(isEditMode()){
-                alert(alternatingColors.errorNoRange);
+                // alert(alternatingColors.errorNoRange);
+                tooltip.notify(alternatingColors.errorNoRange);
             }
             else{
                 tooltip.info(alternatingColors.errorNoRange, "");
@@ -1006,7 +1007,8 @@ const alternateformat = {
 
         if(isExists){
             if(isEditMode()){
-                alert(alternatingColors.errorExistColors);
+                // alert(alternatingColors.errorExistColors);
+                tooltip.notify(alternatingColors.errorExistColors);
             }
             else{
                 tooltip.info(alternatingColors.errorExistColors, "");
