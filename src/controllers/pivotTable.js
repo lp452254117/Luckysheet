@@ -738,7 +738,7 @@ const pivotTable = {
         const locale_pivotTable = _locale.pivotTable;
 
         if (isEditMode()) {
-            alert(locale_pivotTable.errorNotAllowEdit);
+            tooltip.notify("", locale_pivotTable.errorNotAllowEdit);
             return;
         }
 

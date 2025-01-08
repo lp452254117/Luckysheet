@@ -16,7 +16,7 @@ import { luckysheetupdateCell } from "./updateCell";
 import insertFormula from "./insertFormula";
 import sheetmanage from "./sheetmanage";
 import luckysheetPostil from "./postil";
-import { isRealNum, isRealNull, isEditMode, hasPartMC, checkIsAllowEdit } from "../global/validate";
+import { isRealNum, isRealNull, isEditMode, hasPartMC, checkIsAllowEdit, checkSheetDisabled } from "../global/validate";
 import tooltip from "../global/tooltip";
 import editor from "../global/editor";
 import { genarate, update, is_date } from "../global/format";
@@ -51,7 +51,7 @@ import {
 import { openProtectionModal, checkProtectionFormatCells, checkProtectionNotEnable } from "./protection";
 import Store from "../store";
 import locale from "../locale/locale";
-import { checkTheStatusOfTheSelectedCells, frozenFirstRow, frozenFirstColumn } from "../global/api";
+import { checkTheStatusOfTheSelectedCells, frozenFirstRow, frozenFirstColumn, getSheet } from "../global/api";
 import { luckysheetPrint } from "../expendPlugins/print/print?v=1";
 import { defaultToolbar } from "./toolbar";
 
@@ -160,7 +160,11 @@ const menuButton = {
         $("#luckysheet-icon-paintformat").click(function(e) {
             // *如果禁止前台编辑，则中止下一步操作
             if (!checkIsAllowEdit()) {
-                tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+                tooltip.notify("", locale().pivotTable.errorNotAllowEdit);
+                return;
+            }
+            // 判断当前sheet是否能编辑
+            if (checkSheetDisabled()) {
                 return;
             }
             e.stopPropagation();
@@ -262,7 +266,11 @@ const menuButton = {
         $("#luckysheet-icon-paintformat").dblclick(function() {
             // *如果禁止前台编辑，则中止下一步操作
             if (!checkIsAllowEdit()) {
-                tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+                tooltip.notify("", locale().pivotTable.errorNotAllowEdit);
+                return;
+            }
+            // 判断当前sheet是否能编辑
+            if (checkSheetDisabled()) {
                 return;
             }
             let _locale = locale();
@@ -966,7 +974,11 @@ const menuButton = {
                 $menuButton.find(".luckysheet-icon-alternateformat").click(function() {
                     // *如果禁止前台编辑，则中止下一步操作
                     if (!checkIsAllowEdit()) {
-                        tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+                        tooltip.notify("", locale().pivotTable.errorNotAllowEdit);
+                        return;
+                    }
+                    // 判断当前sheet是否能编辑
+                    if (checkSheetDisabled()) {
                         return;
                     }
                     $menuButton.hide();
@@ -1125,7 +1137,11 @@ const menuButton = {
         $("#luckysheet-icon-border-all").click(function() {
             // *如果禁止前台编辑，则中止下一步操作
             if (!checkIsAllowEdit()) {
-                tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+                tooltip.notify("", locale().pivotTable.errorNotAllowEdit);
+                return;
+            }
+            // 判断当前sheet是否能编辑
+            if (checkSheetDisabled()) {
                 return;
             }
             if (!checkProtectionFormatCells(Store.currentSheetIndex)) {
@@ -1521,7 +1537,11 @@ const menuButton = {
                 $menuButton.find(".luckysheet-cols-menuitem").click(function() {
                     // *如果禁止前台编辑，则中止下一步操作
                     if (!checkIsAllowEdit()) {
-                        tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+                        tooltip.notify("", locale().pivotTable.errorNotAllowEdit);
+                        return;
+                    }
+                    // 判断当前sheet是否能编辑
+                    if (checkSheetDisabled()) {
                         return;
                     }
                     $menuButton.hide();
@@ -3247,13 +3267,14 @@ const menuButton = {
                             for (let i = 0; i < file.length; i++) {
                                 sheetindex.push(file[i].index);
                             }
-
+                            let currentSheet = getSheet();
                             $.ajax({
                                 url: loadSheetUrl,
                                 type: 'POST',
                                 data: {
                                     gridKey: server.gridKey,
-                                    index: sheetindex.join(",")
+                                    index: sheetindex.join(","),
+                                    sheetId: currentSheet?.sheetId || null
                                 },
                                 // dataType: 'json', // 或者其他数据类型
                                 headers: Store.init_setting.api_headers || {}, // 支持自定义身份信息
@@ -3997,7 +4018,12 @@ const menuButton = {
 
         // *如果禁止前台编辑，则中止下一步操作
         if (!checkIsAllowEdit()) {
-            tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+            tooltip.notify("", locale().pivotTable.errorNotAllowEdit);
+            return;
+        }
+
+        // 判断当前sheet是否能编辑
+        if (checkSheetDisabled()) {
             return;
         }
 
@@ -4046,9 +4072,15 @@ const menuButton = {
     updateFormat_mc: function(d, foucsStatus) {
         // *如果禁止前台编辑，则中止下一步操作
         if (!checkIsAllowEdit()) {
-            tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+            tooltip.notify("", locale().pivotTable.errorNotAllowEdit);
             return;
         }
+
+        // 判断当前sheet是否能编辑
+        if (checkSheetDisabled()) {
+            return;
+        }
+
         let cfg = $.extend(true, {}, Store.config);
         if (cfg["merge"] == null) {
             cfg["merge"] = {};

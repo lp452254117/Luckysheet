@@ -1,5 +1,8 @@
 import luckysheetConfigsetting from '../controllers/luckysheetConfigsetting';
 import Store from '../store';
+import {getSheet} from "../global/api";
+import tooltip from "./tooltip";
+import locale from "../locale/locale";
 
 export const error = {
     v: "#VALUE!",    //错误的参数或运算符
@@ -57,7 +60,7 @@ function valueIsError(value) {
 //是否有中文
 function hasChinaword(s) {
     let patrn = /[\u4E00-\u9FA5]|[\uFE30-\uFFA0]/gi;
-    
+
     if (!patrn.exec(s)) {
         return false;
     }
@@ -81,13 +84,26 @@ function isEditMode() {
  * @param {*}
  * @return {Boolean} true:允许编辑 fasle:不允许
  */
-function checkIsAllowEdit(){
+function checkIsAllowEdit() {
     if (Store.allowEdit) {
         return true;
-    }
-    else {
+    } else {
         return false;
     }
+}
+
+// 检查工作簿是否被禁止
+function checkSheetDisabled (isTips = true) {
+    // 20250108 迭代工作簿整个禁止编辑
+    // 判断当前sheet是否允许被编辑
+    let currentSheet = getSheet();
+    if (currentSheet?.disabled) {
+        if (isTips) {
+            tooltip.notify("", locale().protection.checkSheetDisabledTips);
+        }
+        return true;
+    }
+    return false;
 }
 
 //范围是否只包含部分合并单元格
@@ -206,7 +222,7 @@ function hasPartMC(cfg, r1, r2, c1, c2) {
 function checkWordByteLength(value) {
     return Math.ceil(value.charCodeAt().toString(2).length / 8);
  }
- 
+
 
 export {
     isRealNull,
@@ -216,5 +232,6 @@ export {
     isEditMode,
     checkIsAllowEdit,
     hasPartMC,
-    checkWordByteLength
+    checkWordByteLength,
+    checkSheetDisabled
 }

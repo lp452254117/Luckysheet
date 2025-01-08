@@ -173,6 +173,7 @@ window.sheetDataVerification = {
         }],
     "row": 84,
     "column": 60,
+    // "disabled": true,
     "config": {
         "merge": {},
         "rowlen": {},
@@ -191,7 +192,7 @@ window.sheetDataVerification = {
             "6": 1,
             "7": 1
         },
-        "authority":{//当前工作表的权限配置
+        "authority":{ //当前工作表的权限配置
             selectLockedCells:1, //选定锁定单元格
             selectunLockedCells:1, //选定解除锁定的单元格
             formatCells:1, //设置单元格格式
@@ -219,7 +220,7 @@ window.sheetDataVerification = {
                     hintText:"", //提示文字
                     algorithmName:"None",//加密方案：MD2,MD4,MD5,RIPEMD-128,RIPEMD-160,SHA-1,SHA-256,SHA-384,SHA-512,WHIRLPOOL
                     saltValue:null, //密码解密的盐参数，为一个自己定的随机数值
-                    sqref:"$C$1:$D$5" //区域范围
+                    sqref:"$A$1:$D$100" //区域范围
                 }
             ],
         },

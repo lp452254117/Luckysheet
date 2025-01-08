@@ -7174,7 +7174,6 @@ export default {
     valueStatisticsSTDEVP: "整体标准差",
     valueStatisticslet: "方差",
     valueStatisticsVARP: "整体方差",
-
     errorNotAllowEdit: "非编辑模式下禁止该操作！",
     errorNotAllowMulti: "不能对多重选择区域执行此操作，请选择单个区域，然后再试",
     errorSelectRange: "请选择新建透视表的区域",
@@ -7182,12 +7181,10 @@ export default {
     errorNotAllowPivotData: "不可选择数据透视表为源数据！",
     errorSelectionRange: "选择失败, 输入范围错误！",
     errorIncreaseRange: "请扩大选择的数据范围!",
-
     titleAddColumn: "添加列到数据透视表",
     titleMoveColumn: "移动该列到下方白框",
     titleClearColumnFilter: "清除该列的筛选条件",
     titleFilterColumn: "筛选该列",
-
     titleSort: "排序",
     titleNoSort: "无排序",
     titleSortAsc: "升序",
@@ -7256,14 +7253,13 @@ export default {
     validationTitle: "验证提示",
     validationTips: "需要输入密码来撤销工作表的保护",
     validationInputHint: "请输入密码",
-
     checkPasswordNullalert: "密码不能为空！",
     checkPasswordWrongalert: "密码错误，请重试！",
-
     checkPasswordSucceedalert: "解锁成功，可以编辑该区域!",
     defaultRangeHintText: "该单元格正在受密码保护。",
-    defaultSheetHintText:
-      "该单元格或图表位于受保护的工作表中，若要进行更改，请取消工作表保护，您可能需要输入密码。",
+    defaultSheetHintText: "该单元格或图表位于受保护的工作表中，若要进行更改，请取消工作表保护，您可能需要输入密码。",
+    checkSheetDisabledTips: "当前工作簿已被系统禁止编辑",
+    checkSheetDisabledUploadTips: "存在系统保护sheet,不能进行上传覆盖",
   },
   cellFormat: {
     cellFormatTitle: "设置单元格格式",

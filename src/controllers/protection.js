@@ -9,6 +9,7 @@ import dataVerificationCtrl from './dataVerificationCtrl';
 import { replaceHtml,transformRangeToAbsolute,openSelfModel } from '../utils/util';
 import { selectionCopyShow } from './select';
 import tooltip from '../global/tooltip';
+import { checkSheetDisabled } from "../global/validate";
 // import cleargridelement from '../global/cleargridelement';
 
 /**
@@ -901,7 +902,7 @@ function openRangePasswordModal(rangeAut) {
 
 }
 
-//protection state
+// 检查保护未启用
 export function checkProtectionNotEnable(sheetIndex){
     let sheetFile = sheetmanage.getSheetByIndex(sheetIndex);
     if(sheetFile==null){
@@ -935,12 +936,15 @@ export function checkProtectionNotEnable(sheetIndex){
     return false;
 }
 
-//cell locked state
-export function checkProtectionLocked(r, c, sheetIndex, isOpenAlert=true, isLock=true){
-
+// 检查保护已锁定
+export function checkProtectionLocked(r, c, sheetIndex, isOpenAlert=true, isLock=true) {
     let sheetFile = sheetmanage.getSheetByIndex(sheetIndex);
-    if(sheetFile==null){
+    if (sheetFile == null) {
         return true;
+    }
+
+    if (checkSheetDisabled(sheetFile)) {
+        return;
     }
 
     if(sheetFile.config==null || sheetFile.config.authority==null){
@@ -959,11 +963,11 @@ export function checkProtectionLocked(r, c, sheetIndex, isOpenAlert=true, isLock
 
     const _locale = locale();
     const local_protection = _locale.protection;
-
     return checkProtectionLockedSqref(r, c , aut, local_protection, isOpenAlert, isLock);
 }
 
-//cell hidden state
+
+// 检查保护单元隐藏
 export function checkProtectionCellHidden(r, c, sheetIndex){
     let sheetFile = sheetmanage.getSheetByIndex(sheetIndex);
     if(!sheetFile || (sheetFile.data && !sheetFile.data[r]) || (sheetFile.data && !sheetFile.data[r][c])){
@@ -987,14 +991,15 @@ export function checkProtectionCellHidden(r, c, sheetIndex){
     return false;
 }
 
-//cell range locked state
+// 检查保护锁定范围列表
 export function checkProtectionLockedRangeList(rangeList, sheetIndex){
     let sheetFile = sheetmanage.getSheetByIndex(sheetIndex);
-
     if(sheetFile==null){
         return true;
     }
-
+    if (checkSheetDisabled(sheetFile)) {
+        return;
+    }
     if(sheetFile.config==null || sheetFile.config.authority==null){
         return true;
     }
@@ -1031,7 +1036,7 @@ export function checkProtectionLockedRangeList(rangeList, sheetIndex){
     return true;
 }
 
-//selectLockedCells  , selectunLockedCells  and cell state
+// 检查保护选择锁定或未锁定的单元格
 export function checkProtectionSelectLockedOrUnLockedCells(r, c, sheetIndex){
     const _locale = locale();
     const local_protection = _locale.protection;
@@ -1083,7 +1088,7 @@ export function checkProtectionSelectLockedOrUnLockedCells(r, c, sheetIndex){
 
 
 
-//selectLockedCells or selectunLockedCells authority, highlight cell
+// 检查保护全部选定
 export function checkProtectionAllSelected(sheetIndex){
     const _locale = locale();
     const local_protection = _locale.protection;
@@ -1119,7 +1124,7 @@ export function checkProtectionAllSelected(sheetIndex){
     return false;
 }
 
-//formatCells authority, bl cl fc fz ff ct  border etc.
+// 检查保护格式单元格
 export function checkProtectionFormatCells(sheetIndex){
 
     let sheetFile = sheetmanage.getSheetByIndex(sheetIndex);
@@ -1169,10 +1174,11 @@ export function checkProtectionFormatCells(sheetIndex){
 //usePivotTablereports authority
 //editObjects authority: insert,delete,update for image, chart, comment,shape etc.
 //editScenarios authority: Scenarios features is uncompleted
-
+// 检查保护权限正常
 export function checkProtectionAuthorityNormal(sheetIndex, type="formatColumns", isAlert=true){
 
     let sheetFile = sheetmanage.getSheetByIndex(sheetIndex);
+
     if(sheetFile==null){
         return true;
     }

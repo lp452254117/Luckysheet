@@ -8,7 +8,7 @@ import { selectHightlightShow, luckysheet_count_show, selectHelpboxFill } from "
 import { getObjType, showrightclickmenu, luckysheetContainerFocus, luckysheetfontformat, $$ } from "../utils/util";
 import { getSheetIndex, getRangetxt } from "../methods/get";
 import { rowLocation, rowLocationByIndex, colLocation, colLocationByIndex, mouseposition } from "../global/location";
-import { isRealNull, isRealNum, hasPartMC, isEditMode, checkIsAllowEdit } from "../global/validate";
+import { isRealNull, isRealNum, hasPartMC, isEditMode, checkIsAllowEdit, checkSheetDisabled } from "../global/validate";
 import { countfunc } from "../global/count";
 import formula from "../global/formula";
 import { luckysheetextendtable, luckysheetdeletetable, luckysheetDeleteCell } from "../global/extend";
@@ -432,6 +432,10 @@ export function rowColumnOperationInitial() {
             if (event.which == 3) {
                 // *如果禁止前台编辑，则中止下一步操作
                 if (!checkIsAllowEdit()) {
+                    return;
+                }
+                // 判断当前sheet是否能编辑
+                if (checkSheetDisabled()) {
                     return;
                 }
                 if (isEditMode()) {
@@ -979,6 +983,10 @@ export function rowColumnOperationInitial() {
                 if (!checkIsAllowEdit()) {
                     return;
                 }
+                // 判断当前sheet是否能编辑
+                if (checkSheetDisabled()) {
+                    return;
+                }
                 if (isEditMode()) {
                     //非编辑模式下禁止右键功能框
                     return;
@@ -1122,6 +1130,10 @@ export function rowColumnOperationInitial() {
         if (!checkIsAllowEdit()) {
             return;
         }
+        // 判断当前sheet是否能编辑
+        if (checkSheetDisabled()) {
+            return;
+        }
         //有批注在编辑时
         luckysheetPostil.removeActivePs();
 
@@ -1171,6 +1183,10 @@ export function rowColumnOperationInitial() {
         .mousedown(function(event) {
             // *如果禁止前台编辑，则中止下一步操作
             if (!checkIsAllowEdit()) {
+                return;
+            }
+            // 判断当前sheet是否能编辑
+            if (checkSheetDisabled()) {
                 return;
             }
             //有批注在编辑时
@@ -1230,7 +1246,11 @@ export function rowColumnOperationInitial() {
     $("#luckysheet-cols-menu-btn").click(function(event) {
         // *如果禁止前台编辑，则中止下一步操作
         if (!checkIsAllowEdit()) {
-            tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+            tooltip.notify("", locale().pivotTable.errorNotAllowEdit);
+            return;
+        }
+        // 判断当前sheet是否能编辑
+        if (checkSheetDisabled()) {
             return;
         }
         let $menu = $("#luckysheet-rightclick-menu");
@@ -1357,8 +1377,8 @@ export function rowColumnOperationInitial() {
 
         let st_index = Store.luckysheet_select_save[0][Store.luckysheetRightHeadClickIs][0];
 
-		if(!method.createHookFunction("rowInsertBefore",  st_index, value, "lefttop", Store.luckysheetRightHeadClickIs)){ 
-			return; 
+		if(!method.createHookFunction("rowInsertBefore",  st_index, value, "lefttop", Store.luckysheetRightHeadClickIs)){
+			return;
 		}
 		luckysheetextendtable(Store.luckysheetRightHeadClickIs, st_index, value, "lefttop");
 
@@ -1375,8 +1395,8 @@ export function rowColumnOperationInitial() {
 
         let st_index = Store.luckysheet_select_save[0].row[0];
 
-		if(!method.createHookFunction("rowInsertBefore",  st_index, 1, "lefttop", Store.luckysheetRightHeadClickIs)){ 
-			return; 
+		if(!method.createHookFunction("rowInsertBefore",  st_index, 1, "lefttop", Store.luckysheetRightHeadClickIs)){
+			return;
 		}
         luckysheetextendtable('row', st_index, 1, "lefttop");
 
@@ -1584,7 +1604,7 @@ export function rowColumnOperationInitial() {
         let st_index = Store.luckysheet_select_save[0][Store.luckysheetRightHeadClickIs][1];
 
 		if(!method.createHookFunction("rowInsertBefore",  st_index, value, "rightbottom", Store.luckysheetRightHeadClickIs)){
-			return; 
+			return;
 		}
 
         luckysheetextendtable(Store.luckysheetRightHeadClickIs, st_index, value, "rightbottom");
@@ -1732,7 +1752,7 @@ export function rowColumnOperationInitial() {
             ed_index = Store.luckysheet_select_save[0][Store.luckysheetRightHeadClickIs][1];
 
         if(!method.createHookFunction("rowDeleteBefore", st_index, ed_index, Store.luckysheetRightHeadClickIs)){
-        	return; 
+        	return;
 
         }
         luckysheetdeletetable(Store.luckysheetRightHeadClickIs, st_index, ed_index);
@@ -1764,7 +1784,7 @@ export function rowColumnOperationInitial() {
             ed_index = Store.luckysheet_select_save[0].row[1];
 
 		if(!method.createHookFunction("rowDeleteBefore", st_index, ed_index, 'row')){
-			return; 
+			return;
 		}
         luckysheetdeletetable('row', st_index, ed_index);
     })

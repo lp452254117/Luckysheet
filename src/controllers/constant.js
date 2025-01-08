@@ -345,7 +345,7 @@ const columeHeader_word = [
         '<div id="luckysheet-cell-flow_${index}" class="luckysheet-cell-flow luckysheetsheetchange" style="width:${width}px;"><div class="luckysheet-cell-flow-clip"><div class="luckysheet-grdblkpush"></div>${flow}</div></div>',
     colsmenuHTML = "";
 
-//右键菜单dom
+//右键菜单dom 初始化项目时一次性创建 通过display控制隐藏显示
 function rightclickHTML() {
     const _locale = locale();
     const rightclick = _locale.rightclick;
@@ -914,7 +914,10 @@ const pivottablesumHTML = function() {
 };
 
 const sheetHTML =
-        '<div style="${style}" id="luckysheet-sheets-item${index}" data-index="${index}" class="luckysheet-sheets-item ${active}"><span class="luckysheet-sheets-item-name" spellcheck ="false" contenteditable="false">${name}</span> <span class="luckysheet-sheets-item-menu luckysheet-mousedown-cancel"><i class="fa fa-sort-desc luckysheet-mousedown-cancel"></i></span>${colorset}</div>',
+    '<div style="${style}" id="luckysheet-sheets-item${index}" data-index="${index}" class="luckysheet-sheets-item ${active}"><span class="luckysheet-sheets-item-name" spellcheck ="false" contenteditable="false">${name}</span> <span class="luckysheet-sheets-item-menu luckysheet-mousedown-cancel"><i class="fa fa-sort-desc luckysheet-mousedown-cancel"></i></span>${colorset}</div>',
+    sheetHTMLDisabled =
+      '<div style="${style}" id="luckysheet-sheets-item${index}" data-index="${index}" class="luckysheet-sheets-item ${active}"><span class="luckysheet-sheets-item-name" spellcheck ="false" contenteditable="false">${name}</span> ${colorset}</div>',
+
     columnHeaderHTML =
         '<div class="luckysheet-cols-h-cells luckysheetsheetchange"  id="luckysheet-cols-h-cells_${index}" style="width:${width}px;"> <div class="luckysheet-cols-h-cells-c"> <div class="luckysheet-grdblkpush"></div>${column}</div></div>',
     sheetselectlistHTML =
@@ -1519,6 +1522,7 @@ export {
     pivottableconfigHTML,
     pivottablesumHTML,
     sheetHTML,
+    sheetHTMLDisabled,
     columnHeaderHTML,
     sheetselectlistHTML,
     sheetselectlistitemHTML,

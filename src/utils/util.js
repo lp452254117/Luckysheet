@@ -55,7 +55,8 @@ function replaceHtml(temp, dataarry) {
         let s = dataarry[s2];
         if (typeof s != "undefined") {
             return s;
-        } else {
+        }
+        else {
             return s1;
         }
     });

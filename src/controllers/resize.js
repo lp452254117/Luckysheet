@@ -457,6 +457,9 @@ export function menuToolBarWidth() {
                 toobarWidths.push($(curr.ele[0]).offset().left);
                 toobarWidths.push($(curr.ele[0]).offset().left + $(curr.ele[0]).outerWidth() + 5);
             }else{
+                // console.log(curr.ele);
+                // console.log($(curr.ele));
+                // console.log($(curr.ele).offset());
                 toobarWidths.push($(curr.ele).offset().left);
                 toobarWidths.push($(curr.ele).offset().left + $(curr.ele).outerWidth() + 5);
             }

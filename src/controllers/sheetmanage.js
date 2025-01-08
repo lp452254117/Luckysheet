@@ -11,7 +11,7 @@ import editor from "../global/editor";
 import { luckysheetextendtable, luckysheetdeletetable } from "../global/extend";
 import { isRealNum } from "../global/validate";
 import { replaceHtml, getObjType, chatatABC, arrayRemoveItem } from "../utils/util";
-import { sheetHTML, luckysheetlodingHTML } from "./constant";
+import { sheetHTML, sheetHTMLDisabled, luckysheetlodingHTML } from "./constant";
 import server from "./server";
 import luckysheetConfigsetting from "./luckysheetConfigsetting";
 import pivotTable from "./pivotTable";
@@ -35,6 +35,7 @@ import luckysheetformula from "../global/formula";
 import { getSheetIndex } from "../methods/get";
 import { setluckysheetfile } from "../methods/set";
 import conditionformat from "./conditionformat";
+import { getSheet } from "../global/api";
 
 const sheetmanage = {
     generateRandomSheetIndex: function(prefix) {
@@ -227,7 +228,6 @@ const sheetmanage = {
         let index = _this.generateRandomSheetIndex();
 
         let sheetname = _this.generateRandomSheetName(Store.luckysheetfile, isPivotTable);
-
         $("#luckysheet-sheet-container-c").append(
             replaceHtml(sheetHTML, { index: index, active: "", name: sheetname, style: "", colorset: "" }),
         );
@@ -436,7 +436,7 @@ const sheetmanage = {
             if (Store.currentSheetIndex == sheetIndex) {
                 //使用Store.luckysheetfile中的index比较，而不是order
                 btn.push(
-                    replaceHtml(sheetHTML, {
+                    replaceHtml(Store.luckysheetfile[i].disabled ? sheetHTMLDisabled : sheetHTML, {
                         index: sheetIndex,
                         active: "luckysheet-sheets-item-active",
                         name: Store.luckysheetfile[i].name,
@@ -447,7 +447,7 @@ const sheetmanage = {
             } else {
                 if (Store.luckysheetfile[i].hide == 1) {
                     btn.push(
-                        replaceHtml(sheetHTML, {
+                        replaceHtml(Store.luckysheetfile[i].disabled ? sheetHTMLDisabled : sheetHTML, {
                             index: sheetIndex,
                             active: "",
                             name: Store.luckysheetfile[i].name,
@@ -457,7 +457,7 @@ const sheetmanage = {
                     );
                 } else {
                     btn.push(
-                        replaceHtml(sheetHTML, {
+                        replaceHtml(Store.luckysheetfile[i].disabled ? sheetHTMLDisabled : sheetHTML, {
                             index: sheetIndex,
                             active: "",
                             name: Store.luckysheetfile[i].name,
@@ -618,7 +618,6 @@ const sheetmanage = {
                 data.color +
                 ';"></div>';
         }
-
         $("#luckysheet-sheet-container-c").append(
             replaceHtml(sheetHTML, {
                 index: data.index,
@@ -1042,13 +1041,14 @@ const sheetmanage = {
                         execF();
                         return;
                     }
-
+                    let currentSheet = getSheet();
                     $.ajax({
                         url: loadSheetUrl,
                         type: 'POST',
                         data: {
                             gridKey: server.gridKey,
-                            index: sheetindex.join(",")
+                            index: sheetindex.join(","),
+                            sheetId: currentSheet?.sheetId || null
                         },
                         // dataType: 'json', // 或者其他数据类型
                         headers: Store.init_setting.api_headers || {}, // 支持自定义身份信息
@@ -1394,18 +1394,25 @@ const sheetmanage = {
                 $("#luckysheet-grid-window-1").append(luckysheetlodingHTML());
 
                 let sheetindex = _this.checkLoadSheetIndex(file);
+                let currentSheet = getSheet();
                 $.ajax({
                     url: loadSheetUrl,
                     type: 'POST',
                     data: {
                         gridKey: server.gridKey,
-                        index: sheetindex.join(",")
+                        index: sheetindex.join(","),
+                        sheetId: currentSheet?.sheetId || null
                     },
                     // dataType: 'json', // 或者其他数据类型
+                    // contentType: 'application/json',
                     headers: Store.init_setting.api_headers || {}, // 支持自定义身份信息
                     success: function(d) {
                         let dataset = new Function("return " + d)();
-                        file.celldata = dataset[index.toString()];
+                        console.log(dataset);
+                        console.log(index.toString());
+                        if (dataset && dataset.hasOwnProperty(index.toString())) {
+                            file.celldata = dataset[index.toString()];
+                        }
                         let data = _this.buildGridData(file);
 
                         setTimeout(function() {
@@ -1443,7 +1450,8 @@ const sheetmanage = {
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         // 处理错误情况
-                        console.error(textStatus + ": " + errorThrown);
+                        // console.error(textStatus + ": " + errorThrown);
+                        // console.log(jqXHR, textStatus, errorThrown);
                     }
                 });
 

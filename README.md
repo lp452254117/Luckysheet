@@ -1,79 +1,82 @@
 
+简体中文
 # Luckysheet
 
-English| [简体中文](./README-zh.md)
-
-## Introduction
-🚀Luckysheet is an online spreadsheet like excel that is powerful, simple to configure, and completely open source.
+点击 [#1454](https://github.com/dream-num/Luckysheet/issues/1454) 查看更多详情。
 
 
-## Links
-| Source Code   | Documentation | Demo | Plugins Demo | Forum |
+## 介绍
+🚀Luckysheet ，一款纯前端类似excel的在线表格，功能强大、配置简单、完全开源。
+
+
+## 相关链接
+ | 源码   | 文档 | Demo | 插件Demo | 论坛 |
  | ------ | -------- | ------ | ------ | ------ |
-| [Github](https://github.com/mengshukeji/Luckysheet)| [Online Documentation](https://dream-num.github.io/LuckysheetDocs/) | [Online Demo](https://dream-num.github.io/LuckysheetDemo) / [Cooperative editing demo](http://luckysheet.lashuju.com/demo/) | [Import Excel Demo](https://dream-num.github.io/LuckyexcelDemo/) | [Chinese Forum](https://support.qq.com/product/288322)  |
-| [Gitee Mirror](https://gitee.com/mengshukeji/Luckysheet)| [Gitee Online Documentation](https://mengshukeji.gitee.io/LuckysheetDocs/) | [Gitee Online Demo](https://mengshukeji.gitee.io/luckysheetdemo/) | [Gitee Import Excel Demo](https://mengshukeji.gitee.io/luckyexceldemo/) | [Google Group](https://groups.google.com/g/luckysheet) |
+ | [Github](https://github.com/mengshukeji/Luckysheet)| [在线文档](https://dream-num.github.io/LuckysheetDocs/zh/) | [在线Demo](https://dream-num.github.io/LuckysheetDemo) / [协同编辑Demo](http://luckysheet.lashuju.com/demo/) | [导入Excel Demo](https://dream-num.github.io/LuckyexcelDemo/) | [中文论坛](https://support.qq.com/product/288322) |
+ | [Gitee镜像](https://gitee.com/mengshukeji/Luckysheet)| [Gitee在线文档](https://mengshukeji.gitee.io/LuckysheetDocs/zh/) | [Gitee在线Demo](https://mengshukeji.gitee.io/luckysheetdemo/) | [Gitee导入Excel Demo](https://mengshukeji.gitee.io/luckyexceldemo/) | [Google Group](https://groups.google.com/g/luckysheet) |
 
-![Demo](/docs/.vuepress/public/img/LuckysheetDemo.gif)
+![演示](/docs/.vuepress/public/img/LuckysheetDemo.gif)
 
-## Plugins
-- [Luckyexcel](https://github.com/mengshukeji/Luckyexcel): Excel import and export library
-- [chartMix](https://github.com/mengshukeji/chartMix): Chart plugin
+## 插件
+- [Luckyexcel](https://gitee.com/mengshukeji/Luckyexcel)：excel导入导出库 
+- [chartMix](https://gitee.com/mengshukeji/chartMix)：图表插件
 
-## Ecosystem
+## 生态
 
-| Project | Description |
+| 工程 | 描述 |
 |---------|-------------|
-| [Luckysheet Vue]          | Luckysheet and Luckyexcel in a vue cli3 project |
-| [Luckysheet Vue3]          | Luckysheet and Luckyexcel in a vue3 project with vite|
-| [Luckysheet React]          | Luckysheet in a React project |
-| [Luckyexcel Node]          | Use Luckyexcel in koa2 |
-| [Luckysheet Server]          | Java backend Luckysheet Server |
-| [Luckysheet Server Starter]          | LuckysheetServer docker deployment startup template |
+| [Luckysheet Vue]          | 在vue cli 3项目中使用Luckysheet和Luckyexcel|
+| [Luckysheet Vue3]          | 在vue3, vite项目中使用Luckysheet和Luckyexcel|
+| [Luckysheet React]          | 在React项目中使用Luckysheet |
+| [Luckyexcel Node]          | 在koa2中使用Luckyexcel |
+| [Luckysheet Server]          | Java后台Luckysheet Server |
+| [Luckysheet Server Starter]          | LuckysheetServer 一键docker部署 |
 
-[Luckysheet Vue]: https://github.com/mengshukeji/luckysheet-vue
-[Luckysheet Vue3]: https://github.com/hjwforever/luckysheet-vue3-vite
-[Luckysheet React]: https://github.com/mengshukeji/luckysheet-react
-[Luckyexcel Node]: https://github.com/mengshukeji/Luckyexcel-node
-[Luckysheet Server]: https://github.com/mengshukeji/LuckysheetServer
-[Luckysheet Server Starter]: https://github.com/mengshukeji/LuckysheetServerStarter
+[Luckysheet Vue]: https://gitee.com/mengshukeji/luckysheet-vue
+[Luckysheet Vue3]: https://gitee.com/hjwforever/luckysheet-vue3-vite.git
+[Luckysheet React]: https://gitee.com/mengshukeji/luckysheet-react
+[Luckyexcel Node]: https://gitee.com/mengshukeji/Luckyexcel-node
+[Luckysheet Server]: https://gitee.com/mengshukeji/LuckysheetServer
+[Luckysheet Server Starter]: https://gitee.com/mengshukeji/LuckysheetServerStarter
 
+## 特性
 
-## Features
+- **格式设置**：样式，条件格式，文本对齐及旋转，文本截断、溢出、自动换行，多种数据类型，单元格内多样式
+- **单元格**：拖拽，下拉填充，多选区，查找和替换，定位，合并单元格，数据验证
+- **行和列操作**：隐藏、插入、删除行或列，冻结，文本分列
+- **操作体验**：撤销、重做，复制、粘贴、剪切，快捷键，格式刷，选区拖拽
+- **公式和函数**：内置公式，远程公式，自定义公式
+- **表格操作**：筛选，排序
+- **增强功能**：数据透视表，图表，评论，共享编辑，插入图片，矩阵计算，截图，复制到其他格式，EXCEL导入及导出等
 
-- **Formatting**: style, conditional formatting, text alignment and rotation, text truncation, overflow, automatic line wrapping, multiple data types, cell segmentation style
-- **Cells**: drag and drop, fill handle, multiple selection, find and replace, location, merge cells, data verification
-- **Row & column**: hide, insert, delete rows or columns, freeze, and split text
-- **Operation**: undo, redo, copy, paste, cut, hot key, format painter, drag and drop selection
-- **Formulas & Functions**: Built-in, remote and custom formulas
-- **Tables**: filter, sort
-- **Enhanced functions**: Pivot tables, charts, comments, cooperative editing, insert picture, matrix calculations, screenshots, copying to other formats, EXCEL import and export, etc.
+更详细的功能列表，请查阅：[特性](https://dream-num.github.io/LuckysheetDocs/zh/guide/#%E7%89%B9%E6%80%A7)
 
-For a more detailed feature list, please refer to: [Features](https://dream-num.github.io/LuckysheetDocs/guide/#features)
+## 📖 学习资源
 
-## 📖 Resources
-- Priority reading for new users: [User Guide](https://github.com/mengshukeji/Luckysheet/wiki/User-Guide)
-- For the tutorials, learning materials and supporting solutions provided by the community, please refer to: [Tutorials and Resources](https://dream-num.github.io/LuckysheetDocs/guide/resource.html)
+- 新用户优先阅读：[用户指引](https://github.com/mengshukeji/Luckysheet/wiki/User-Guide)
+- 社区提供的教程、学习资料及配套解决方案请查阅：[教程与资源](https://dream-num.github.io/LuckysheetDocs/zh/guide/resource.html)
 
-## 📜 Changelog
+## 📜 更新日志
 
-Detailed changes for each release are documented in the [CHANGELOG.md](CHANGELOG.md).
+每个版本的详细更改都记录在 [CHANGELOG.md](CHANGELOG.md) 中。
 
-## ❗️ Issues
+## ❗️ 问题反馈
 
-Please make sure to read the [Issue Reporting Checklist](https://dream-num.github.io/LuckysheetDocs/guide/contribute.html#how-to-submit-issues) before opening an issue. Issues not conforming to the guidelines may be closed immediately.
+在反馈问题之前，请确保仔细阅读 [如何提交问题](https://dream-num.github.io/LuckysheetDocs/zh/guide/contribute.html#如何提交问题)。 不符合准则的问题可能会立即被移除。
 
-## ✅ TODO
+## ✅ 开发计划
 
-Managed with [GitHub Projects](https://github.com/mengshukeji/Luckysheet/projects/1)
+通过 [GitHub Projects](https://github.com/mengshukeji/Luckysheet/projects/1) 管理
 
-## 💪Contribution
+## 💪 贡献
 
-Please make sure to read the[ Contributing Guide](https://dream-num.github.io/LuckysheetDocs/guide/contribute.html) before making a pull request.
+在提交PR之前，请确保仔细阅读 [贡献指南](https://dream-num.github.io/LuckysheetDocs/zh/guide/contribute.html)。
 
-## Usage
+## 用法
 
-### First step
-Introduce dependencies through CDN
+### 第一步
+通过CDN引入依赖
+
 ```
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/css/pluginsCss.css' />
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/plugins.css' />
@@ -82,43 +85,44 @@ Introduce dependencies through CDN
 <script src="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/js/plugin.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/luckysheet.umd.js"></script>
 ```
-### Second step
-Specify a table container
+### 第二步
+指定一个表格容器
 ```
 <div id="luckysheet" style="margin:0px;padding:0px;position:absolute;width:100%;height:100%;left: 0px;top: 0px;"></div>
 ```
-### Third step
-Create a table
+### 第三步
+创建一个表格
 ```
 <script>
     $(function () {
-        //Configuration item
+        //配置项
         var options = {
-            container: 'luckysheet' //luckysheet is the container id
+            container: 'luckysheet' //luckysheet为容器id
         }
         luckysheet.create(options)
     })
 </script>
 ```
+## 开发
 
-## Development
+### 环境
+[Node.js](https://nodejs.org/en/) Version >= 6 
 
-### Requirements
-[Node.js](https://nodejs.org/en/) Version >= 6
-
-### Installation
+### 安装
 ```
 npm install
 npm install gulp -g
 ```
-### Development
+### 开发
 ```
 npm run dev
 ```
-### Package
+### 打包
 ```
 npm run build
 ```
 
-## License
+## 版权信息
 [MIT](http://opensource.org/licenses/MIT)
+
+Copyright (c) 2020-present, mengshukeji
