@@ -7287,8 +7287,9 @@ export default {
 
         checkPasswordSucceedalert: "Unlock Succeed!",
         defaultRangeHintText: "The cell is being password protected.",
-        defaultSheetHintText:
-            "The cell or chart is in a protected worksheet. To make changes, please unprotect the worksheet. You may need to enter a password",
+        defaultSheetHintText: "The cell or chart is in a protected worksheet. To make changes, please unprotect the worksheet. You may need to enter a password",
+        checkSheetDisabledTips: "The current workbook has been disabled for editing by the system.",
+        checkSheetDisabledUploadTips: "There is a system-protected sheet, and upload overwrite is not allowed.",
     },
     cellFormat: {
         cellFormatTitle: "Format cells",

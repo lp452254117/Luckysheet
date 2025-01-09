@@ -5935,7 +5935,7 @@ export function getAllChartsBase64(cb) {
                 }})
 
                 chartMap[item.index][chartInfo.chart_id] = chartInstance
-                
+
             });
 
         }
@@ -5951,13 +5951,13 @@ export function getAllChartsBase64(cb) {
                         sheet[chart_id] = chartInstance.getDataURL();
                     }
                 }
-                
+
             }
         }
         cb && cb(chartMap)
-        
+
     }, 500);
-    
+
 }
 
 /**
@@ -6948,4 +6948,11 @@ export function openSearchDialog(source = 1){
     luckysheetSearchReplace.createDialog(source);
     luckysheetSearchReplace.init();
     $("#luckysheet-search-replace #searchInput input").focus();
+}
+
+/*
+* 释放在线表格
+* */
+export function destroy() {
+    method.destroy();
 }
