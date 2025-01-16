@@ -92,7 +92,8 @@ function formulaMoveEvent(dir, ctrlKey, shiftKey, event){
             }
             event.preventDefault();
         }
-        else if(formula.israngeseleciton()){
+        else if(formula.isRangeSelected()){
+
             let anchor = $(window.getSelection().anchorNode);
             // console.log(anchor.parent().next().text());
             if(anchor.parent().next().text() == null || anchor.parent().next().text() == ""){

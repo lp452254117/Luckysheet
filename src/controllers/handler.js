@@ -37,8 +37,8 @@ import {
     checkProtectionAuthorityNormal,
 } from "./protection";
 import { openCellFormatModel } from "./cellFormat";
-import LuckyExcel from 'luckyexcel';
-import {getWorkbookName} from '../global/api';
+import LuckyExcel from 'mkk-luckyexcel';
+import { getAllSheets, getSheet, getWorkbookName } from "../global/api";
 import exportExcel from '../utils/excelExport';
 
 import {
@@ -56,7 +56,7 @@ import {
 import { getSheetIndex, getRangetxt } from "../methods/get";
 import { rowLocation, colLocation, mouseposition } from "../global/location";
 import { rowlenByRange } from "../global/getRowlen";
-import { isRealNull, hasPartMC, isEditMode, checkIsAllowEdit } from "../global/validate";
+import { isRealNull, hasPartMC, isEditMode, checkIsAllowEdit, checkSheetDisabled } from "../global/validate";
 import { countfunc } from "../global/count";
 import browser from "../global/browser";
 import formula from "../global/formula";
@@ -455,7 +455,7 @@ export default function luckysheetHandler() {
                     formula.rangestart ||
                     formula.rangedrag_column_start ||
                     formula.rangedrag_row_start ||
-                    formula.israngeseleciton()
+                    formula.isRangeSelected()
                 ) {
                     //公式选区
                     let rowseleted = [row_index, row_index_ed];
@@ -606,7 +606,7 @@ export default function luckysheetHandler() {
                         formula.rangeHightlightselected($("#luckysheet-rich-text-editor"));
 
                         //再进行 选区的选择
-                        formula.israngeseleciton();
+                        formula.isRangeSelected();
                         formula.func_selectedrange = {
                             left: left,
                             width: width,
@@ -1241,7 +1241,11 @@ export default function luckysheetHandler() {
         .mouseup(function(event) {
             if (event.which == "3") {
                 //禁止前台编辑(只可 框选单元格、滚动查看表格)
-                if (!Store.allowEdit) {
+                if (!checkIsAllowEdit()) {
+                    return;
+                }
+                // 判断当前sheet是否能编辑
+                if (checkSheetDisabled()) {
                     return;
                 }
 
@@ -5294,6 +5298,14 @@ export default function luckysheetHandler() {
 
     //Menu bar, Chart button
     $("#luckysheet-chart-btn-title").click(function() {
+        //禁止前台编辑(只可 框选单元格、滚动查看表格)
+        if (!checkIsAllowEdit()) {
+            return;
+        }
+        // 判断当前sheet是否能编辑
+        if (checkSheetDisabled()) {
+            return;
+        }
         createLuckyChart();
     });
 
@@ -5502,7 +5514,11 @@ export default function luckysheetHandler() {
     $("#luckysheet-insertImg-btn-title").click(function() {
         // *如果禁止前台编辑，则中止下一步操作
         if (!checkIsAllowEdit()) {
-            tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+            tooltip.notify("", locale().pivotTable.errorNotAllowEdit);
+            return;
+        }
+        // 判断当前sheet是否能编辑
+        if (checkSheetDisabled()) {
             return;
         }
         if (!checkProtectionAuthorityNormal(Store.currentSheetIndex, "editObjects")) {
@@ -5531,9 +5547,17 @@ export default function luckysheetHandler() {
     $("#luckysheet-icon-upload").click(function () {
         // *如果禁止前台编辑，则中止下一步操作
         if (!checkIsAllowEdit()) {
-            tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+            tooltip.notify("", locale().pivotTable.errorNotAllowEdit);
             return
         }
+
+        // 上传因为是全量替换 所有要判断所有sheet都不能被禁止才允许被上传
+        // let allSheets = getAllSheets();
+        // if(allSheets.some(item => item.disabled)) {
+        //     tooltip.notify("", locale().protection.checkSheetDisabledUploadTips);
+        //     return;
+        // }
+
         if(!checkProtectionAuthorityNormal(Store.currentSheetIndex, "editObjects")){
             return;
         }
@@ -5564,36 +5588,27 @@ export default function luckysheetHandler() {
         //     alert("Currently only supports the import of xlsx files");
         //     return;
         // }
+
         LuckyExcel.transformExcelToLucky(files[0], function (exportJson) {
+            // console.log("导入的数据", JSON.stringify(exportJson));
             if (exportJson.sheets == null || exportJson.sheets.length == 0) {
                 // alert("Failed to read the content of the excel file, currently does not support xls files!");
                 tooltip.notify("Failed to read the content of the excel file, currently does not support xls files!");
                 return;
             }
-
             // 释放luckysheet实例
             luckysheet.destroy();
-
             // 要继承之前的初始化信息
             luckysheet.create(common_extend(Store.init_setting, {
                 data: exportJson.sheets,
                 title: exportJson.info.name,
                 userInfo: exportJson.info.name.creator
-            }));
-
+            }), true);
         });
     });
 
     //菜单栏 导出Excel文件
     $("#luckysheet-icon-download").click(function () {
-        // *如果禁止前台编辑，则中止下一步操作
-        if (!checkIsAllowEdit()) {
-            tooltip.info("", locale().pivotTable.errorNotAllowEdit);
-            return
-        }
-        if(!checkProtectionAuthorityNormal(Store.currentSheetIndex, "editObjects")){
-            return;
-        }
         let name = getWorkbookName();
         name = name.replaceAll('.xlsx', '').replaceAll('.xls', '')
         tooltip.notify("请稍等...正在处理中,稍后会自动下载文件", "");
@@ -5605,8 +5620,14 @@ export default function luckysheetHandler() {
     $("#luckysheet-insertLink-btn-title").click(function() {
         // *如果禁止前台编辑，则中止下一步操作
         if (!checkIsAllowEdit()) {
-            tooltip.info("", locale().pivotTable.errorNotAllowEdit);
+            tooltip.notify("", locale().pivotTable.errorNotAllowEdit);
         }
+
+        // 判断当前sheet是否能编辑
+        if (checkSheetDisabled()) {
+            return;
+        }
+
         if (!checkProtectionNotEnable(Store.currentSheetIndex)) {
             return;
             return;

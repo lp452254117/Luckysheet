@@ -448,6 +448,7 @@ const controlHistory = {
         method.createHookFunction('updated', newCtr)
 
     },
+    // 撤销
     undo: function () {
         if (Store.jfundo.length == 0) {
             return;
@@ -460,7 +461,6 @@ const controlHistory = {
         if (sheetmanage.hasSheet(ctr.sheetIndex) && Store.currentSheetIndex != ctr.sheetIndex) {
             sheetmanage.changeSheetExec(ctr.sheetIndex);
         }
-
         if (ctr.type == "datachange") {
             formula.execFunctionGroup();
 

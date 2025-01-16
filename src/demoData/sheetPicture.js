@@ -1,7 +1,6 @@
 window.sheetPicture = {
     "name": "Picture",
     "index": "Sheet_3e4oe25C757r_1600925108337",
-    "celldata": [],
     "row": 84,
     "column": 60,
     "config": {
@@ -21,28 +20,103 @@ window.sheetPicture = {
             "8": 1
         }
     },
-    celldata:[{"r":0,"c":0,"v":{"v":null,"bl":1}},{"r":1,"c":1,"v":{"ct":{"fa":"General","t":"g"},"v":"Border","bl":1,"tb":"1","m":"Border"}},{"r":1,"c":8,"v":{"m":"Fixed Position","ct":{"fa":"General","t":"g"},"v":"Fixed Position","bl":1}},{"r":4,"c":8,"v":{}},{"r":5,"c":1,"v":{"ct":{"fa":"General","t":"g"},"v":"Move and resize cells","bl":1,"tb":"1","m":"Move and resize cells"}},{"r":5,"c":8,"v":{"m":"Move and don't resize the cell","ct":{"fa":"General","t":"g"},"v":"Move and don't resize the cell","bl":1,"tb":"1"}},{"r":6,"c":0,"v":{"v":"","ct":{"fa":"General","t":"g"},"m":""}}],
-    "luckysheet_select_save": [
-        {
-            "left": 444,
-            "width": 73,
-            "top": 239,
-            "height": 19,
-            "left_move": 444,
-            "width_move": 73,
-            "top_move": 239,
-            "height_move": 19,
-            "row": [
-                9,
-                9
-            ],
-            "column": [
-                6,
-                6
-            ],
-            "row_focus": 9,
-            "column_focus": 6
+    "celldata": [
+      {
+        "r": 0,
+        "c": 0,
+        "v": {
+            "v": null,
+            "bl": 1
         }
+    }, {
+        "r": 1,
+        "c": 1,
+        "v": {
+            "ct": {
+                "fa": "General",
+                "t": "g"
+            },
+            "v": "Border",
+            "bl": 1,
+            "tb": "1",
+            "m": "Border"
+        }
+    }, {
+        "r": 1,
+        "c": 8,
+        "v": {
+            "m": "Fixed Position",
+            "ct": {
+                "fa": "General",
+                "t": "g"
+            },
+            "v": "Fixed Position",
+            "bl": 1
+        }
+    }, {
+        "r": 4,
+        "c": 8,
+        "v": {}
+    }, {
+        "r": 5,
+        "c": 1,
+        "v": {
+            "ct": {
+                "fa": "General",
+                "t": "g"
+            },
+            "v": "Move and resize cells",
+            "bl": 1,
+            "tb": "1",
+            "m": "Move and resize cells"
+        }
+    }, {
+        "r": 5,
+        "c": 8,
+        "v": {
+            "m": "Move and don't resize the cell",
+            "ct": {
+                "fa": "General",
+                "t": "g"
+            },
+            "v": "Move and don't resize the cell",
+            "bl": 1,
+            "tb": "1"
+        }
+    }, {
+        "r": 6,
+        "c": 0,
+        "v": {
+            "v": "",
+            "ct": {
+                "fa": "General",
+                "t": "g"
+            },
+            "m": ""
+        }
+    }],
+    "luckysheet_select_save":
+      [
+        // {
+        //     "left": 444,
+        //     "width": 73,
+        //     "top": 239,
+        //     "height": 19,
+        //     "left_move": 444,
+        //     "width_move": 73,
+        //     "top_move": 239,
+        //     "height_move": 19,
+        //     "row": [
+        //         5,
+        //         5
+        //     ],
+        //     "column": [
+        //         6,
+        //         6
+        //     ],
+        //     "row_focus": 5,
+        //     "column_focus": 6
+        // }
     ],
     "images": {
         "img_wx5a6n0A1ael_1600925814407": {

@@ -13,13 +13,13 @@ import menuButton from './menuButton';
 import conditionformat from './conditionformat';
 import alternateformat from './alternateformat';
 import {checkProtectionAuthorityNormal} from './protection';
-import { 
-    rgbTohex, 
-    showrightclickmenu, 
+import {
+    rgbTohex,
+    showrightclickmenu,
 } from '../utils/util';
 import cleargridelement from '../global/cleargridelement';
-import { 
-    jfrefreshgrid, 
+import {
+    jfrefreshgrid,
     jfrefreshgrid_rhcw,
 } from '../global/refresh';
 import { orderbydata, orderbydata1D } from '../global/sort';
@@ -33,7 +33,7 @@ function labelFilterOptionState($top, optionstate, rowhidden, caljs, notSave, st
 
         if (caljs != null) {
             $top.data("byconditionvalue", caljs["value"]).data("byconditiontype", caljs["type"]).data("byconditiontext", caljs["text"]);
-            
+
             if (caljs["value1"] != null) {
                 $top.data("byconditionvalue1", caljs["value1"]);
             }
@@ -58,8 +58,8 @@ function labelFilterOptionState($top, optionstate, rowhidden, caljs, notSave, st
 
         if (optionstate) {
             let param = {
-                "caljs": caljs, 
-                "rowhidden": rowhidden, 
+                "caljs": caljs,
+                "rowhidden": rowhidden,
                 "optionstate": optionstate,
                 "str": str,
                 "edr": edr,
@@ -206,38 +206,38 @@ function createFilter() {
     server.saveParam("all", Store.currentSheetIndex, Store.luckysheet_filter_save, { "k": "filter_select" });
 
     if (Store.filterchage) {
-        Store.jfredo.push({ 
-            "type": "filtershow", 
-            "data": [], 
-            "curdata": [], 
-            "sheetIndex": Store.currentSheetIndex, 
-            "filter_save": Store.luckysheet_filter_save 
+        Store.jfredo.push({
+            "type": "filtershow",
+            "data": [],
+            "curdata": [],
+            "sheetIndex": Store.currentSheetIndex,
+            "filter_save": Store.luckysheet_filter_save
         });
     }
 }
 
-//创建筛选配置
+//创建筛选选项
 function createFilterOptions(luckysheet_filter_save, filterObj) {
     $("#luckysheet-filter-selected-sheet" + Store.currentSheetIndex).remove();
     $("#luckysheet-filter-options-sheet" + Store.currentSheetIndex).remove();
-    
+
     if(luckysheet_filter_save == null || JSON.stringify(luckysheet_filter_save) == "{}"){
         return;
     }
 
-    let r1 = luckysheet_filter_save.row[0], 
+    let r1 = luckysheet_filter_save.row[0],
         r2 = luckysheet_filter_save.row[1];
-    let c1 = luckysheet_filter_save.column[0], 
+    let c1 = luckysheet_filter_save.column[0],
         c2 = luckysheet_filter_save.column[1];
 
-    let row = Store.visibledatarow[r2], 
+    let row = Store.visibledatarow[r2],
         row_pre = r1 - 1 == -1 ? 0 : Store.visibledatarow[r1 - 1];
-    let col = Store.visibledatacolumn[c2], 
+    let col = Store.visibledatacolumn[c2],
         col_pre = c1 - 1 == -1 ? 0 : Store.visibledatacolumn[c1 - 1];
-    
+
     let newSelectedHTML = '<div id="luckysheet-filter-selected-sheet'+ Store.currentSheetIndex +'" class="luckysheet-cell-selected luckysheet-filter-selected"  style="left:'+ col_pre +'px;width:'+ (col - col_pre - 1) +'px;top:'+ row_pre +'px;height:'+ (row - row_pre - 1) +'px;display:block;border-color:#897BFF;z-index:20;background:none;"></div>';
     $("#luckysheet-cell-main").append(newSelectedHTML);
-    
+
     let optionHTML = "";
 
     for (let c = c1; c <= c2; c++) {
@@ -267,7 +267,7 @@ function createFilterOptions(luckysheet_filter_save, filterObj) {
                 }
 
                 caljs_data = 'data-caljs="'+ JSON.stringify(filterObj[c - c1].caljs) +'" ' +
-                                 'data-byconditionvalue="'+ filterObj[c - c1].caljs["value"] +'" ' + 
+                                 'data-byconditionvalue="'+ filterObj[c - c1].caljs["value"] +'" ' +
                                  'data-byconditiontype="'+ filterObj[c - c1].caljs["type"] +'" ' +
                                  'data-byconditiontext="'+ filterObj[c - c1].caljs["text"] +'" ' +
                                  caljs_value1_data + caljs_value2_data;
@@ -341,12 +341,12 @@ function initialFilterHandler(){
 
     $("#luckysheet-filter-menu").mouseover(function () {
         clearTimeout(hidefilersubmenu);
-        
+
         hidefilersubmenu = setTimeout(function () {
             $("#luckysheet-filter-submenu").hide();
         }, 500);
     });
-    
+
 
     $("#luckysheet-filter-submenu").mouseover(function () {
         clearTimeout(hidefilersubmenu);
@@ -356,7 +356,7 @@ function initialFilterHandler(){
 
         let $type = $(this).data("type");
         let $value = $(this).attr("data-value");
-        
+
         if ($type == "2") {
             $("#luckysheet-filter-selected span").data("type", "2");
             $("#luckysheet-filter-menu .luckysheet-filter-selected-input2").show();
@@ -368,7 +368,7 @@ function initialFilterHandler(){
         else {
             $("#luckysheet-filter-selected span").data("type", "1");
             $("#luckysheet-filter-menu .luckysheet-filter-selected-input").eq(0).show();
-            
+
             //若是日期 改变input type类型为date
             if($value == "dateequal" || $value == "datelessthan" || $value == "datemorethan"){
                 $("#luckysheet-filter-menu .luckysheet-filter-selected-input input").prop("type", "date");
@@ -407,25 +407,25 @@ function initialFilterHandler(){
     $("#luckysheet-filter-selected").click(function () {
         let $t = $(this), toffset = $t.offset(), $menu = $("#luckysheet-filter-submenu");
         $menu.hide();
-    
+
         let winH = $(window).height(), winW = $(window).width();
         let menuW = $menu.width(), menuH = $menu.height();
         let top = toffset.top, left = toffset.left, mheight = winH - toffset.top - 20;
-        
+
         if (toffset.left + menuW > winW) {
             left = toffset.left - menuW;
         }
-    
+
         if (toffset.top > winH / 2) {
             top = winH - toffset.top;
-            
+
             if (top < 0) {
                 top = 0;
             }
-    
+
             mheight = toffset.top - 20;
         }
-    
+
         $menu.css({ "top": top, "left": left, "height": mheight }).show();
         clearTimeout(hidefilersubmenu);
     });
@@ -435,17 +435,17 @@ function initialFilterHandler(){
         if(!checkProtectionAuthorityNormal(Store.currentSheetIndex, "filter")){
             return;
         }
-        let $t = $(e.currentTarget), 
-            toffset = $t.offset(), 
-            $menu = $("#luckysheet-filter-menu"), 
-            winH = $(window).height(), 
+        let $t = $(e.currentTarget),
+            toffset = $t.offset(),
+            $menu = $("#luckysheet-filter-menu"),
+            winH = $(window).height(),
             winW = $(window).width();
 
-        let st_r = $t.data("str"), 
-            ed_r = $t.data("edr"), 
-            cindex = $t.data("cindex"), 
-            st_c = $t.data("stc"), 
-            ed_c = $t.data("edc"), 
+        let st_r = $t.data("str"),
+            ed_r = $t.data("edr"),
+            cindex = $t.data("cindex"),
+            st_c = $t.data("stc"),
+            ed_c = $t.data("edc"),
             rowhidden = $t.data("rowhidden") == "" ? {} : JSON.parse($t.data("rowhidden").replace(/\'/g, '"'));
 
         $("body .luckysheet-cols-menu").hide();
@@ -453,7 +453,7 @@ function initialFilterHandler(){
         $("#luckysheet-filter-byvalue-input").val("");
         $("#luckysheet-filter-bycondition").next().hide();
         $("#luckysheet-filter-byvalue").next().show();
-        
+
         $menu.data("str", st_r);
         $menu.data("edr", ed_r);
         $menu.data("cindex", cindex);
@@ -489,13 +489,13 @@ function initialFilterHandler(){
         let rowhiddenother = {}; //其它筛选列的隐藏行
         $("#luckysheet-filter-options-sheet" + Store.currentSheetIndex + " .luckysheet-filter-options").not(this).each(function () {
             let $t = $(this), rh = $t.data("rowhidden");
-            
+
             if (rh == "") {
                 return true;
             }
 
             rh = JSON.parse(rh.replace(/\'/g, '"'));
-            
+
             for (let r in rh) {
                 rowhiddenother[r] = 0;
             }
@@ -505,12 +505,12 @@ function initialFilterHandler(){
 
         setTimeout(function () {
             //日期值
-            let dvmap = {};  
+            let dvmap = {};
             let dvmap_uncheck = {};
 
             //除日期以外的值
-            let vmap = {}; 
-            let vmap_uncheck = {};  
+            let vmap = {};
+            let vmap_uncheck = {};
 
             for (let r = st_r + 1; r <= ed_r; r++) {
                 if(r in rowhiddenother){
@@ -541,7 +541,7 @@ function initialFilterHandler(){
                     if(!(d in dvmap[y][m])){
                         dvmap[y][m][d] = 0;
                     }
-                    
+
                     dvmap[y][m][d]++;
 
                     if(r in rowhidden){
@@ -572,7 +572,7 @@ function initialFilterHandler(){
                     }
 
                     if(!(m in vmap[v])){
-                        vmap[v][m] = 0;                            
+                        vmap[v][m] = 0;
                     }
 
                     vmap[v][m]++;
@@ -605,7 +605,7 @@ function initialFilterHandler(){
                                 mT = "0" + Number(m);
                             }
                             else{
-                                mT = m;    
+                                mT = m;
                             }
 
                             //日 小于 10
@@ -614,7 +614,7 @@ function initialFilterHandler(){
                                 dT = "0" + Number(d);
                             }
                             else{
-                                dT = d;    
+                                dT = d;
                             }
 
                             //日是否选中状态
@@ -635,14 +635,14 @@ function initialFilterHandler(){
                         }
 
                         ysum += msum;
-                        
+
                         //月 小于 10
                         let mT2;
                         if(Number(m) < 10){
                             mT2 = "0" + Number(m);
                         }
                         else{
-                            mT2 = m;    
+                            mT2 = m;
                         }
 
                         //月是否选中状态
@@ -757,74 +757,74 @@ function initialFilterHandler(){
         function(){
             //遍历筛选列颜色
             let $menu = $("#luckysheet-filter-menu");
-            let st_r = $menu.data("str"), 
-                ed_r = $menu.data("edr"), 
-                cindex = $menu.data("cindex"), 
-                st_c = $menu.data("stc"), 
+            let st_r = $menu.data("str"),
+                ed_r = $menu.data("edr"),
+                cindex = $menu.data("cindex"),
+                st_c = $menu.data("stc"),
                 ed_c = $menu.data("edc");
             let bgMap = {}; //单元格颜色
             let fcMap = {}; //字体颜色
-    
+
             let af_compute = alternateformat.getComputeMap();
             let cf_compute = conditionformat.getComputeMap();
-    
+
             for (let r = st_r + 1; r <= ed_r; r++) {
                 let cell = Store.flowdata[r][cindex];
-    
+
                 //单元格颜色
                 let bg = menuButton.checkstatus(Store.flowdata, r, cindex , "bg");
 
                 if(bg == null){
                     bg = "#ffffff";
                 }
-    
+
                 let checksAF = alternateformat.checksAF(r, cindex, af_compute);
                 if(checksAF != null){//若单元格有交替颜色
                     bg = checksAF[1];
                 }
-    
+
                 let checksCF = conditionformat.checksCF(r, cindex, cf_compute);
                 if(checksCF != null && checksCF["cellColor"] != null){//若单元格有条件格式
                     bg = checksCF["cellColor"];
                 }
-    
+
                 if(bg.indexOf("rgb") > -1){
                     bg = rgbTohex(bg);
                 }
-    
+
                 if(bg.length == 4){
                     bg = bg.substr(0, 1) + bg.substr(1, 1).repeat(2) + bg.substr(2, 1).repeat(2) + bg.substr(3, 1).repeat(2);
                 }
-    
+
                 //字体颜色
                 let fc = menuButton.checkstatus(Store.flowdata, r, cindex , "fc");
-                
+
                 if(checksAF != null){//若单元格有交替颜色
                     fc = checksAF[0];
                 }
-    
+
                 if(checksCF != null && checksCF["textColor"] != null){//若单元格有条件格式
                     fc = checksCF["textColor"];
                 }
-    
+
                 if(fc.indexOf("rgb") > -1){
                     fc = rgbTohex(fc);
                 }
-    
+
                 if(fc.length == 4){
                     fc = fc.substr(0, 1) + fc.substr(1, 1).repeat(2) + fc.substr(2, 1).repeat(2) + fc.substr(3, 1).repeat(2);
                 }
-    
+
                 if(Store.config != null && Store.config["rowhidden"] != null && r in Store.config["rowhidden"]){
                     bgMap[bg] = 1;
-    
+
                     if(cell != null && !isRealNull(cell.v)){
                         fcMap[fc] = 1;
                     }
                 }
                 else{
                     bgMap[bg] = 0;
-    
+
                     if(cell != null && !isRealNull(cell.v)){
                         fcMap[fc] = 0;
                     }
@@ -844,7 +844,7 @@ function initialFilterHandler(){
                 }
                 filterBgColorHtml = '<div id="filterBgColor" class="box luckysheet-mousedown-cancel"><div class="title luckysheet-mousedown-cancel">'+locale_filter.filiterByColorTip+'</div><div style="max-height:128px;overflow:auto;" class="luckysheet-mousedown-cancel">' + bgColorItemHtml + '</div></div>';
             }
-    
+
             let filterFcColorHtml = '';
             if(JSON.stringify(fcMap).length > 2 && Object.keys(fcMap).length > 1){
                 let fcColorItemHtml = '';
@@ -872,20 +872,20 @@ function initialFilterHandler(){
             let $t = $("#luckysheet-filter-orderby-color-submenu").end();
             let $con = $(this).parent();
             let winW = $(window).width(), winH = $(window).height();
-            let menuW = $con.width(), 
-                myh = $t.height() + 25, 
+            let menuW = $con.width(),
+                myh = $t.height() + 25,
                 myw = $t.width() + 5;
             let offset = $(this).offset();
             let top = offset.top, left = offset.left + menuW;
-    
+
             if (left + myw > winW) {
                 left = offset.left - myw;
             }
-    
+
             if (top + myh > winH) {
                 top = winH - myh;
             }
-    
+
             $("#luckysheet-filter-orderby-color-submenu").css({ "top": top, "left": left }).show();
         },
         function(){
@@ -896,7 +896,7 @@ function initialFilterHandler(){
     $(document).on("mouseover mouseleave", "#luckysheet-filter-orderby-color-submenu", function(e){
         if (e.type === "mouseover") {
             clearTimeout(submenuhide);
-        } 
+        }
         else {
             $(this).hide();
         }
@@ -907,12 +907,12 @@ function initialFilterHandler(){
     $(document).off("click.orderbyColorConfirm").on("click.orderbyColorConfirm", "#luckysheet-filter-orderby-color-submenu #luckysheet-filter-orderby-color-confirm", function(){
         let bg_colorMap = {};
         let fc_colorMap = {};
-        
+
         $("#luckysheet-filter-orderby-color-submenu .item").each(function(i, e){
             if($(e).find("input[type='checkbox']").is(":checked")){
                 let color = $(this).find("label").attr("title");
                 let $id = $(this).closest(".box").attr("id");
-    
+
                 if($id == "filterBgColor"){
                     bg_colorMap[color] = 0;
                 }
@@ -921,7 +921,7 @@ function initialFilterHandler(){
                 }
             }
         });
-        
+
         let bg_filter;
         if($("#luckysheet-filter-orderby-color-submenu #filterBgColor").length > 0){
             bg_filter = true;
@@ -929,7 +929,7 @@ function initialFilterHandler(){
         else{
             bg_filter = false;
         }
-        
+
         let fc_filter;
         if($("#luckysheet-filter-orderby-color-submenu #filterFcColor").length > 0){
             fc_filter = true;
@@ -937,90 +937,90 @@ function initialFilterHandler(){
         else{
             fc_filter = false;
         }
-    
+
         let $menu = $("#luckysheet-filter-menu");
-        let st_r = $menu.data("str"), 
-            ed_r = $menu.data("edr"), 
-            cindex = $menu.data("cindex"), 
-            st_c = $menu.data("stc"), 
+        let st_r = $menu.data("str"),
+            ed_r = $menu.data("edr"),
+            cindex = $menu.data("cindex"),
+            st_c = $menu.data("stc"),
             ed_c = $menu.data("edc");
-    
+
         let rowhiddenother = {}; //其它筛选列的隐藏行
         $("#luckysheet-filter-options-sheet" + Store.currentSheetIndex + " .luckysheet-filter-options").not($("#luckysheet-filter-options-sheet" + Store.currentSheetIndex + " .luckysheet-filter-options").eq(cindex - st_c).get(0)).each(function () {
             let $t = $(this), rh = $t.data("rowhidden");
-    
+
             if (rh == "") {
                 return true;
             }
-    
+
             rh = JSON.parse(rh);
-            
+
             for (let r in rh) {
                 rowhiddenother[r] = 0;
             }
         });
-    
+
         let filterdata = {};
         let rowhidden = {};
         let caljs = {};
-    
+
         let af_compute = alternateformat.getComputeMap();
         let cf_compute = conditionformat.getComputeMap();
-    
+
         for (let r = st_r + 1; r <= ed_r; r++) {
             if(r in rowhiddenother){
                 continue;
             }
-    
+
             if(Store.flowdata[r] == null){
                 continue;
             }
-    
+
             let cell = Store.flowdata[r][cindex];
-    
+
             //单元格颜色
             let bg = menuButton.checkstatus(Store.flowdata, r, cindex , "bg");
-    
+
             let checksAF = alternateformat.checksAF(r, cindex, af_compute);
             if(checksAF != null){//若单元格有交替颜色
                 bg = checksAF[1];
             }
-    
+
             let checksCF = conditionformat.checksCF(r, cindex, cf_compute);
             if(checksCF != null && checksCF["cellColor"] != null){//若单元格有条件格式
                 bg = checksCF["cellColor"];
             }
-            
+
             // bg maybe null
             bg = bg == null ? '#ffffff' : bg;
 
             if(bg.indexOf("rgb") > -1){
                 bg = rgbTohex(bg);
             }
-    
+
             if(bg.length == 4){
                 bg = bg.substr(0, 1) + bg.substr(1, 1).repeat(2) + bg.substr(2, 1).repeat(2) + bg.substr(3, 1).repeat(2);
             }
-    
+
             //文本颜色
             let fc = menuButton.checkstatus(Store.flowdata, r, cindex , "fc");
-    
+
             if(checksAF != null){//若单元格有交替颜色
                 fc = checksAF[0];
             }
-    
+
             if(checksCF != null && checksCF["textColor"] != null){//若单元格有条件格式
                 fc = checksCF["textColor"];
             }
-    
+
             if(fc.indexOf("rgb") > -1){
                 fc = rgbTohex(fc);
             }
-    
+
             if(fc.length == 4){
                 fc = fc.substr(0, 1) + fc.substr(1, 1).repeat(2) + fc.substr(2, 1).repeat(2) + fc.substr(3, 1).repeat(2);
             }
-    
+
             if(bg_filter && fc_filter){
                 if(!(bg in bg_colorMap) && (!(fc in fc_colorMap) || cell == null || isRealNull(cell.v))){
                     rowhidden[r] = 0;
@@ -1037,51 +1037,51 @@ function initialFilterHandler(){
                 }
             }
         }
-    
+
         let $top = $("#luckysheet-filter-options-sheet" + Store.currentSheetIndex + " .luckysheet-filter-options").eq(cindex - st_c);
-    
+
         let optionstate = Object.keys(rowhidden).length > 0;
-    
-        let rowhiddenall = $.extend(true, rowhiddenother, rowhidden), 
+
+        let rowhiddenall = $.extend(true, rowhiddenother, rowhidden),
             rowhidenPre = json.parseJsonParm($top.data("rowhidden"));
-    
+
         labelFilterOptionState($top, optionstate, rowhidden, caljs, true, st_r, ed_r, cindex, st_c, ed_c);
-    
+
         let cfg = $.extend(true, {}, Store.config);
         cfg["rowhidden"] = rowhiddenall;
-    
+
         //保存撤销
         if(Store.clearjfundo){
             let redo = {};
             redo["type"] = "datachangeAll_filter";
             redo["sheetIndex"] = Store.currentSheetIndex;
-    
+
             redo["config"] = $.extend(true, {}, Store.config);
             redo["curconfig"] = cfg;
-    
+
             redo["optionstate"] = optionstate;
             redo["optionsindex"] = cindex - st_c;
-    
+
             redo["rowhidden"] = $.extend(true, {}, rowhidden);
             redo["rowhidenPre"] = $.extend(true, {}, rowhidenPre);
-    
+
             if (caljs != null) {
                 redo["caljs"] = caljs;
             }
-    
+
             Store.jfundo.length  = 0;
             Store.jfredo.push(redo);
         }
-    
+
         //config
         Store.config = cfg;
         Store.luckysheetfile[getSheetIndex(Store.currentSheetIndex)].config = Store.config;
-    
+
         server.saveParam("cg", Store.currentSheetIndex, cfg["rowhidden"], { "k": "rowhidden" });
-    
-        //行高、列宽 刷新  
+
+        //行高、列宽 刷新
         jfrefreshgrid_rhcw(Store.flowdata.length, Store.flowdata[0].length);
-    
+
         $("#luckysheet-filter-menu, #luckysheet-filter-submenu, #luckysheet-filter-orderby-color-submenu").hide();
         cleargridelement();
     });
@@ -1128,7 +1128,7 @@ function initialFilterHandler(){
         let $yearDay = $(this).parents(".yearBox").find(".day");
         $yearDay.each(function(i,e){
             if($(e).attr("data-check") == "true"){
-                
+
             }
             else{
                 yearDayAllCheck = false;
@@ -1157,7 +1157,7 @@ function initialFilterHandler(){
         let $monthDay = $(this).parents(".monthBox").find(".day");
         $monthDay.each(function(i,e){
             if($(e).attr("data-check") == "true"){
-                
+
             }
             else{
                 monthDayAllCheck = false;
@@ -1176,7 +1176,7 @@ function initialFilterHandler(){
         let $yearDay = $(this).parents(".yearBox").find(".day");
         $yearDay.each(function(i,e){
             if($(e).attr("data-check") == "true"){
-                
+
             }
             else{
                 yearDayAllCheck = false;
@@ -1237,7 +1237,7 @@ function initialFilterHandler(){
             let $monthDay = $(event).find(".day input[type='checkbox']");
             $monthDay.each(function(i,e){
                 if($(e).is(":checked")){
-                    
+
                 }
                 else{
                     monthDayAllCheck = false;
@@ -1259,7 +1259,7 @@ function initialFilterHandler(){
             let $yearDay = $(event).find(".day input[type='checkbox']");
             $yearDay.each(function(i,e){
                 if($(e).is(":checked")){
-                    
+
                 }
                 else{
                     yearDayAllCheck = false;
@@ -1305,8 +1305,8 @@ function initialFilterHandler(){
 
             optiongroups.push({
                 "optionstate":optionstate,
-                "rowhidden": rowhidden, 
-                "caljs":caljs, 
+                "rowhidden": rowhidden,
+                "caljs":caljs,
                 "str": $t.data("str"),
                 "edr": $t.data("edr"),
                 "cindex": $t.data("cindex"),
@@ -1333,7 +1333,7 @@ function initialFilterHandler(){
 
         server.saveParam("cg", Store.currentSheetIndex, {}, { "k": "rowhidden" });
 
-        //行高、列宽 刷新  
+        //行高、列宽 刷新
         jfrefreshgrid_rhcw(Store.flowdata.length, Store.flowdata[0].length);
     });
 
@@ -1341,7 +1341,7 @@ function initialFilterHandler(){
     $("#luckysheet-filter-byvalue-input").on('input propertychange', function () {
         let v = $(this).val().toString();
         $("#luckysheet-filter-byvalue-select .ListBox .luckysheet-mousedown-cancel").show();
-        
+
         if(v != ""){
             $("#luckysheet-filter-byvalue-select .ListBox input[type='checkbox']").each(function(i, e){
                 if($(e).closest(".day").length > 0){
@@ -1352,7 +1352,7 @@ function initialFilterHandler(){
 
                     if(itemV.indexOf(v) == -1){
                         $(e).closest(".day").hide();
-                        
+
                         //天 对应的 月份
                         let $monthDay = $(e).closest(".dayList").find(".day:visible");
                         if($monthDay.length == 0){
@@ -1369,7 +1369,7 @@ function initialFilterHandler(){
 
                 if($(e).closest(".textBox").length > 0){
                     let itemV = $(e).siblings("label").text().toString();
-                    
+
                     if(itemV.indexOf(v) == -1){
                         $(e).parents(".textBox").hide();
                     }
@@ -1386,10 +1386,10 @@ function initialFilterHandler(){
     //筛选 确认
     $("#luckysheet-filter-confirm").click(function () {
         let $menu = $("#luckysheet-filter-menu");
-        let st_r = $menu.data("str"), 
-            ed_r = $menu.data("edr"), 
-            cindex = $menu.data("cindex"), 
-            st_c = $menu.data("stc"), 
+        let st_r = $menu.data("str"),
+            ed_r = $menu.data("edr"),
+            cindex = $menu.data("cindex"),
+            st_c = $menu.data("stc"),
             ed_c = $menu.data("edc");
 
         let rowhiddenother = {}; //其它筛选列的隐藏行
@@ -1401,7 +1401,7 @@ function initialFilterHandler(){
             }
 
             rh = JSON.parse(rh.replace(/\'/g, '"'));
-            
+
             for (let r in rh) {
                 rowhiddenother[r] = 0;
             }
@@ -1442,7 +1442,7 @@ function initialFilterHandler(){
                 }
 
                 let cell = Store.flowdata[r][cindex];
-                
+
                 if (value == "cellnull") { //单元格为空
                     if(cell != null && !isRealNull(cell.v)){
                         rowhidden[r] = 0;
@@ -1453,7 +1453,7 @@ function initialFilterHandler(){
                         rowhidden[r] = 0;
                     }
                 }
-                else if (value == "textinclude") { //文本包含 
+                else if (value == "textinclude") { //文本包含
                     let value1 = caljs["value1"];
 
                     if(cell == null || isRealNull(cell.v)){
@@ -1658,7 +1658,7 @@ function initialFilterHandler(){
                     }
                     else{
                         max = value1;
-                        min = value2;   
+                        min = value2;
                     }
 
                     if(cell == null || isRealNull(cell.v)){
@@ -1683,7 +1683,7 @@ function initialFilterHandler(){
                     }
                     else{
                         max = value1;
-                        min = value2;   
+                        min = value2;
                     }
 
                     if(cell == null || isRealNull(cell.v)){
@@ -1730,7 +1730,7 @@ function initialFilterHandler(){
                     filterdata[itemV] = "1";
                 }
             });
-            
+
             for (let r = st_r + 1; r <= ed_r; r++) {
                 if(r in rowhiddenother){
                     continue;
@@ -1769,7 +1769,7 @@ function initialFilterHandler(){
 
         let optionstate = $("#luckysheet-filter-byvalue-select .ListBox input[type='checkbox']:visible:checked").length < $("#luckysheet-filter-byvalue-select .ListBox input[type='checkbox']:visible").length || $("#luckysheet-filter-byvalue-input").val().length > 0 || ($("#luckysheet-filter-bycondition").next().is(":visible") && $("#luckysheet-filter-byvalue").next().is(":hidden") && $("#luckysheet-filter-selected span").data("value") != "null");
 
-        let rowhiddenall = $.extend(true, rowhiddenother, rowhidden), 
+        let rowhiddenall = $.extend(true, rowhiddenother, rowhidden),
             rowhidenPre = json.parseJsonParm($top.data("rowhidden"));
 
         labelFilterOptionState($top, optionstate, rowhidden, caljs, true, st_r, ed_r, cindex, st_c, ed_c);
@@ -1806,7 +1806,7 @@ function initialFilterHandler(){
 
         server.saveParam("cg", Store.currentSheetIndex, cfg["rowhidden"], { "k": "rowhidden" });
 
-        //行高、列宽 刷新  
+        //行高、列宽 刷新
         jfrefreshgrid_rhcw(Store.flowdata.length, Store.flowdata[0].length);
 
         $("#luckysheet-filter-menu, #luckysheet-filter-submenu").hide();

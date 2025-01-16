@@ -44,6 +44,9 @@ let luckysheet = {};
 
 luckysheet = common_extend(api, luckysheet);
 
+// TODO 要删除的代码
+// window.Store = Store;
+
 //创建luckysheet表格
 // 20250108 增加一个isUpload 表示是上传文件后重构的数据不需要从服务器拉取数据,因为上传的数据还在本地
 luckysheet.create = function (setting, isUpload = false) {
@@ -182,7 +185,6 @@ luckysheet.create = function (setting, isUpload = false) {
                 // 调试数据
                 let data = new Function("return " + d)();
                 Store.luckysheetfile = data;
-
                 sheetmanage.initialjfFile(menu, title);
                 initialWorkBook();
 
@@ -197,20 +199,6 @@ luckysheet.create = function (setting, isUpload = false) {
                 console.error(textStatus + ": " + errorThrown);
             }
         });
-
-        // $.post(loadurl, {"gridKey" : server.gridKey}, function (d) {
-        //     let data = new Function("return " + d)();
-        //     Store.luckysheetfile = data;
-        //
-        //     sheetmanage.initialjfFile(menu, title);
-        //     // luckysheetsizeauto();
-        //     initialWorkBook();
-        //
-        //     //需要更新数据给后台时，建立WebSocket连接
-        //     if(server.allowUpdate){
-        //         server.openWebSocket();
-        //     }
-        // });
     }
 
     initChat()

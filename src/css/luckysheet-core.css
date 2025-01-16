@@ -3096,10 +3096,11 @@ fieldset[disabled] .btn-danger.focus {
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
     color: white;
     /* 迭代 */
-    border-radius: 2px;
-    padding: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
-    border: none;
+    /* 20250113 先注释,原因是影响到选框上方显示的单元格地址 */
+    /*border-radius: 2px;*/
+    /*padding: 20px;*/
+    /*box-shadow: 0 1px 3px rgba(0, 0, 0, .3);*/
+    /*border: none;*/
 }
 
 .luckysheet-modal-dialog {

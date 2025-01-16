@@ -38,6 +38,7 @@ const Store = {
 
   luckysheet_select_status: false,
   luckysheet_select_save: [{ "row": [0, 0], "column": [0, 0] }],
+  luckysheet_select_save_default: [{ "row": [0, 0], "column": [0, 0] }],
   luckysheet_selection_range: [],
 
   luckysheet_copy_save: {}, //复制粘贴

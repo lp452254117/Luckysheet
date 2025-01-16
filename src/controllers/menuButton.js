@@ -5005,7 +5005,7 @@ const menuButton = {
             '</span><span dir="auto" class="luckysheet-formula-text-color">)</span>';
         $("#luckysheet-rich-text-editor").html(formulaTxt);
 
-        luckysheetformula.israngeseleciton();
+        luckysheetformula.isRangeSelected();
         luckysheetformula.rangestart = true;
         luckysheetformula.rangedrag_column_start = false;
         luckysheetformula.rangedrag_row_start = false;

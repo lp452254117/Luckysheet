@@ -97,7 +97,7 @@ export function rowColumnOperationInitial() {
                     formula.rangestart ||
                     formula.rangedrag_column_start ||
                     formula.rangedrag_row_start ||
-                    formula.israngeseleciton() ||
+                    formula.isRangeSelected() ||
                     $("#luckysheet-ifFormulaGenerator-multiRange-dialog").is(":visible")
                 ) {
                     //公式选区
@@ -214,7 +214,7 @@ export function rowColumnOperationInitial() {
                         formula.rangeHightlightselected($("#luckysheet-rich-text-editor"));
 
                         //再进行 选区的选择
-                        formula.israngeseleciton();
+                        formula.isRangeSelected();
                         formula.func_selectedrange = {
                             left: colLocationByIndex(0)[0],
                             width: colLocationByIndex(0)[1] - colLocationByIndex(0)[0] - 1,
@@ -250,7 +250,7 @@ export function rowColumnOperationInitial() {
                         formula.rangestart ||
                         formula.rangedrag_column_start ||
                         formula.rangedrag_row_start ||
-                        formula.israngeseleciton()
+                        formula.isRangeSelected()
                     ) {
                         formula.rangeSetValue({ row: rowseleted, column: [null, null] });
                     } else if ($("#luckysheet-ifFormulaGenerator-multiRange-dialog").is(":visible")) {
@@ -647,7 +647,7 @@ export function rowColumnOperationInitial() {
                     formula.rangestart ||
                     formula.rangedrag_column_start ||
                     formula.rangedrag_row_start ||
-                    formula.israngeseleciton() ||
+                    formula.isRangeSelected() ||
                     $("#luckysheet-ifFormulaGenerator-multiRange-dialog").is(":visible")
                 ) {
                     //公式选区
@@ -764,7 +764,7 @@ export function rowColumnOperationInitial() {
                         formula.rangeHightlightselected($("#luckysheet-rich-text-editor"));
 
                         //再进行 选区的选择
-                        formula.israngeseleciton();
+                        formula.isRangeSelected();
                         formula.func_selectedrange = {
                             left: left,
                             width: width,
@@ -800,7 +800,7 @@ export function rowColumnOperationInitial() {
                         formula.rangestart ||
                         formula.rangedrag_column_start ||
                         formula.rangedrag_row_start ||
-                        formula.israngeseleciton()
+                        formula.isRangeSelected()
                     ) {
                         formula.rangeSetValue({ row: [null, null], column: columnseleted });
                     } else if ($("#luckysheet-ifFormulaGenerator-multiRange-dialog").is(":visible")) {

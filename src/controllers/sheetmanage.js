@@ -21,7 +21,7 @@ import imageCtrl from "./imageCtrl";
 import dataVerificationCtrl from "./dataVerificationCtrl";
 import hyperlinkCtrl from "./hyperlinkCtrl";
 import luckysheetFreezen from "./freezen";
-import { createFilterOptions, labelFilterOptionState } from "./filter";
+import { createFilter, createFilterOptions, labelFilterOptionState } from "./filter";
 import { selectHightlightShow, selectionCopyShow } from "./select";
 import Store from "../store";
 import locale from "../locale/locale";
@@ -163,6 +163,7 @@ const sheetmanage = {
 
         return curindex;
     },
+    // 定位当前正在操作的sheet索引(第二次打开也需要定位到上一次离开的sheet)
     getCurSheet: function() {
         if (Store.luckysheetfile.length) {
             let hasActive = false,
@@ -713,6 +714,18 @@ const sheetmanage = {
 
         return ret;
     },
+    // 批量建立数据
+    buildGridDataAll: function() {
+        // console.log("======= 触发批量生成data数据 =======");
+        if(Store.luckysheetfile.length > 0){
+            Store.luckysheetfile.forEach((item, index) => {
+                if(!item.hasOwnProperty('data')) {
+                    Store.luckysheetfile[index].data = this.buildGridData(item);
+                }
+            })
+        }
+    },
+    // 建立数据
     buildGridData: function(file) {
         // 如果已经存在二维数据data,那么直接返回data；如果只有celldata，那么就转化成二维数组data，再返回
         let row = file.row == null ? Store.defaultrowNum : file.row,
@@ -726,6 +739,7 @@ const sheetmanage = {
                 }
             }
         } else {
+            // console.log(file.name);
             if (celldata && celldata.length > 0) {
                 for (let i = 0; i < celldata.length; i++) {
                     let item = celldata[i];
@@ -797,8 +811,16 @@ const sheetmanage = {
 
         return data;
     },
+    // sheet 参数恢复
     sheetParamRestore: function(file, data) {
+        // console.log(file.name);
+        // console.log(JSON.stringify(file));
+        // console.log(JSON.stringify(file.luckysheet_select_save));
+        // console.log(JSON.stringify(Store.luckysheet_select_save));
+        Store.luckysheet_select_save = [];
         Store.luckysheet_select_save = file["luckysheet_select_save"];
+        // console.log(Store.luckysheet_select_save);
+        // console.log(JSON.stringify(Store.luckysheet_select_save));
         if (Store.luckysheet_select_save == null || Store.luckysheet_select_save.length == 0) {
             if (data[0] != null && data[0][0] != null && data[0][0].mc != null) {
                 Store.luckysheet_select_save = [
@@ -848,16 +870,17 @@ const sheetmanage = {
     },
     initialjfFile: function(menu, title) {
         let _this = this;
-
         _this.getCurSheet();
+        // 批量生成data数据
+        _this.buildGridDataAll();
         let file = Store.luckysheetfile[_this.getSheetIndex(Store.currentSheetIndex)];
         _this.nulldata = datagridgrowth([], Store.defaultrowNum, Store.defaultcolumnNum);
-        let data = _this.buildGridData(file);
-
+        let data = file.data;
         //初始化的时候 记录选区
         let select_save = [];
         file.jfgird_select_save = file.jfgird_select_save || [];
         file.jfgird_select_save.forEach((item) => select_save.push({ row: item.row, column: item.column }));
+
         file.luckysheet_select_save = select_save;
 
         this.sheetParamRestore(file, data);
@@ -878,9 +901,6 @@ const sheetmanage = {
         }
 
         menuButton.fontInitial(Store.fontList); //initial font
-
-        file.data = data;
-
         let rowheight = data.length;
         if (r2 > rowheight - 1) {
             rowheight = r2 + 1;
@@ -1056,7 +1076,10 @@ const sheetmanage = {
         file["visibledatacolumn"] = Store.visibledatacolumn;
         file["ch_width"] = Store.ch_width;
         file["rh_height"] = Store.rh_height;
-        file["luckysheet_select_save"] = $.extend(true, [], Store.luckysheet_select_save);
+        // console.log(Store.luckysheet_select_save || luckysheet_select_save_default);
+        // console.log(JSON.stringify(Store.luckysheet_select_save || luckysheet_select_save_default));
+        // console.log(Store.luckysheet_selection_range);
+        file["luckysheet_select_save"] = $.extend(true, [], Store.luckysheet_select_save || luckysheet_select_save_default);
         file["luckysheet_selection_range"] = $.extend(true, [], Store.luckysheet_selection_range);
 
         if ($("#luckysheet-scrollbar-x")[0].scrollWidth > $("#luckysheet-scrollbar-x")[0].offsetWidth) {
@@ -1070,6 +1093,7 @@ const sheetmanage = {
         file["zoomRatio"] = Store.zoomRatio;
     },
     setSheetParam: function(isload = true) {
+        console.log("======setSheetParam======");
         let index = this.getSheetIndex(Store.currentSheetIndex);
         let file = Store.luckysheetfile[index];
 
@@ -1079,7 +1103,8 @@ const sheetmanage = {
         // formula.execFunctionGroupData = null;
         formula.execFunctionGlobalData = null;
         window.luckysheet_getcelldata_cache = null;
-
+        // console.log("sheet name = ", file.name);
+        // console.log(JSON.stringify(file.luckysheet_select_save));
         this.sheetParamRestore(file, Store.flowdata);
 
         if (file["freezen"] == null) {
@@ -1112,13 +1137,18 @@ const sheetmanage = {
         //链接
         hyperlinkCtrl.hyperlink = file.hyperlink;
         hyperlinkCtrl.init();
-
-        createFilterOptions(file["filter_select"], file["filter"]);
+        // 创建过滤
+        if (file["filter"]) {
+            createFilter();
+            createFilterOptions(file["filter_select"], file["filter"]);
+        }
     },
+    // 恢复选区
     restoreselect: function() {
         let index = this.getSheetIndex(Store.currentSheetIndex);
+        // console.log("当前sheet索引", index, Store.currentSheetIndex);
         let file = Store.luckysheetfile[index];
-
+        // console.log("当前sheet Name = ", file.name);
         //选区
         selectHightlightShow(true);
 
@@ -1142,6 +1172,7 @@ const sheetmanage = {
 
         _this.storeSheetParam();
         let index = _this.getSheetIndex(Store.currentSheetIndex);
+        // console.log('Store.luckysheetfile[index]["data"] = ', Store.flowdata);
         Store.luckysheetfile[index]["data"] = Store.flowdata;
         Store.luckysheetfile[index]["config"] = $.extend(true, {}, Store.config);
     },
@@ -1193,28 +1224,6 @@ const sheetmanage = {
     },
     loadOtherFile: function(file) {
         let _this = this;
-        // let sheetindexset = _this.checkLoadSheetIndex(file);
-        // let sheetindex = [];
-
-        // for(let i = 0; i < sheetindexset.length; i++){
-        //     let item = sheetindexset[i];
-
-        //     if(item == file["index"]){
-        //         continue;
-        //     }
-
-        //     sheetindex.push(item);
-        // }
-
-        // for(let i = 0;i<sheetindex.length;i++){
-        //     let item = sheetindex[i];
-        //     let otherfile = Store.luckysheetfile[_this.getSheetIndex(item)];
-        //     if(otherfile["load"] == null || otherfile["load"] == "0"){
-        //         otherfile["data"] = _this.buildGridData(otherfile);
-        //         otherfile["load"] = "1";
-        //     }
-        // }
-
         for (let i = 0; i < Store.luckysheetfile.length; i++) {
             let otherfile = Store.luckysheetfile[i];
             if (otherfile.index == file.index) {
@@ -1228,7 +1237,8 @@ const sheetmanage = {
         }
     },
     // 切换sheet
-    changeSheet: function(index, isPivotInitial, isNewSheet, isCopySheet) {
+     changeSheet:async function(index, isPivotInitial, isNewSheet, isCopySheet) {
+
         if (isEditMode()) {
             // alert("非编辑模式下不允许该操作！");
             return;
@@ -1269,6 +1279,7 @@ const sheetmanage = {
         window.luckysheetCurrentIndex = index;
 
         _this.storeSheetParamALL();
+        // 设置当前sheet索引
         _this.setCurSheet(index);
 
         if (!!file.isPivotTable) {
@@ -1282,13 +1293,10 @@ const sheetmanage = {
             luckysheetsizeauto(false);
             this.refreshAllPivotTable(Store.currentSheetIndex);
         }
-
         let load = file["load"];
         if (load != null) {
             let data = _this.buildGridData(file);
             file.data = data;
-            // _this.loadOtherFile(file);
-
             _this.mergeCalculation(index);
             _this.setSheetParam(true);
             _this.showSheet();
@@ -1301,38 +1309,11 @@ const sheetmanage = {
         } else {
             let loadSheetUrl = server.loadSheetUrl;
             if (loadSheetUrl == "" || Store.luckysheetcurrentisPivotTable || !!isNewSheet) {
-                let data = _this.buildGridData(file);
-
-                file["data"] = data;
+                if(!file.hasOwnProperty("data")) {
+                    let data = _this.buildGridData(file);
+                    file["data"] = data;
+                }
                 file["load"] = "1";
-
-                // *这里不应该调用loadOtherFile去加载其余页面的数据,
-                // *因为loadOtherFile里判断后会调用buildGridData把其余的sheet的数据设置为空的二维数组,即使那个sheet在服务端存在数据.
-                // *这就导致一个数据丢失问题.
-                // _this.loadOtherFile(file);
-
-                // let sheetindexset = _this.checkLoadSheetIndex(file);
-                // let sheetindex = [];
-
-                // for(let i = 0; i < sheetindexset.length; i++){
-                //     let item = sheetindexset[i];
-
-                //     if(item == file["index"]){
-                //         continue;
-                //     }
-
-                //     sheetindex.push(item);
-                // }
-
-                // for(let i = 0;i<sheetindex.length;i++){
-                //     let item = sheetindex[i];
-                //     let otherfile = Store.luckysheetfile[_this.getSheetIndex(item)];
-                //     if(otherfile["load"] == null || otherfile["load"] == "0"){
-                //         otherfile["data"] = _this.buildGridData(otherfile);
-                //         otherfile["load"] = "1";
-                //     }
-                // }
-
                 _this.mergeCalculation(index);
                 _this.setSheetParam();
                 _this.showSheet();
@@ -1347,10 +1328,9 @@ const sheetmanage = {
                 server.saveParam("shs", null, Store.currentSheetIndex);
             } else {
                 $("#luckysheet-grid-window-1").append(luckysheetlodingHTML());
-
                 let sheetindex = _this.checkLoadSheetIndex(file);
                 let currentSheet = getSheet();
-                $.ajax({
+                await $.ajax({
                     url: loadSheetUrl,
                     type: 'POST',
                     data: {
@@ -1363,13 +1343,10 @@ const sheetmanage = {
                     headers: Store.init_setting.api_headers || {}, // 支持自定义身份信息
                     success: function(d) {
                         let dataset = new Function("return " + d)();
-                        console.log(dataset);
-                        console.log(index.toString());
                         if (dataset && dataset.hasOwnProperty(index.toString())) {
                             file.celldata = dataset[index.toString()];
                         }
                         let data = _this.buildGridData(file);
-
                         setTimeout(function() {
                             Store.loadingObj.close();
                         }, 500);
@@ -1400,7 +1377,6 @@ const sheetmanage = {
                             _this.restoreSheetAll(Store.currentSheetIndex);
                             luckysheetrefreshgrid();
                         }, 1);
-
                         server.saveParam("shs", null, Store.currentSheetIndex);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -1409,7 +1385,6 @@ const sheetmanage = {
                         // console.log(jqXHR, textStatus, errorThrown);
                     }
                 });
-
             }
         }
 
@@ -1529,8 +1504,8 @@ const sheetmanage = {
                 let formulaTxt = getcellFormula(f.r, f.c, dataindex);
                 // console.log("=== function:checkLoadSheetIndex ===", formulaTxt);
                 if (formulaTxt == null) {
-                    let file = Store.luckysheetfile[this.getSheetIndex(dataindex)];
-                    file.data = this.buildGridData(file);
+                    // let file = Store.luckysheetfile[this.getSheetIndex(dataindex)];
+                    // file.data = this.buildGridData(file);
                     formulaTxt = getcellFormula(f.r, f.c, dataindex);
                     if (formulaTxt == null) {
                         continue;
@@ -1649,6 +1624,7 @@ const sheetmanage = {
         for (let i = 0; i < Store.luckysheetfile.length; i++) {
             if (Store.luckysheetfile[i]["index"] == index) {
                 Store.luckysheetfile[i].status = 1;
+                // console.log("要显示的sheetName = ", Store.luckysheetfile[i].name);
             } else {
                 Store.luckysheetfile[i].status = 0;
             }

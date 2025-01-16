@@ -1356,6 +1356,7 @@ const server = {
       });
     });
   },
+  // 保持高亮框
   keepHighLightBox: function() {
     Store.cooperativeEdit.checkoutData.forEach(value => {
       if (value.index == Store.currentSheetIndex) {

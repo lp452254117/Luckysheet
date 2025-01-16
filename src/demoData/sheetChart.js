@@ -4,7 +4,8 @@ window.sheetChart = {
 	"status": 0,
 	"order": 8,
 	"index": "Sheet_6az6nei65t1i_1596209937084",
-	"celldata": [{
+	"celldata": [
+		{
 		"r": 0,
 		"c": 0,
 		"v": {
@@ -1245,20 +1246,22 @@ window.sheetChart = {
 	"isPivotTable": false,
 	"ch_width": 4560,
 	"rh_height": 1807,
-	"luckysheet_select_save": [{
-		"left": 0,
-		"width": 73,
-		"top": 445,
-		"height": 20,
-		"left_move": 0,
-		"width_move": 147,
-		"top_move": 445,
-		"height_move": 251,
-		"row": [22, 33],
-		"column": [0, 1],
-		"row_focus": 22,
-		"column_focus": 0
-	}],
+	"luckysheet_select_save": [
+	// 	{
+	// 	"left": 0,
+	// 	"width": 73,
+	// 	"top": 445,
+	// 	"height": 20,
+	// 	"left_move": 0,
+	// 	"width_move": 147,
+	// 	"top_move": 445,
+	// 	"height_move": 251,
+	// 	"row": [22, 33],
+	// 	"column": [0, 1],
+	// 	"row_focus": 22,
+	// 	"column_focus": 0
+	// }
+	],
 	"luckysheet_selection_range": [],
 	"scrollLeft": 0,
 	"scrollTop": 185,

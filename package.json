@@ -45,7 +45,7 @@
     "exceljs": "^4.4.0",
     "flatpickr": "^4.6.6",
     "jquery": "^2.2.4",
-    "luckyexcel": "^1.0.1",
+    "mkk-luckyexcel": "^1.0.0",
     "numeral": "^2.0.6",
     "pako": "^1.0.11"
   },

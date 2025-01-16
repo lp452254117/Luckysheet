@@ -226,26 +226,26 @@ window.sheetDataVerification = {
         },
     },
     "luckysheet_select_save": [
-        {
-            "left": 963,
-            "width": 125,
-            "top": 240,
-            "height": 19,
-            "left_move": 963,
-            "width_move": 125,
-            "top_move": 240,
-            "height_move": 19,
-            "row": [
-                12,
-                12
-            ],
-            "column": [
-                7,
-                7
-            ],
-            "row_focus": 12,
-            "column_focus": 7
-        }
+        // {
+        //     "left": 963,
+        //     "width": 125,
+        //     "top": 240,
+        //     "height": 19,
+        //     "left_move": 963,
+        //     "width_move": 125,
+        //     "top_move": 240,
+        //     "height_move": 19,
+        //     "row": [
+        //         12,
+        //         12
+        //     ],
+        //     "column": [
+        //         7,
+        //         7
+        //     ],
+        //     "row_focus": 12,
+        //     "column_focus": 7
+        // }
     ],
     "dataVerification": {
         "1_0": {

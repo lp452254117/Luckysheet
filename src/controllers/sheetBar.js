@@ -21,6 +21,8 @@ import method from '../global/method';
 import luckysheetsizeauto from './resize';
 import {openProtectionModal} from "./protection";
 
+// TODO 测试代码要删除的
+window.formula = formula;
 //表格底部名称栏区域 相关事件（增、删、改、隐藏显示、颜色等等）
 let isInitialSheetConfig = false, luckysheetcurrentSheetitem = null, jfdbclicklagTimeout = null,oldSheetFileName = "";
 function showsheetconfigmenu() {
@@ -124,27 +126,33 @@ function showsheetconfigmenu() {
     },1);
 }
 
-let luckysheetsheetrightclick = function ($t, $cur, e) {
-        //引用单元格范围时，禁止切换sheer
+// 切换shhet会触发
+let luckySheetSheetRightClick = function ($t, $cur, e) {
+    // 引用单元格范围时，禁止切换sheer
     if ($("#luckysheet-dataVerificationRange-dialog").is(":visible"))//是否可见
     {
         //禁止切换sheer
-        window.alert("选择单元格范围窗口打开时，不能切换sheet!");
+        tooltip.info("", "选择单元格范围窗口打开时，不能切换sheet!");
         return;
     }
     clearTimeout(jfdbclicklagTimeout);
     if ($cur.hasClass("luckysheet-sheets-item-name") && $cur.attr("contenteditable") == "true") {
         return;
     }
-    if (formula.rangestart || formula.rangedrag_column_start || formula.rangedrag_row_start || formula.israngeseleciton()) {
+    // 判断是否显示公式编辑框
+    // if (formula.rangestart || formula.rangedrag_column_start || formula.rangedrag_row_start || formula.isRangeSelected()) {
+    if (formula.rangestart || formula.rangedrag_column_start || formula.rangedrag_row_start || formula.isRangeSelected()) {
         setTimeout(function () {
             formula.setCaretPosition(formula.rangeSetValueTo.get(0), 0, formula.rangeSetValueTo.text().length);
             formula.createRangeHightlight();
             $("#luckysheet-input-box-index").find(".luckysheet-input-box-index-sheettxt").remove().end().prepend("<span class='luckysheet-input-box-index-sheettxt'>" + sheetmanage.getSheetName(formula.rangetosheet) + "!</span>").show();
-            $("#luckysheet-input-box-index").css({"left": $("#luckysheet-input-box").css("left"), "top": (parseInt($("#luckysheet-input-box").css("top")) - 20) + "px", "z-index": $("#luckysheet-input-box").css("z-index")});
+            $("#luckysheet-input-box-index").css({
+                "left": $("#luckysheet-input-box").css("left"),
+                "top": (parseInt($("#luckysheet-input-box").css("top")) - 20) + "px",
+                "z-index": $("#luckysheet-input-box").css("z-index"),
+            });
         }, 1);
-    }
-    else {
+    } else {
         //保存正在编辑的单元格内容
         if (parseInt($("#luckysheet-input-box").css("top")) > 0) {
             formula.updatecell(Store.luckysheetCellUpdate[0], Store.luckysheetCellUpdate[1]);
@@ -153,14 +161,11 @@ let luckysheetsheetrightclick = function ($t, $cur, e) {
         $("#luckysheet-input-box").removeAttr("style");
         $("#luckysheet-formula-functionrange .luckysheet-formula-functionrange-highlight").remove();
     }
-
     $("#luckysheet-sheet-area div.luckysheet-sheets-item").removeClass("luckysheet-sheets-item-active");
     $t.addClass("luckysheet-sheets-item-active");
     cleargridelement(e);
     sheetmanage.changeSheet($t.data("index"));
-
     $("#luckysheet-sheet-list, #luckysheet-rightclick-sheet-menu").hide();
-
     if ($cur.hasClass("luckysheet-sheets-item-menu") || $cur.hasClass("fa-sort-desc") || e.which == "3") {
         luckysheetcurrentSheetitem = $cur.closest(".luckysheet-sheets-item");
         showsheetconfigmenu();
@@ -170,7 +175,6 @@ let luckysheetsheetrightclick = function ($t, $cur, e) {
     {
         //刷新页面
         refreshProtectionContent();
-
     }
     luckysheetsizeauto();
 }
@@ -202,7 +206,7 @@ export function initialSheetBar(){
 
         if (e.which == "3") {
             setTimeout(() => {
-                luckysheetsheetrightclick($t, $cur, e);
+                luckySheetSheetRightClick($t, $cur, e);
                 luckysheetcurrentSheetitem = $item;
                 showsheetconfigmenu();
                 return;
@@ -236,14 +240,14 @@ export function initialSheetBar(){
             }, 200);
         }
     }).on("click", "div.luckysheet-sheets-item", function (e) {
-
-        if(isEditMode()){
+        // 点击sheet触发
+        if(isEditMode()) {
             // alert("非编辑模式下不允许该操作！");
             return;
         }
 
         let $t = $(this), $cur = $(e.target);
-        luckysheetsheetrightclick($t, $cur, e);
+        luckySheetSheetRightClick($t, $cur, e);
         server.keepHighLightBox()
     });
 
@@ -350,7 +354,7 @@ export function initialSheetBar(){
         // 钩子： sheetEditNameAfter
         method.createHookFunction('sheetEditNameAfter', {
             i: Store.luckysheetfile[index].index,
-            oldName: oldtxt, newName: txt 
+            oldName: oldtxt, newName: txt
         });
     });
 

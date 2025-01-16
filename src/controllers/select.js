@@ -29,7 +29,7 @@ function seletedHighlistByindex(id, r1, r2, c1, c2) {
 function selectHightlightShow(isRestore = false) {
     $("#luckysheet-cell-selected-boxs").show();
     $("#luckysheet-cell-selected-boxs #luckysheet-cell-selected").siblings(".luckysheet-cell-selected").remove();
-
+    // console.log(JSON.stringify(Store.luckysheet_select_save));
     if (Store.luckysheet_select_save.length > 0) {
         for (let i = 0; i < Store.luckysheet_select_save.length; i++) {
             let r1 = Store.luckysheet_select_save[i].row[0],
@@ -181,19 +181,18 @@ function selectHightlightShow(isRestore = false) {
         if (Store.luckysheet_select_save.length == 1 && Store.luckysheet_select_save[0].row[0] == Store.luckysheet_select_save[0].row[1] && Store.luckysheet_select_save[0].column[0] == Store.luckysheet_select_save[0].column[1]) {
             dynamicArrayHightShow(Store.luckysheet_select_save[0].row[0], Store.luckysheet_select_save[0].column[0]);
         }
-    
+
         /* 刷新当前状态栏 */
         refreshMenuButtonFocus();
     }
-
-    Store.luckysheetfile[getSheetIndex(Store.currentSheetIndex)].luckysheet_select_save = Store.luckysheet_select_save;
+        Store.luckysheetfile[getSheetIndex(Store.currentSheetIndex)].luckysheet_select_save = Store.luckysheet_select_save;
             // Hook function, change the range selection box, selectHightlightShowillbe triggered multiple times when mousemove is moused, and thhistoricalvalue is used here to throttle
         const luckysheet_select_save_previous = JSON.stringify(Store.luckysheet_select_save);
 
-        if(Store.luckysheet_select_save_previous == null |Store.luckysheet_select_save_previous !== luckysheet_select_save_previous){
+        if(Store.luckysheet_select_save_previous == null || Store.luckysheet_select_save_previous !== luckysheet_select_save_previous){
             method.createHookFunction('rangeSelect', Store.luckysheetfile[getSheetIndex(Store.currentSheetIndex)], Store.luckysheet_select_save);
         }
-        
+
         Store.luckysheet_select_save_previous = luckysheet_select_save_previous;
 }
 

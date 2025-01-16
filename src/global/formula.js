@@ -51,6 +51,120 @@ const luckysheetformula = {
         nl: "#NULL!", //交叉运算符（空格）使用不正确
         sp: "#SPILL!", //数组范围有其它值
     },
+    //sparklines添加
+    colorList: [
+        "#2ec7c9",
+        "#fc5c5c",
+        "#5ab1ef",
+        "#ffb980",
+        "#d87a80",
+        "#8d98b3",
+        "#e5cf0d",
+        "#97b552",
+        "#95706d",
+        "#dc69aa",
+        "#07a2a4",
+        "#9a7fd1",
+        "#588dd5",
+        "#f5994e",
+        "#c05050",
+        "#59678c",
+        "#c9ab00",
+        "#7eb00a",
+        "#6f5553",
+        "#c14089",
+    ],
+    classlist: {
+        province: {
+            11: "北京",
+            12: "天津",
+            13: "河北",
+            14: "山西",
+            15: "内蒙古",
+            21: "辽宁",
+            22: "吉林",
+            23: "黑龙江",
+            31: "上海",
+            32: "江苏",
+            33: "浙江",
+            34: "安徽",
+            35: "福建",
+            36: "江西",
+            37: "山东",
+            41: "河南",
+            42: "湖北",
+            43: "湖南",
+            44: "广东",
+            45: "广西",
+            46: "海南",
+            50: "重庆",
+            51: "四川",
+            52: "贵州",
+            53: "云南",
+            54: "西藏",
+            61: "陕西",
+            62: "甘肃",
+            63: "青海",
+            64: "宁夏",
+            65: "新疆",
+            71: "台湾",
+            81: "香港",
+            82: "澳门",
+            91: "国外",
+        },
+    },
+    oldvalue: null,
+    rangechangeindex: null,
+    rangestart: false,
+    rangetosheet: null,
+    rangeSetValueTo: null,
+    func_selectedrange: {}, //函数选区范围
+    rangeHightlightHTML:
+      '<div id="luckysheet-formula-functionrange-highlight-${id}" rangeindex="${id}"  class="luckysheet-selection-highlight luckysheet-formula-functionrange-highlight"><div data-type="top" class="luckysheet-selection-copy-top luckysheet-copy"></div><div data-type="right" class="luckysheet-selection-copy-right luckysheet-copy"></div><div data-type="bottom" class="luckysheet-selection-copy-bottom luckysheet-copy"></div><div data-type="left" class="luckysheet-selection-copy-left luckysheet-copy"></div><div class="luckysheet-selection-copy-hc"></div><div data-type="lt" class="luckysheet-selection-highlight-topleft luckysheet-highlight"></div><div data-type="rt" class="luckysheet-selection-highlight-topright luckysheet-highlight"></div><div data-type="lb" class="luckysheet-selection-highlight-bottomleft luckysheet-highlight"></div><div data-type="rb" class="luckysheet-selection-highlight-bottomright luckysheet-highlight"></div></div>',
+    searchHTML: '<div id="luckysheet-formula-search-c" class="luckysheet-formula-search-c"></div>',
+    helpHTML:
+      '<div id="luckysheet-formula-help-c" class="luckysheet-formula-help-c"> <div class="luckysheet-formula-help-close" title="${helpClose}"><i class="fa fa-times" aria-hidden="true"></i></div> <div class="luckysheet-formula-help-collapse" title="${helpCollapse}"><i class="fa fa-angle-up" aria-hidden="true"></i></div> <div class="luckysheet-formula-help-title"><div class="luckysheet-formula-help-title-formula"> <span class="luckysheet-arguments-help-function-name">SUM</span> <span class="luckysheet-arguments-paren">(</span> <span class="luckysheet-arguments-parameter-holder"> <span class="luckysheet-arguments-help-parameter luckysheet-arguments-help-parameter-active" dir="auto">A2:A100</span>, <span class="luckysheet-arguments-help-parameter" dir="auto">101</span> </span> <span class="luckysheet-arguments-paren">)</span> </div></div> <div class="luckysheet-formula-help-content"> <div class="luckysheet-formula-help-content-example"> <div class="luckysheet-arguments-help-section-title">${helpExample}</div> <div class="luckysheet-arguments-help-formula"> <span class="luckysheet-arguments-help-function-name">SUM</span> <span class="luckysheet-arguments-paren">(</span> <span class="luckysheet-arguments-parameter-holder"> <span class="luckysheet-arguments-help-parameter luckysheet-arguments-help-parameter-active" dir="auto">A2:A100</span>, <span class="luckysheet-arguments-help-parameter" dir="auto">101</span> </span> <span class="luckysheet-arguments-paren">)</span> </div> </div> <div class="luckysheet-formula-help-content-detail"> <div class="luckysheet-arguments-help-section"> <div class="luckysheet-arguments-help-section-title luckysheet-arguments-help-parameter-name">${helpAbstract}</div> <span class="luckysheet-arguments-help-parameter-content">${helpAbstract}</span> </div> </div> <div class="luckysheet-formula-help-content-param"> ${param} </div> </div> <div class="luckysheet-formula-help-foot"></div></div>',
+    searchFunctionCell: null,
+    functionlistPosition: {},
+    operator: "==|!=|<>|<=|>=|=|+|-|>|<|/|*|%|&|^",
+    operatorjson: null,
+    rangedrag_column_start: false, // 范围拖动列开始
+    rangedrag_row_start: false, // 范围拖动行开始
+    rangeResizeObj: null,
+    rangeResize: null,
+    rangeResizeIndex: null,
+    rangeResizexy: null,
+    rangeResizeWinH: null,
+    rangeResizeWinW: null,
+    rangeResizeTo: null,
+    rangeMovexy: null,
+    rangeMove: false,
+    rangeMoveObj: null,
+    rangeMoveIndex: null,
+    rangeMoveRangedata: null,
+    functionHTMLIndex: 0,
+    functionRangeIndex: null,
+    operatorPriority: {
+        "^": 0,
+        "%": 1,
+        "*": 1,
+        "/": 1,
+        "+": 2,
+        "-": 2,
+    },
+    isFunctionRangeSave: false,
+    execvertex: {},
+    execFunctionGroupData: null,
+    execFunctionExist: null,
+    formulaContainSheetList: {}, // 公式包含工作表列表
+    formulaContainCellList: {}, // 公式包含单元格列表
+    cellTextToIndexList: {},
+    execFunctionGlobalData: {},
+    groupValuesRefreshData: [],
+    functionResizeData: {},
+    functionResizeStatus: false,
+    functionResizeTimeout: null,
+    data_parm_index: 0, //选择公式后参数索引标记
     errorInfo: function(err) {
         return err;
     },
@@ -262,69 +376,6 @@ const luckysheetformula = {
 
         return colorLists;
     },
-    //sparklines添加
-    colorList: [
-        "#2ec7c9",
-        "#fc5c5c",
-        "#5ab1ef",
-        "#ffb980",
-        "#d87a80",
-        "#8d98b3",
-        "#e5cf0d",
-        "#97b552",
-        "#95706d",
-        "#dc69aa",
-        "#07a2a4",
-        "#9a7fd1",
-        "#588dd5",
-        "#f5994e",
-        "#c05050",
-        "#59678c",
-        "#c9ab00",
-        "#7eb00a",
-        "#6f5553",
-        "#c14089",
-    ],
-    classlist: {
-        province: {
-            11: "北京",
-            12: "天津",
-            13: "河北",
-            14: "山西",
-            15: "内蒙古",
-            21: "辽宁",
-            22: "吉林",
-            23: "黑龙江",
-            31: "上海",
-            32: "江苏",
-            33: "浙江",
-            34: "安徽",
-            35: "福建",
-            36: "江西",
-            37: "山东",
-            41: "河南",
-            42: "湖北",
-            43: "湖南",
-            44: "广东",
-            45: "广西",
-            46: "海南",
-            50: "重庆",
-            51: "四川",
-            52: "贵州",
-            53: "云南",
-            54: "西藏",
-            61: "陕西",
-            62: "甘肃",
-            63: "青海",
-            64: "宁夏",
-            65: "新疆",
-            71: "台湾",
-            81: "香港",
-            82: "澳门",
-            91: "国外",
-        },
-    },
-    oldvalue: null,
     dontupdate: function() {
         let _this = this;
         Store.luckysheetCellUpdate.length = 0; //clear array
@@ -743,11 +794,11 @@ const luckysheetformula = {
             sheetdata = Store.flowdata;
             rangetxt = txt;
         }
-
         // fix =VLOOKUP(D9,数据透视表!A:D,2,0)
         if(sheetdata == null){
             return null
         }
+        // console.log(rangetxt);
         if (rangetxt.indexOf(":") == -1) {
             let row = parseInt(rangetxt.replace(/[^0-9]/g, "")) - 1;
             let col = ABCatNum(rangetxt.replace(/[^A-Za-z]/g, ""));
@@ -798,8 +849,7 @@ const luckysheetformula = {
             return item;
         }
     },
-    rangeHightlightHTML:
-        '<div id="luckysheet-formula-functionrange-highlight-${id}" rangeindex="${id}"  class="luckysheet-selection-highlight luckysheet-formula-functionrange-highlight"><div data-type="top" class="luckysheet-selection-copy-top luckysheet-copy"></div><div data-type="right" class="luckysheet-selection-copy-right luckysheet-copy"></div><div data-type="bottom" class="luckysheet-selection-copy-bottom luckysheet-copy"></div><div data-type="left" class="luckysheet-selection-copy-left luckysheet-copy"></div><div class="luckysheet-selection-copy-hc"></div><div data-type="lt" class="luckysheet-selection-highlight-topleft luckysheet-highlight"></div><div data-type="rt" class="luckysheet-selection-highlight-topright luckysheet-highlight"></div><div data-type="lb" class="luckysheet-selection-highlight-bottomleft luckysheet-highlight"></div><div data-type="rb" class="luckysheet-selection-highlight-bottomright luckysheet-highlight"></div></div>',
+    // 创建范围高亮显示
     createRangeHightlight: function() {
         let _this = this;
 
@@ -834,7 +884,11 @@ const luckysheetformula = {
                     .end()
                     .find(".luckysheet-selection-copy-hc")
                     .css({ background: luckyColor[rangeindex] });
-
+                // console.log(                    rangeid,
+                //   cellrange.row[0],
+                //   cellrange.row[1],
+                //   cellrange.column[0],
+                //   cellrange.column[1],);
                 seletedHighlistByindex(
                     rangeid,
                     cellrange.row[0],
@@ -847,9 +901,6 @@ const luckysheetformula = {
 
         $("#luckysheet-formula-functionrange .luckysheet-formula-functionrange-highlight").show();
     },
-    searchHTML: '<div id="luckysheet-formula-search-c" class="luckysheet-formula-search-c"></div>',
-    helpHTML:
-        '<div id="luckysheet-formula-help-c" class="luckysheet-formula-help-c"> <div class="luckysheet-formula-help-close" title="${helpClose}"><i class="fa fa-times" aria-hidden="true"></i></div> <div class="luckysheet-formula-help-collapse" title="${helpCollapse}"><i class="fa fa-angle-up" aria-hidden="true"></i></div> <div class="luckysheet-formula-help-title"><div class="luckysheet-formula-help-title-formula"> <span class="luckysheet-arguments-help-function-name">SUM</span> <span class="luckysheet-arguments-paren">(</span> <span class="luckysheet-arguments-parameter-holder"> <span class="luckysheet-arguments-help-parameter luckysheet-arguments-help-parameter-active" dir="auto">A2:A100</span>, <span class="luckysheet-arguments-help-parameter" dir="auto">101</span> </span> <span class="luckysheet-arguments-paren">)</span> </div></div> <div class="luckysheet-formula-help-content"> <div class="luckysheet-formula-help-content-example"> <div class="luckysheet-arguments-help-section-title">${helpExample}</div> <div class="luckysheet-arguments-help-formula"> <span class="luckysheet-arguments-help-function-name">SUM</span> <span class="luckysheet-arguments-paren">(</span> <span class="luckysheet-arguments-parameter-holder"> <span class="luckysheet-arguments-help-parameter luckysheet-arguments-help-parameter-active" dir="auto">A2:A100</span>, <span class="luckysheet-arguments-help-parameter" dir="auto">101</span> </span> <span class="luckysheet-arguments-paren">)</span> </div> </div> <div class="luckysheet-formula-help-content-detail"> <div class="luckysheet-arguments-help-section"> <div class="luckysheet-arguments-help-section-title luckysheet-arguments-help-parameter-name">${helpAbstract}</div> <span class="luckysheet-arguments-help-parameter-content">${helpAbstract}</span> </div> </div> <div class="luckysheet-formula-help-content-param"> ${param} </div> </div> <div class="luckysheet-formula-help-foot"></div></div>',
     getrangeseleciton: function() {
         let currSelection = window.getSelection();
         let anchor = $(currSelection.anchorNode);
@@ -947,7 +998,6 @@ const luckysheetformula = {
             })
             .show();
     },
-    searchFunctionCell: null,
     searchFunction: function($editer) {
         let _this = this;
         let functionlist = Store.functionlist;
@@ -1062,7 +1112,6 @@ const luckysheetformula = {
 
         return retHTML;
     },
-    functionlistPosition: {},
     helpFunction: function($editer, funcname, paramIndex) {
         let _this = this;
         let functionlist = Store.functionlist;
@@ -1807,8 +1856,6 @@ const luckysheetformula = {
             }
         }
     },
-    operator: "==|!=|<>|<=|>=|=|+|-|>|<|/|*|%|&|^",
-    operatorjson: null,
     functionCopy: function(txt, mode, step) {
         let _this = this;
 
@@ -2487,7 +2534,8 @@ const luckysheetformula = {
             }
         }
     },
-    israngeseleciton: function(istooltip) {
+    // 是否是范围选择
+    isRangeSelected: function(istooltip) {
         let _this = this;
 
         if (_this.operatorjson == null) {
@@ -2595,11 +2643,6 @@ const luckysheetformula = {
 
         return false;
     },
-    rangechangeindex: null,
-    rangestart: false,
-    rangetosheet: null,
-    rangeSetValueTo: null,
-    func_selectedrange: {}, //函数选区范围
     rangeSetValue: function(selected, obj) {
         let _this = this;
 
@@ -2873,8 +2916,6 @@ const luckysheetformula = {
 
         luckysheetFreezen.scrollFreezen(rowseleted, columnseleted);
     },
-    rangedrag_column_start: false,
-    rangedrag_row_start: false,
     rangedrag_column: function(event) {
         let _this = this;
 
@@ -3036,13 +3077,6 @@ const luckysheetformula = {
         luckysheetFreezen.scrollFreezen(rowseleted, [0, col_index]);
     },
     rangedragged: function() {},
-    rangeResizeObj: null,
-    rangeResize: null,
-    rangeResizeIndex: null,
-    rangeResizexy: null,
-    rangeResizeWinH: null,
-    rangeResizeWinW: null,
-    rangeResizeTo: null,
     rangeResizeDraging: function(
         event,
         luckysheetCurrentChartResizeObj,
@@ -3196,11 +3230,6 @@ const luckysheetformula = {
             .find(".luckysheet-selection-copy-hc")
             .css("opacity", 0.03);
     },
-    rangeMovexy: null,
-    rangeMove: false,
-    rangeMoveObj: null,
-    rangeMoveIndex: null,
-    rangeMoveRangedata: null,
     rangeMoveDraging: function(
         event,
         luckysheet_cell_selected_move_index,
@@ -3279,8 +3308,6 @@ const luckysheetformula = {
             .find(".luckysheet-selection-copy-hc")
             .css("opacity", 0.03);
     },
-    functionHTMLIndex: 0,
-    functionRangeIndex: null,
     findrangeindex: function(v, vp) {
         let _this = this;
 
@@ -3474,6 +3501,7 @@ const luckysheetformula = {
 
         return null;
     },
+    // 设置插入符号位置
     setCaretPosition: function(textDom, children, pos) {
         try {
             let el = textDom;
@@ -3509,6 +3537,7 @@ const luckysheetformula = {
             _this.functionRangeIndex.select();
         }
     },
+    // 函数输入框处理
     functionInputHanddler: function($to, $input, kcode) {
         if (isEditMode()) {
             //此模式下禁用公式栏
@@ -3523,9 +3552,9 @@ const luckysheetformula = {
             value1txt = $editer.text();
         let xssDeal = this.xssDeal;
         setTimeout(function() {
-            let value = $editer.text(),
-                valuetxt = value;
+            let value = $editer.text();
             value = xssDeal(value);
+            // 要支持删除
             if (value.length > 0 && value.substr(0, 1) == "=" && (kcode != 229 || value.length == 1)) {
                 value = _this.functionHTMLGenerate(value);
                 value1 = _this.functionHTMLGenerate(value1txt);
@@ -3571,41 +3600,21 @@ const luckysheetformula = {
                 _this.rangedrag_row_start = false;
 
                 _this.rangeHightlightselected($editer, kcode);
-            } else if (value1txt.substr(0, 1) != "=") {
-                //&& value1.indexOf("span")>-1
-                // $editer.html(value1);
-
-                // let w = window.getSelection();
-                // if(w!=null && w.type!="None"){
-                //     let range = w.getRangeAt(0);
-                //     let c = range.startContainer;
-
-                //     if(c.id=="luckysheet-rich-text-editor" || $(c).closest("#luckysheet-rich-text-editor")){
-                //         $functionbox.html(value);
+            }
+            // else if (value1txt.substr(0, 1) != "=") {
+            else {
+                // 函数输入框删除公式也要生效
+                // if ($copy.attr("id") == "luckysheet-rich-text-editor") {
+                //     if ($copy.html().substr(0, 5) == "<span") {
+                //     } else {
+                //         value = _this.ltGtSignDeal(value);
+                //         console.log(value);
+                //         $copy.html(value);
                 //     }
-                //     else if(c.id=="luckysheet-functionbox-cell" || $(c).closest("#luckysheet-functionbox-cell")){
-                //         if(value1.indexOf("span")>-1){
-
-                //         }
-                //         else{
-                //             $editer.html(value);
-                //         }
-                //     }
-
-                // }
-                // console.trace();
-                // console.log(value, $copy.attr("id"));
-
-                if ($copy.attr("id") == "luckysheet-rich-text-editor") {
-                    if ($copy.html().substr(0, 5) == "<span") {
-                    } else {
-                        value = _this.ltGtSignDeal(value);
-                        $copy.html(value);
-                    }
-                } else {
+                // } else {
                     value = _this.ltGtSignDeal(value);
                     $copy.html(value);
-                }
+                // }
             }
         }, 1);
     },
@@ -4016,14 +4025,6 @@ const luckysheetformula = {
         } else {
             return true;
         }
-    },
-    operatorPriority: {
-        "^": 0,
-        "%": 1,
-        "*": 1,
-        "/": 1,
-        "+": 2,
-        "-": 2,
     },
     functionParserExe: function(txt) {
         let _this = this;
@@ -4533,7 +4534,6 @@ const luckysheetformula = {
         });
         setluckysheetfile(luckysheetfile);
     },
-    isFunctionRangeSave: false,
     isFunctionRangeSimple: function(txt, r, c, index, dynamicArray_compute) {
         if (txt == null || txt.length == 0) {
             return;
@@ -5151,12 +5151,6 @@ const luckysheetformula = {
 
         // }
     },
-    execvertex: {},
-    execFunctionGroupData: null,
-    execFunctionExist: null,
-    formulaContainSheetList: {}, // 公式包含工作表列表
-    formulaContainCellList: {}, // 公式包含单元格列表
-    cellTextToIndexList: {},
     addToCellList: function(formulaTxt, cellstring) {
         if (formulaTxt == null || formulaTxt.length == 0 || cellstring == null || cellstring.length == 0) {
             return;
@@ -5212,7 +5206,6 @@ const luckysheetformula = {
 
         this.formulaContainSheetList[formulaTxt][sheetIndex] = obIndex;
     },
-    execFunctionGlobalData: {},
     // 执行函数组强制
     execFunctionGroupForce: function(isForce) {
         if (isForce) {
@@ -5499,7 +5492,7 @@ const luckysheetformula = {
                 updateValueArray.push(formulaObject);
             }
         });
-
+        // console.log(updateValueArray);
         // console.log(formulaObjects)
         // console.timeEnd("2");
 
@@ -5561,9 +5554,9 @@ const luckysheetformula = {
 
             window.luckysheet_getcelldata_cache = null;
             let calc_funcStr = formulaCell.calc_funcStr;
-
+            // console.log(calc_funcStr, formulaCell.r, formulaCell.c, formulaCell.index);
             let v = _this.execfunction(calc_funcStr, formulaCell.r, formulaCell.c, formulaCell.index);
-
+            // console.log(v);
             _this.groupValuesRefreshData.push({
                 r: formulaCell.r,
                 c: formulaCell.c,
@@ -5842,7 +5835,7 @@ const luckysheetformula = {
             f: v[2],
         };
     },
-    groupValuesRefreshData: [],
+
     groupValuesRefresh: function() {
         let _this = this;
         let luckysheetfile = getluckysheetfile();
@@ -6006,7 +5999,7 @@ const luckysheetformula = {
         } catch (e) {
             let err = e;
             //err错误提示处理
-            console.log(e, fp);
+            // console.log(e, fp);
             err = _this.errorInfo(err);
             result = [_this.error.n, err];
         }
@@ -6092,11 +6085,6 @@ const luckysheetformula = {
         let _this = this;
         return this.execfunction(txt, r, c, index);
     },
-    functionResizeData: {},
-    functionResizeStatus: false,
-    functionResizeTimeout: null,
-    data_parm_index: 0, //选择公式后参数索引标记
-
     // 点中指定的公式，展示刷新按钮
     cellFocus:function(row_index, col_index) {
         const file = Store.luckysheetfile[getSheetIndex(Store.currentSheetIndex)];
@@ -6122,7 +6110,7 @@ const luckysheetformula = {
         let listener =  $("#luckysheet-formula-refresh").data("listener")
 
         if(!listener){
-            console.info('listener')
+            // console.info('listener')
             $("#luckysheet-formula-refresh").data("listener","true")
             $("#luckysheet-formula-refresh").on('click',(e)=>{
                 this.execFunctionGroupForce(true);
@@ -6160,6 +6148,8 @@ const luckysheetformula = {
     hideButton: function() {
         $("#luckysheet-formula-refresh").hide()
     }
+    /***** 迭代 ******/
+
 };
 
 export default luckysheetformula;
