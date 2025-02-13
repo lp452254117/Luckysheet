@@ -4,8 +4,10 @@ export default function exportExcelFront(luckysheet, name, excelType , fallback)
     // 1.创建工作簿，可以为工作簿添加属性
     const workbook = new ExcelJS.Workbook()
     // 2.创建表格，第二个参数可以配置创建什么样的工作表
-    luckysheet.forEach(function (table) {
-        if (table?.data?.length === 0) return true
+    luckysheet.forEach(function (table, index) {
+        if (table?.data?.length === 0) return true;
+        // 过滤不能导出的sheet
+        if (table.allowExport == false) return true;
         const worksheet = workbook.addWorksheet(table.name)
         const merge = (table.config && table.config.merge) || {}        //合并单元格
         const borderInfo = (table.config && table.config.borderInfo) || {}      //边框
@@ -348,13 +350,13 @@ var setStyleAndValue = function (cellArr, worksheet) {
             target.value = value
             // console.log(typeof value, value);
             // console.log(JSON.stringify(value));
-            try {
-                //设置单元格格式
-                target.numFmt = cell.ct.fa;
-            } catch (e) {
-                console.warn(e)
-            }
-
+            // try {
+            //     //设置单元格格式
+            //     target.numFmt = cell?.ct?.fa;
+            // } catch (e) {
+            //     console.warn(e)
+            // }
+            target.numFmt = cell?.ct?.fa;
             return true
         })
     })

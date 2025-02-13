@@ -26,6 +26,8 @@ const gridHTML = function() {
                                 <i style="color:#444D5A;" class="fa fa-angle-left fa-2x" aria-hidden="true"></i> 
                             </div> 
                             <!--<div class="luckysheet-share-logo" title="\${logotitle}"></div>-->
+                            <!-- 关闭标题显示 -->
+                            <!--
                             <div class="sheet-name"> 
                                 <input data-tips="${
                                     locale_info.tips
@@ -41,7 +43,7 @@ const gridHTML = function() {
                             <div id="luckysheet_info_detail_save" class="luckysheet_info_detail_save"> ${
                                 locale_info.wait
                             } </div>
-                            
+                            -->
                             \${functionButton}
                             
                             ${
