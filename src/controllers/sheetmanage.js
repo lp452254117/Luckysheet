@@ -870,6 +870,7 @@ const sheetmanage = {
     },
     initialjfFile: function(menu, title) {
         let _this = this;
+        // console.time("initialjfFile");
         _this.getCurSheet();
         // 批量生成data数据
         _this.buildGridDataAll();
@@ -921,6 +922,7 @@ const sheetmanage = {
         }
         luckysheetcreatedom(colwidth, rowheight, data, menu, title);
         setTimeout(function() {
+            // console.time("__init");
             tooltip.createHoverTip(
                 "#luckysheet_info_detail",
                 ".luckysheet_info_detail_back, .luckysheet_info_detail_input, .luckysheet_info_detail_update",
@@ -953,6 +955,7 @@ const sheetmanage = {
                 file["load"] = "1";
                 _this.createSheet();
                 let execF = function(forceCalculation) {
+                    // console.time("execF");
                     _this.mergeCalculation(file["index"]);
                     _this.setSheetParam(false);
                     // editor.webWorkerFlowDataCache(Store.flowdata);//worker存数据
@@ -996,61 +999,65 @@ const sheetmanage = {
                             Store.loadingObj.close();
                         }, 500);
                     }
+                    // console.timeEnd("execF");
                 };
                 let loadSheetUrl = server.loadSheetUrl;
                 if (loadSheetUrl == "") {
                     _this.loadOtherFile(file);
-                    execF();
-                } else {
-                    let sheetindexset = _this.checkLoadSheetIndex(file);
-                    // console.log(sheetindexset);
-                    let sheetindex = [];
-                    for (let i = 0; i < sheetindexset.length; i++) {
-                        let item = sheetindexset[i];
-                        if (item == file["index"]) {
-                            continue;
-                        }
-                        sheetindex.push(item);
-                    }
-                    // console.log(sheetindex);
-                    // 如果没有链接到其他工作表，则不会发送请求
-                    if (sheetindex.length === 0) {
-                        execF();
-                        return;
-                    }
-                    let currentSheet = getSheet();
-                    $.ajax({
-                        url: loadSheetUrl,
-                        type: 'POST',
-                        data: {
-                            gridKey: server.gridKey,
-                            index: sheetindex.join(","),
-                            sheetId: currentSheet?.sheetId || null
-                        },
-                        // dataType: 'json', // 或者其他数据类型
-                        headers: Store.init_setting.api_headers || {}, // 支持自定义身份信息
-                        success: function(d) {
-                            let dataset = new Function("return " + d)();
-                            for (let item in dataset) {
-                                if (item == file["index"]) {
-                                    continue;
-                                }
-                                let otherfile = Store.luckysheetfile[_this.getSheetIndex(item)];
-                                if (otherfile["load"] == null || otherfile["load"] == "0") {
-                                    otherfile.celldata = dataset[item.toString()];
-                                    otherfile["data"] = _this.buildGridData(otherfile);
-                                    otherfile["load"] = "1";
-                                }
-                            }
-                            // console.log("执行更新");
-                            execF(true);
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            // 处理错误情况
-                            console.error(textStatus + ": " + errorThrown);
-                        }
-                    });
+                    // execF();
                 }
+                execF();
+                // else {
+                //     let sheetindexset = _this.checkLoadSheetIndex(file);
+                //     // console.log(sheetindexset);
+                //     let sheetindex = [];
+                //     for (let i = 0; i < sheetindexset.length; i++) {
+                //         let item = sheetindexset[i];
+                //         if (item == file["index"]) {
+                //             continue;
+                //         }
+                //         sheetindex.push(item);
+                //     }
+                //     // console.log(sheetindex);
+                //     // 如果没有链接到其他工作表，则不会发送请求
+                //     if (sheetindex.length === 0) {
+                //         execF();
+                //         return;
+                //     }
+                //     let currentSheet = getSheet();
+                //     $.ajax({
+                //         url: loadSheetUrl,
+                //         type: 'POST',
+                //         data: {
+                //             gridKey: server.gridKey,
+                //             index: sheetindex.join(","),
+                //             sheetId: currentSheet?.sheetId || null
+                //         },
+                //         // dataType: 'json', // 或者其他数据类型
+                //         headers: Store.init_setting.api_headers || {}, // 支持自定义身份信息
+                //         success: function(d) {
+                //             console.log("sheetmanage_loadSheetUrl", d);
+                //             let dataset = new Function("return " + d)();
+                //             for (let item in dataset) {
+                //                 if (item == file["index"]) {
+                //                     continue;
+                //                 }
+                //                 let otherfile = Store.luckysheetfile[_this.getSheetIndex(item)];
+                //                 if (otherfile["load"] == null || otherfile["load"] == "0") {
+                //                     otherfile.celldata = dataset[item.toString()];
+                //                     otherfile["data"] = _this.buildGridData(otherfile);
+                //                     otherfile["load"] = "1";
+                //                 }
+                //             }
+                //             // console.log("执行更新");
+                //             execF(true);
+                //         },
+                //         error: function(jqXHR, textStatus, errorThrown) {
+                //             // 处理错误情况
+                //             console.error(textStatus + ": " + errorThrown);
+                //         }
+                //     });
+                // }
             };
 
             try {
@@ -1064,9 +1071,11 @@ const sheetmanage = {
                 });
             } catch (e) {
                 ini();
-                console.log("缓存操作失败");
+                // console.log("缓存操作失败");
             }
+            // console.timeEnd("__init")
         }, 1);
+        // console.timeEnd("initialjfFile");
     },
     storeSheetParam: function() {
         let index = this.getSheetIndex(Store.currentSheetIndex);
@@ -1093,7 +1102,7 @@ const sheetmanage = {
         file["zoomRatio"] = Store.zoomRatio;
     },
     setSheetParam: function(isload = true) {
-        console.log("======setSheetParam======");
+        // console.log("======setSheetParam======");
         let index = this.getSheetIndex(Store.currentSheetIndex);
         let file = Store.luckysheetfile[index];
 
@@ -1238,7 +1247,9 @@ const sheetmanage = {
     },
     // 切换sheet
      changeSheet:async function(index, isPivotInitial, isNewSheet, isCopySheet) {
-
+        // console.time("changeSheet");
+        // var startTime = Date.now();
+        // console.log(startTime);
         if (isEditMode()) {
             // alert("非编辑模式下不允许该操作！");
             return;
@@ -1294,21 +1305,32 @@ const sheetmanage = {
             this.refreshAllPivotTable(Store.currentSheetIndex);
         }
         let load = file["load"];
+        // console.log("load = ", load, load != null);
         if (load != null) {
+            // console.log(Date.now() - startTime);
             let data = _this.buildGridData(file);
             file.data = data;
             _this.mergeCalculation(index);
             _this.setSheetParam(true);
             _this.showSheet();
-
+            // console.log(Date.now() - startTime);
             setTimeout(function() {
+                // console.time("changeSheet_1");
+                // console.log(Date.now() - startTime);
                 formula.execFunctionGroupForce(true);
+                // formula.execFunctionGroupForce(false);
+                // console.log(Date.now() - startTime);
                 luckysheetrefreshgrid();
+                // console.log(Date.now() - startTime);
                 server.saveParam("shs", null, Store.currentSheetIndex);
+                // console.log(Date.now() - startTime);
+                // console.timeEnd("changeSheet_1");
             }, 1);
         } else {
             let loadSheetUrl = server.loadSheetUrl;
+            // console.log('loadSheetUrl == "" || Store.luckysheetcurrentisPivotTable || !!isNewSheet', loadSheetUrl == "" || Store.luckysheetcurrentisPivotTable || !!isNewSheet);
             if (loadSheetUrl == "" || Store.luckysheetcurrentisPivotTable || !!isNewSheet) {
+                // console.time("changeSheet_2");
                 if(!file.hasOwnProperty("data")) {
                     let data = _this.buildGridData(file);
                     file["data"] = data;
@@ -1326,6 +1348,7 @@ const sheetmanage = {
                 }, 1);
 
                 server.saveParam("shs", null, Store.currentSheetIndex);
+                // console.timeEnd("changeSheet_2");
             } else {
                 $("#luckysheet-grid-window-1").append(luckysheetlodingHTML());
                 let sheetindex = _this.checkLoadSheetIndex(file);
@@ -1342,6 +1365,7 @@ const sheetmanage = {
                     // contentType: 'application/json',
                     headers: Store.init_setting.api_headers || {}, // 支持自定义身份信息
                     success: function(d) {
+                        // console.log(d);
                         let dataset = new Function("return " + d)();
                         if (dataset && dataset.hasOwnProperty(index.toString())) {
                             file.celldata = dataset[index.toString()];
@@ -1399,6 +1423,7 @@ const sheetmanage = {
         _this.restoreselect();
         //工作表保护的事件 不初始化工作表保护打开以后引用单元格点不动
         initialEvent(file);
+        // console.timeEnd("changeSheet");
     },
 
     refreshAllPivotTable: function(index) {

@@ -82,6 +82,9 @@ const server = {
     }
   },
   saveParam: function(type, index, value, params) {
+    // TODO 统一关闭广播
+    return;
+
     let _this = this;
 
     if (!_this.allowUpdate) {
@@ -101,7 +104,6 @@ const server = {
     if (type === "shs") {
       return;
     }
-
     if (type == "rv") { //单元格批量更新
       d.range = params.range;
     } else if (type == "v" || type == "fu" || type == "fm") {
